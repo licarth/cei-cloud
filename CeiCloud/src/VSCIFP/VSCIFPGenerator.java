@@ -8,9 +8,7 @@ import common.Generator;
 
 public abstract class VSCIFPGenerator implements Generator<VSCIFP> {
 	
-	private final long seed = 4378578463L;
-
-	protected Random r = new Random(seed);
+	protected Random r = new Random(SEED);
 	
 	private int maxBinCapacity = 100;
 	private int numBinTypes = 10;
@@ -34,7 +32,7 @@ public abstract class VSCIFPGenerator implements Generator<VSCIFP> {
 
 	@Override
 	public long getSeed() {
-		return seed;
+		return SEED;
 	}
 	
 }
