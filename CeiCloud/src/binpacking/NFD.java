@@ -24,7 +24,7 @@ public class NFD implements Algorithm<BPP> {
 		// Sort desc. (OFF-LINE ALG)
 		int[] sortedItemSizes = ArrayUtils.clone(ins.getItemSizes());
 		Utils.sortDesc(sortedItemSizes);
-		System.out.println(Arrays.toString(sortedItemSizes));
+//		System.out.println(Arrays.toString(sortedItemSizes));
 
 		//Worst case : 1 bin per item.
 		List<List<Integer>> sol = new ArrayList<>();

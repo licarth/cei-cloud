@@ -1,12 +1,14 @@
 package binpacking;
 import java.math.BigInteger;
+import java.util.Arrays;
 
+import common.AbstractProblem;
 import common.Problem;
 import common.ProblemInputDataException;
 import common.Utils;
 
 
-public class BPP implements Problem{
+public class BPP extends AbstractProblem {
 
 	/**
 	 *	Bin size. 
@@ -39,6 +41,13 @@ public class BPP implements Problem{
 		this.itemSizes = itemSizes;
 		checkProblemInput();
 	}
+	
+	@Override
+	public String toStringDetailed() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(String.format("binsize=%s,costLimit=%s,itemSizes=%s", binSize, costLimit, Arrays.toString(itemSizes)));
+		return sb.toString();
+	}
 
 	@Override
 	public void checkProblemInput() throws ProblemInputDataException{
@@ -57,7 +66,6 @@ public class BPP implements Problem{
 			if (i > binSize) throw new ProblemInputDataException("Items should be smaller than bins!");
 			if (i <= 0) throw new ProblemInputDataException("Items sizes should be stricly positive integers!");
 		}
-
 	}
 
 	public int getNumberOfItems() {
