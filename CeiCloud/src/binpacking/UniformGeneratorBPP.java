@@ -8,18 +8,20 @@ import javax.management.RuntimeErrorException;
 
 import common.Generator;
 import common.ProblemInputDataException;
+import common.StatUtils;
 import common.Utils;
+import common.VizUtils;
 
 public class UniformGeneratorBPP implements Generator<BPP> {
 
-	private int numItems = 20;
-	private int itemMaxSize = 200;
-	private int binsize = 200;
+	private int numItems = 2000;
+	private int itemMaxSize = 10;
+	private int binsize = 10;
 
-	private int binsGenerated = 0;
+	private int optimalSolution = 0;
 	private int itemsPutIntoBins = 0;
 
-	private ArrayList<Bin> bins;
+	private ArrayList<Bin> bins = new ArrayList<Bin>();
 
 	Random r = new Random(SEED);
 
@@ -28,26 +30,8 @@ public class UniformGeneratorBPP implements Generator<BPP> {
 
 		BPP p = null;
 
-		boolean permutationFound = false;
-
-		//		while(!permutationFound){
-		//			if (itemsPutIntoBins > numItems){
-		//				ArrayList<Bin> permutation = searchPermutation(bins);
-		//				if (permutation != null){
-		//					permutationFound = true;
-		//					bins = permutation;
-		//					try {
-		//						p = new BPP(binsize, getAllItemsRandom());
-		//					} catch (ProblemInputDataException e) {
-		//						// TODO Auto-generated catch block
-		//						e.printStackTrace();
-		//					}
-		//				}
-		//			}
-		//		}
-		
 		while(itemsPutIntoBins < numItems){
-			generateOneBin();
+			bins.add(generateOneBin());
 		}
 		
 		try {
@@ -57,6 +41,10 @@ public class UniformGeneratorBPP implements Generator<BPP> {
 			e.printStackTrace();
 		}
 
+		//Test du chi II
+		System.out.println("Chi II Test: "+((StatUtils.isRandom(p.getItemSizes(), itemMaxSize)) ? "PASSED" : "FAILED"));
+		VizUtils.barChart(p.getItemSizes(), binsize+1);
+		System.out.println("Optimal solution: "+optimalSolution);
 		System.out.println(p);
 		return p;
 	}
@@ -79,16 +67,18 @@ public class UniformGeneratorBPP implements Generator<BPP> {
 		return items;
 	}
 
-	private void generateOneBin() {
+	private Bin generateOneBin() {
 		Bin bin = new Bin();
 
-		while(itemsPutIntoBins < numItems || !bin.isFull()){
+		while(itemsPutIntoBins < numItems && !bin.isFull()){
+			if (itemsPutIntoBins > numItems) throw new RuntimeErrorException(null, "IMPOSSIBLE!");
 			if (itemsPutIntoBins > numItems) throw new RuntimeErrorException(null, "IMPOSSIBLE!");
 			int nextItem = nextItem();
 			if (bin.sum() + nextItem > binsize) nextItem = binsize - bin.sum();
 			bin.put(nextItem);
 		}
-		binsGenerated++;
+		optimalSolution++;
+		return bin;
 	}
 
 	private int nextItem() {

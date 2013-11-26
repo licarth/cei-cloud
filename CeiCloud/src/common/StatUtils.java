@@ -17,7 +17,12 @@ public class StatUtils {
     {
             //According to Sedgewick: "This is valid if N is greater than about 10r"
             if (randomNums.length <= 10 * r)
-                    return false;
+				try {
+					throw new Exception("Sample too small");
+				} catch (Exception e) {
+					e.printStackTrace();
+					return false;
+				}
 
             //PART A: Get frequency of randoms
             Map<Integer,Integer> ht = getFrequencies(randomNums);

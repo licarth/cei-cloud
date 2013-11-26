@@ -7,6 +7,7 @@ import VSCIFP.BinType;
 import VSCIFP.VSCIFP;
 import VSCIFP.algos.CIFFD;
 import common.ProblemInputDataException;
+import common.VizUtils;
 
 public class Main {
 
@@ -22,15 +23,20 @@ public class Main {
 		
 //		BPP bpp = new BPP(8, new int[]{8,8,2,5,4,3,3,2,2,1});
 //		
+		
+//		VizUtils.barChart(new int[]{8,8,2,5,4,3,3,2,2,1}, 10);
+		
 		FFD ffd = new FFD();
 		FF ff = new FF();
 		
 		UniformGeneratorBPP gen = new UniformGeneratorBPP();
-		List<BPP> l = gen.generateInstances(10);
+		List<BPP> l = gen.generateInstances(1);
 		for (BPP bpp : l) {
 			System.out.println(ffd.solve(bpp));
 			System.out.println(ff.solve(bpp));
 		}
+		
+		
 		
 		
 //		Set<BinType> binTypes = new HashSet<>();
