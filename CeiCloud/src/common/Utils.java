@@ -82,5 +82,4 @@ public class Utils {
 	  if (reversed) Collections.sort(list, Collections.reverseOrder()); else Collections.sort(list);
 	  return list;
 	}
-	
 }

@@ -14,23 +14,19 @@ import common.Utils;
 /**
  * @author thomas
  *
- *	Next-Fit Decreasing implementation for BPP problems.
+ *	First-Fit Decreasing implementation for BPP problems.
  *
  */
-public class NFD implements Algorithm<BPP> {
+public class FF implements Algorithm<BPP> {
 
 	@Override
 	public Solution<BPP> solve(BPP ins) throws ProblemInputDataException {
-		// Sort desc. (OFF-LINE ALG)
-		int[] sortedItemSizes = ArrayUtils.clone(ins.getItemSizes());
-		Utils.sortDesc(sortedItemSizes);
-//		System.out.println(Arrays.toString(sortedItemSizes));
 
 		//Worst case : 1 bin per item.
 		List<List<Integer>> sol = new ArrayList<>();
 
-		for (int i = 0; i < sortedItemSizes.length; i++) {
-			final int itemSize = sortedItemSizes[i];
+		for (int i = 0; i < ins.getItemSizes().length; i++) {
+			final int itemSize = ins.getItemSizes()[i];
 			boolean itemPut = false;
 			if (itemSize > ins.getBinSize()) throw new ProblemInputDataException("Item exceeds bin size!");
 			
