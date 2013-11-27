@@ -16,10 +16,10 @@ public class VizUtils {
 		int[] distr = new int[max];
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		for (int i = 0; i < ints.length; i++) {
-			distr[ints[i]]++;
+			distr[ints[i]-1]++;
 		}
 		for (int i = 0; i < distr.length; i++) {
-		dataset.setValue(distr[i], "D", (i)+"");
+		dataset.setValue(distr[i], "D", (i+1)+"");
 		}
 		JFreeChart chart = ChartFactory.createBarChart("Items Repartition",
 				"Item Size", "Number of items", dataset, PlotOrientation.VERTICAL,

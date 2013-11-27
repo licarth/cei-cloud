@@ -4,9 +4,9 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-import common.Generator;
+import common.RandomGenerator;
 
-public abstract class VSCIFPGenerator implements Generator<VSCIFP> {
+public abstract class VSCIFPGenerator implements RandomGenerator<VSCIFP> {
 	
 	protected Random r = new Random(SEED);
 	
