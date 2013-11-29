@@ -1,36 +1,51 @@
 package binpacking.gens;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import binpacking.BPP;
+import binpacking.BPPInstance;
 
 import common.ProblemInputDataException;
 
 public class UniformBPPGenerator extends BPPGenerator {
+	
+	public UniformBPPGenerator(BPP problem, int numberOfItems) {
+		super(problem, numberOfItems);
+	}
 
 	Random r = getRandom();
 	
 	@Override
-	public BPP generateInstance() {
-		BPP p = null;
-		int[] itemSizes = new int[numItems];
-		for (int i = 0; i < itemSizes.length; i++) {
-			itemSizes[i] = 	r.nextInt(itemMaxSize) + 1;
+	public BPPInstance generateInstance(BPP problem) {
+		BPPInstance inst = null;
+		List<Integer> itemSizes = new ArrayList<Integer>(getNumberOfItems());
+		for (int i = 0; i < getNumberOfItems(); i++) {
+			itemSizes.add(r.nextInt(problem.getItemMaxSize()) + 1);
 		}
 		
 		try {
-			p = new BPP(binsize, itemSizes, itemMaxSize);
+			inst = new BPPInstance(problem, itemSizes);
 		} catch (ProblemInputDataException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		System.out.println(p);
-		return p;
+		return inst;
 	}
 
 	@Override
 	public long getSeed() {
 		return SEED;
+	}
+
+	@Override
+	public List<BPPInstance> generateInstances(int n) {
+		List<BPPInstance> l = new ArrayList<BPPInstance>(n);
+		for (int i = 0; i < n; i++) {
+			l.add(generateInstance(problem));
+		}
+		return l;
 	}
 
 }

@@ -1,5 +1,6 @@
 package common;
 
-public interface Solution<P extends Problem, A extends Algorithm<P>> {
+public interface Solution<I extends Instance> {
 	int getCost();
+	I getInstance();
 }

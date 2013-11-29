@@ -6,8 +6,10 @@ import java.util.List;
 import org.apache.commons.lang.ArrayUtils;
 
 import binpacking.BPP;
+import binpacking.BPPInstance;
 import binpacking.BPPSol;
 import common.Algorithm;
+import common.Instance;
 import common.ProblemInputDataException;
 import common.Solution;
 import common.Utils;
@@ -19,21 +21,21 @@ import common.Utils;
  *	First-Fit Decreasing implementation for BPP problems.
  *
  */
-public class FF implements Algorithm<BPP> {
+public class FF extends BPPAlgorithm {
 
 	@Override
-	public Solution<BPP,FF> solve(BPP ins) throws ProblemInputDataException {
+	public Solution<BPPInstance> solve(BPPInstance ins) throws ProblemInputDataException {
 
 		//Worst case : 1 bin per item.
 		List<List<Integer>> sol = new ArrayList<>();
 
-		for (int i = 0; i < ins.getItemSizes().length; i++) {
-			final int itemSize = ins.getItemSizes()[i];
+		for (int i = 0; i < ins.getItemSizes().size(); i++) {
+			final int itemSize = ins.getItemSizes().get(i);
 			boolean itemPut = false;
-			if (itemSize > ins.getBinSize()) throw new ProblemInputDataException("Item exceeds bin size!");
+			if (itemSize > ins.getProblem().getBinSize()) throw new ProblemInputDataException("Item exceeds bin size!");
 			
 			for (List<Integer> bin : sol) {
-				if (Utils.sum(bin) + itemSize <= ins.getBinSize()){
+				if (Utils.sum(bin) + itemSize <= ins.getProblem().getBinSize()){
 					bin.add(itemSize);
 					itemPut = true;
 					break;
@@ -45,7 +47,6 @@ public class FF implements Algorithm<BPP> {
 				itemPut = true;
 			}
 		}
-
 
 		return new BPPSol(sol, this);
 	}

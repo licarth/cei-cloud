@@ -1,5 +1,6 @@
 package common;
 
-public interface Algorithm<P extends Problem> {
-	Solution<P,?> solve(P instance) throws ProblemInputDataException;
+public interface Algorithm<I extends Instance> {
+	Solution<I> solve(I instance) throws ProblemInputDataException;
+	I getInstance();
 }

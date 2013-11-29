@@ -7,13 +7,17 @@ import java.util.Random;
 import javax.management.RuntimeErrorException;
 
 import binpacking.BPP;
-import common.RandomGenerator;
+import binpacking.BPPInstance;
+import binpacking.OptimalKnownBPPInstance;
+
 import common.ProblemInputDataException;
-import common.StatUtils;
 import common.Utils;
-import common.VizUtils;
 
 public class OptimalUniformBPPGenerator extends BPPGenerator {
+	
+	public OptimalUniformBPPGenerator(BPP problem, int numberOfItems) {
+		super(problem, numberOfItems);
+	}
 
 	private int optimalSolution = 0;
 	private int itemsPutIntoBins = 0;
@@ -23,25 +27,22 @@ public class OptimalUniformBPPGenerator extends BPPGenerator {
 	Random r = getRandom();
 
 	@Override
-	public BPP generateInstance() {
+	public OptimalKnownBPPInstance generateInstance(BPP problem) {
 
-		BPP p = null;
+		OptimalKnownBPPInstance inst = null;
 
-		while(itemsPutIntoBins < numItems){
+		while(itemsPutIntoBins < numberOfItems){
 			bins.add(generateOneBin());
 		}
 		
 		try {
-			p = new BPP(binsize, getAllItemsRandom(), itemMaxSize);
+			inst = new OptimalKnownBPPInstance(problem, getAllItemsRandom(), optimalSolution);
 		} catch (ProblemInputDataException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		//Test du chi II
-		System.out.println("Optimal solution: "+optimalSolution);
-		System.out.println(p);
-		return p;
+		return inst;
 	}
 
 	/**
@@ -49,14 +50,12 @@ public class OptimalUniformBPPGenerator extends BPPGenerator {
 	 * 
 	 * @return
 	 */
-	private int[] getAllItemsRandom() {
-		int[] items = new int[numItems];
-		int n=0;
+	private List<Integer> getAllItemsRandom() {
+		ArrayList<Integer> items = new ArrayList<>();
 		for (Bin bin : bins) {
 			ArrayList<Integer> binItems = bin.items;
 			for (Integer i : binItems) {
-				items[n] = i;
-				n++;
+				items.add(i);
 			}
 		}
 		return items;
@@ -65,11 +64,10 @@ public class OptimalUniformBPPGenerator extends BPPGenerator {
 	private Bin generateOneBin() {
 		Bin bin = new Bin();
 
-		while(itemsPutIntoBins < numItems && !bin.isFull()){
-			if (itemsPutIntoBins > numItems) throw new RuntimeErrorException(null, "IMPOSSIBLE!");
-			if (itemsPutIntoBins > numItems) throw new RuntimeErrorException(null, "IMPOSSIBLE!");
+		while(itemsPutIntoBins < numberOfItems && !bin.isFull()){
+			if (itemsPutIntoBins > numberOfItems) throw new RuntimeErrorException(null, "IMPOSSIBLE!");
 			int nextItem = nextItem();
-			if (bin.sum() + nextItem > binsize) nextItem = binsize - bin.sum();
+			if (bin.sum() + nextItem > problem.getBinSize()) nextItem = problem.getBinSize() - bin.sum();
 			bin.put(nextItem);
 		}
 		optimalSolution++;
@@ -77,11 +75,11 @@ public class OptimalUniformBPPGenerator extends BPPGenerator {
 	}
 
 	private int nextItem() {
-		return r.nextInt(itemMaxSize) + 1;
+		return r.nextInt(problem.getItemMaxSize()) + 1;
 	}
 
 	class Bin{
-		private int capacity = binsize;
+		private int capacity = problem.getBinSize();
 		private ArrayList<Integer> items = new ArrayList<Integer>();
 		public boolean isFull() {
 			return sum() == this.capacity;
@@ -99,5 +97,14 @@ public class OptimalUniformBPPGenerator extends BPPGenerator {
 			}
 		}
 	}
+
+	@Override
+	public List<BPPInstance> generateInstances(int n) {
+			List<BPPInstance> l = new ArrayList<BPPInstance>();
+			for (int i = 0; i < n; i++) {
+				l.add(generateInstance(problem));
+			}
+			return l;
+		}
 
 }

@@ -21,35 +21,28 @@ import common.Utils;
  *	First-Fit Decreasing implementation for BPP problems.
  *
  */
-public class FFD extends BPPAlgorithm {
+public class NF extends BPPAlgorithm {
 
 	@Override
 	public Solution<BPPInstance> solve(BPPInstance ins) throws ProblemInputDataException {
-		// Sort desc. (OFF-LINE ALG)
-		List<Integer> sortedItemSizes = Utils.cloneIntList(ins.getItemSizes());
-		Utils.sortDesc(sortedItemSizes);
-//		System.out.println(Arrays.toString(sortedItemSizes));
 
 		//Worst case : 1 bin per item.
 		List<List<Integer>> sol = new ArrayList<>();
-
-		for (int i = 0; i < sortedItemSizes.size(); i++) {
-			final int itemSize = sortedItemSizes.get(i);
-			boolean itemPut = false;
+		//Create first bin.
+		sol.add(new ArrayList<Integer>());
+		List<Integer> currentBin = sol.get(0);
+		
+		for (int i = 0; i < ins.getItemSizes().size(); i++) {
+			final int itemSize = ins.getItemSizes().get(i);
 			if (itemSize > ins.getProblem().getBinSize()) throw new ProblemInputDataException("Item exceeds bin size!");
 			
-			for (List<Integer> bin : sol) {
-				if (Utils.sum(bin) + itemSize <= ins.getProblem().getBinSize()){
-					bin.add(itemSize);
-					itemPut = true;
-					break;
-				}
+			if (Utils.sum(currentBin) + itemSize <= ins.getProblem().getBinSize()){
+				currentBin.add(itemSize);
 			}
-			
-			if (!itemPut) {
-				//Item has not been put in any bin. We need to create a new bin with it.
-				sol.add(new ArrayList<Integer>(){{add(itemSize);}});
-				itemPut = true;
+			else {
+				currentBin = new ArrayList<Integer>();
+				currentBin.add(itemSize);
+				sol.add(currentBin);
 			}
 		}
 

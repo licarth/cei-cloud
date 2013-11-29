@@ -2,6 +2,7 @@ package common;
 
 public interface Problem {
 
-	void checkProblemInput() throws ProblemInputDataException;
+	@Override
+	public boolean equals(Object obj);
 	
 }

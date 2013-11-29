@@ -8,13 +8,16 @@ public abstract class AbstractRandomGenerator<P extends Problem> implements Rand
 
 	public static final long SEED = 4378578463L;
 	
-	public List<P> generateInstances(int n) {
-		List<P> l = new ArrayList<P>();
-		for (int i = 0; i < n; i++) {
-			l.add(generateInstance());
-		}
-		return l;
+	/**
+	 * The problem this generator creates instances for. e.g. Bin packing with bin capacity = 10.
+	 */
+	protected final P problem;
+	
+	public AbstractRandomGenerator(P problem) {
+		this.problem = problem;
 	}
+	
+	public abstract List<? extends Instance<P>> generateInstances(int n);
 
 	public Random getRandom() {
 		return new Random(getSeed());

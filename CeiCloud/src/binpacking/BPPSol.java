@@ -6,10 +6,12 @@ import common.AbstractSolution;
 import common.Algorithm;
 import common.Solution;
 
-public class BPPSol<A extends Algorithm<BPP>> extends AbstractSolution<BPP, A>{
+public class BPPSol extends AbstractSolution<BPPInstance>{
 	public List<List<Integer>> itemsInBins;
 
-	public BPPSol(List<List<Integer>> itemsInBins, A sourceAlgorithm) {
+	BPPInstance instance;
+	
+	public BPPSol(List<List<Integer>> itemsInBins, Algorithm<BPPInstance> sourceAlgorithm) {
 		super(sourceAlgorithm);
 		this.itemsInBins = itemsInBins;
 	}
@@ -23,6 +25,11 @@ public class BPPSol<A extends Algorithm<BPP>> extends AbstractSolution<BPP, A>{
 	public int getCost() {
 		// TODO Auto-generated method stub
 		return itemsInBins.size();
+	}
+
+	@Override
+	public BPPInstance getInstance() {
+		return instance;
 	}
 	
 }

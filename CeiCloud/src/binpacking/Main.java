@@ -1,4 +1,10 @@
 package binpacking;
+import java.util.List;
+
+import binpacking.algs.FF;
+import binpacking.algs.FFD;
+import binpacking.algs.NF;
+import binpacking.algs.NFD;
 import binpacking.gens.MartelloTothBPPLibraryGenerator;
 
 import common.ProblemInputDataException;
@@ -22,28 +28,31 @@ public class Main {
 		
 		
 //		------------------------------------
-//		FFD ffd = new FFD();
-//		FF ff = new FF();
-//			
-////		UniformGeneratorBPP gen = new UniformGeneratorBPP();
-//		UniformBPPGenerator gen = new UniformBPPGenerator();
-//		List<BPP> l = gen.generateInstances(1);
-//		for (BPP bpp : l) {
-//			VizUtils.barChart(bpp.getItemSizes(), bpp.getItemMaxSize());
-//			bpp.checkUniformItemsRepartition();
-//			System.out.println(ffd.solve(bpp));
-//			System.out.println(ff.solve(bpp));
-//		}
+		FFD ffd = new FFD();
+		FF ff = new FF();
+		NF nf = new NF();
+		NFD nfd = new NFD();
+			
+//		BPP bpp = new BPP(10);		//Problem definition
+		MartelloTothBPPLibraryGenerator gen = new MartelloTothBPPLibraryGenerator();	//Generator choice
+//		OptimalUniformBPPGenerator gen = new OptimalUniformBPPGenerator(bpp, 200);	//Generator choice
+//		UniformBPPGenerator gen = new UniformBPPGenerator(bpp, 200);
+		List<BPPInstance> l = gen.generateInstances();
+//		System.out.println(l);
+		for (BPPInstance iBpp : l) {
+//			System.out.println(iBpp);
+//			VizUtils.barChart(iBpp.getItemSizes(),iBpp.getProblem().getItemMinSize(), iBpp.getProblem().getItemMaxSize());
+//			iBpp.checkUniformItemsRepartition();
+//			VizUtils.barChart(iBpp, max);
+			System.out.println(ff.solve(iBpp).getCost());
+//			System.out.println(ff.solve(iBpp));
+//			System.out.println(nfd.solve(iBpp));
+//			System.out.println(nf.solve(iBpp));
+		}
 //		------------------------------------
 		
-		MartelloTothBPPLibraryGenerator gen = new MartelloTothBPPLibraryGenerator();
-		gen.generateInstances();
-		
-		
-		
-		
-		
-		
+//		MartelloTothBPPLibraryGenerator gen = new MartelloTothBPPLibraryGenerator();
+//		gen.generateInstances();
 		
 //		Set<BinType> binTypes = new HashSet<>();
 //		binTypes.add(new BinType(10, 10));

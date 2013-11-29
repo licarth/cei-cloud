@@ -22,6 +22,18 @@ public class Utils {
 		Arrays.sort(a);
 		ArrayUtils.reverse(a);
 	}
+	
+	/**
+	 * @param a
+	 * 
+	 * Sorts a in desc. order.
+	 * This method edits a directly.
+	 * 
+	 */
+	public static void sortDesc(List<Integer> l){
+		Collections.sort(l);
+		Collections.reverse(l);
+	}
 
 	/**
 	 * @param a
@@ -61,10 +73,10 @@ public class Utils {
 	 * Sums elements of a.
 	 * 
 	 */
-	public static BigInteger bigSum(int[] a) {
+	public static BigInteger bigSum(List<Integer> a) {
 		BigInteger sum = new BigInteger("0");
-		for (int i = 0; i < a.length; i++) {
-			sum.add(new BigInteger(a[i]+""));
+		for (int i = 0; i < a.size(); i++) {
+			sum.add(new BigInteger(a.get(i)+""));
 		}
 		return sum;
 	}
@@ -81,5 +93,11 @@ public class Utils {
 	  List<T> list = new ArrayList<T>(c);
 	  if (reversed) Collections.sort(list, Collections.reverseOrder()); else Collections.sort(list);
 	  return list;
+	}
+
+	public static List<Integer> cloneIntList(List<Integer> list) {
+		    List<Integer> clone = new ArrayList<Integer>(list.size());
+		    for(Integer item: list) clone.add(new Integer(item.intValue()));
+		    return clone;
 	}
 }

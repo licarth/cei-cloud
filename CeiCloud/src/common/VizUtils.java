@@ -2,7 +2,7 @@ package common;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
@@ -12,11 +12,11 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 public class VizUtils {
 
-	public static void barChart(int[] ints, int max) {
+	public static void barChart(List<Integer> ints, int min, int max) {
 		int[] distr = new int[max];
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		for (int i = 0; i < ints.length; i++) {
-			distr[ints[i]-1]++;
+		for (int i = 0; i < ints.size(); i++) {
+			distr[ints.get(i)-1]++;
 		}
 		for (int i = 0; i < distr.length; i++) {
 		dataset.setValue(distr[i], "D", (i+1)+"");

@@ -1,6 +1,7 @@
 package common;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class StatUtils {
@@ -12,23 +13,20 @@ public class StatUtils {
      * @param  randomNums  a uniformly-randomly-generated array of integers
      * @param  r           upper bound for the random range
      * @return             whether it is likely to be uniformly randomly generated
+     * @throws Exception 
      */
-    public static boolean isRandom(int[] randomNums, int r)
+    public static boolean isRandom(List<Integer> randomNums, int r) throws Exception
     {
             //According to Sedgewick: "This is valid if N is greater than about 10r"
-            if (randomNums.length <= 10 * r)
-				try {
+            if (randomNums.size() <= 10 * r){
 					throw new Exception("Sample too small");
-				} catch (Exception e) {
-					e.printStackTrace();
-					return false;
 				}
 
             //PART A: Get frequency of randoms
             Map<Integer,Integer> ht = getFrequencies(randomNums);
 
             //PART B: Calculate chi-square - this approach is in Sedgewick
-            double n_r = (double)randomNums.length / r;
+            double n_r = (double)randomNums.size() / r;
             double chiSquare = 0;
 
             for (int v : ht.values())
@@ -47,7 +45,7 @@ public class StatUtils {
      * @param  nums  an array of integers
      * @return       a Map, key being the number and value its frequency
      */
-    private static Map<Integer,Integer> getFrequencies(int[] nums)
+    private static Map<Integer,Integer> getFrequencies(List<Integer> nums)
     {
             Map<Integer,Integer> freqs = new HashMap<Integer,Integer>();
 

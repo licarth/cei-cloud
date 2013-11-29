@@ -1,10 +1,10 @@
 package common;
 
-public abstract class AbstractSolution<P extends Problem, A extends Algorithm<P>> implements Solution<P,A> {
+public abstract class AbstractSolution<I extends Instance> implements Solution<I> {
 	
-	protected A sourceAlgorithm;
+	protected Algorithm<I> sourceAlgorithm;
 	
-	public AbstractSolution(A sourceAlgorithm) {
+	public AbstractSolution(Algorithm<I> sourceAlgorithm) {
 		this.sourceAlgorithm = sourceAlgorithm;
 	}
 	
