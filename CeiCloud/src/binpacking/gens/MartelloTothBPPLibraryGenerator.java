@@ -41,7 +41,6 @@ public class MartelloTothBPPLibraryGenerator implements LibraryGenerator<BPP>{
 				instances.add(generateInstance(listOfFiles[i]));
 			}
 		}
-
 		return instances;
 	}
 
