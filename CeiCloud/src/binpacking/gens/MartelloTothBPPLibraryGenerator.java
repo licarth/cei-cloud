@@ -27,7 +27,7 @@ public class MartelloTothBPPLibraryGenerator implements LibraryGenerator<BPP>{
 		ArrayList<BPPInstance> instances = new ArrayList<BPPInstance>();
 
 		// Directory path here
-		String path = "./src/binpacking/instances_lib/MartelloToth"; 
+		String path = "../resources/instances_lib/MartelloToth";
 
 		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles(); 
@@ -119,15 +119,20 @@ public class MartelloTothBPPLibraryGenerator implements LibraryGenerator<BPP>{
 					int n = new Integer(line);
 					if (lineCount == 1) {
 						headerNumOfItems = n;
-						if (headerNumOfItems != fileNameNumOfItems)throw new ProblemInputDataException("Number of items in file name and number of items annouced in file header are different !"); 
+						if (headerNumOfItems != fileNameNumOfItems) {
+							br.close();
+							throw new ProblemInputDataException("Number of items in file name and number of items annouced in file header are different !"); 
+						}
 					}
 					else if (lineCount == 2) {
+						br.close();
 						if (p.getBinSize() != n) throw new ProblemInputDataException("Bin size in file and in file name are different !");
 					}
 					else itemSizes.add(new Integer(line));
 					lineCount++;
 				}
 				if (headerNumOfItems != itemSizes.size()){
+					br.close();
 					throw new ProblemInputDataException("Number of items in file name and number of items really in file are different !");
 				}
 				br.close();
