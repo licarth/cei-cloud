@@ -8,11 +8,11 @@ import org.apache.commons.lang.ArrayUtils;
 import binpacking.BPP;
 import binpacking.BPPInstance;
 import binpacking.BPPSol;
-import common.Algorithm;
-import common.Instance;
-import common.ProblemInputDataException;
-import common.Solution;
 import common.Utils;
+import common.algorithm.Algorithm;
+import common.problem.Instance;
+import common.problem.ProblemInputDataException;
+import common.solution.Solution;
 
 
 /**

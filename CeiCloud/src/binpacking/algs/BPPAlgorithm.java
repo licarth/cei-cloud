@@ -1,8 +1,7 @@
 package binpacking.algs;
 
 import binpacking.BPPInstance;
-
-import common.OfflineAlgorithm;
+import common.algorithm.OfflineAlgorithm;
 
 public abstract class BPPAlgorithm extends OfflineAlgorithm<BPPInstance> {
 

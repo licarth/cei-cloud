@@ -6,8 +6,7 @@ import binpacking.algs.FFD;
 import binpacking.algs.NF;
 import binpacking.algs.NFD;
 import binpacking.gens.MartelloTothBPPLibraryGenerator;
-
-import common.ProblemInputDataException;
+import common.problem.ProblemInputDataException;
 
 public class Main {
 

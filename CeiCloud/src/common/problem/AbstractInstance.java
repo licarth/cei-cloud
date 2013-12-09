@@ -1,4 +1,5 @@
-package common;
+package common.problem;
+
 
 public abstract class AbstractInstance<P extends Problem> implements Instance<P> {
 

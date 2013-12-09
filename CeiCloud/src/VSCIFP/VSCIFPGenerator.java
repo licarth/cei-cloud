@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-import common.RandomGenerator;
+import common.generator.RandomGenerator;
 
 public abstract class VSCIFPGenerator implements RandomGenerator<VSCIFP> {
 	

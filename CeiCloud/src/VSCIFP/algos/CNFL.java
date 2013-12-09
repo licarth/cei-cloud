@@ -1,9 +1,9 @@
 package VSCIFP.algos;
 
 import VSCIFP.VSCIFP;
-import common.Algorithm;
-import common.ProblemInputDataException;
-import common.Solution;
+import common.algorithm.Algorithm;
+import common.problem.ProblemInputDataException;
+import common.solution.Solution;
 
 public class CNFL implements Algorithm<VSCIFP> {
 

@@ -5,8 +5,8 @@ import static common.Utils.*;
 import java.util.List;
 import java.util.Set;
 
-import common.Problem;
-import common.ProblemInputDataException;
+import common.problem.Problem;
+import common.problem.ProblemInputDataException;
 
 public class VSCIFP implements Problem{
 	

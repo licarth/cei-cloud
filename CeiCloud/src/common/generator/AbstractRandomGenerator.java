@@ -1,8 +1,11 @@
-package common;
+package common.generator;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import common.problem.Instance;
+import common.problem.Problem;
 
 public abstract class AbstractRandomGenerator<P extends Problem> implements RandomGenerator<P> {
 

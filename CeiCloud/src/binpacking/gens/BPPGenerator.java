@@ -1,8 +1,7 @@
 package binpacking.gens;
 
 import binpacking.BPP;
-
-import common.AbstractRandomGenerator;
+import common.generator.AbstractRandomGenerator;
 
 abstract class BPPGenerator extends AbstractRandomGenerator<BPP>{
 	

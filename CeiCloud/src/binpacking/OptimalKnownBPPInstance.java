@@ -2,7 +2,7 @@ package binpacking;
 
 import java.util.List;
 
-import common.ProblemInputDataException;
+import common.problem.ProblemInputDataException;
 
 public class OptimalKnownBPPInstance extends BPPInstance {
 

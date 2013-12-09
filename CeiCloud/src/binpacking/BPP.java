@@ -1,6 +1,6 @@
 package binpacking;
 
-import common.Problem;
+import common.problem.Problem;
 
 
 public class BPP extends AbstractBPP {

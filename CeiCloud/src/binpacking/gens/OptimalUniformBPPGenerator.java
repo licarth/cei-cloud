@@ -9,9 +9,8 @@ import javax.management.RuntimeErrorException;
 import binpacking.BPP;
 import binpacking.BPPInstance;
 import binpacking.OptimalKnownBPPInstance;
-
-import common.ProblemInputDataException;
 import common.Utils;
+import common.problem.ProblemInputDataException;
 
 public class OptimalUniformBPPGenerator extends BPPGenerator {
 	

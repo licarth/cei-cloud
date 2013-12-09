@@ -1,4 +1,5 @@
-package common;
+package common.problem;
+
 
 public interface Instance<P extends Problem> {
 	

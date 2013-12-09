@@ -6,8 +6,7 @@ import java.util.Random;
 
 import binpacking.BPP;
 import binpacking.BPPInstance;
-
-import common.ProblemInputDataException;
+import common.problem.ProblemInputDataException;
 
 public class UniformBPPGenerator extends BPPGenerator {
 	

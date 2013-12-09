@@ -1,4 +1,7 @@
-package common;
+package common.solution;
+
+import common.algorithm.Algorithm;
+import common.problem.Instance;
 
 public abstract class AbstractSolution<I extends Instance> implements Solution<I> {
 	

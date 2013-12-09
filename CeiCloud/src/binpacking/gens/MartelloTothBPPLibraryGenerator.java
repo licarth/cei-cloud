@@ -15,8 +15,8 @@ import org.apache.commons.lang.ArrayUtils;
 
 import binpacking.BPP;
 import binpacking.BPPInstance;
-import common.LibraryGenerator;
-import common.ProblemInputDataException;
+import common.generator.LibraryGenerator;
+import common.problem.ProblemInputDataException;
 
 public class MartelloTothBPPLibraryGenerator implements LibraryGenerator<BPP>{
 
@@ -27,7 +27,7 @@ public class MartelloTothBPPLibraryGenerator implements LibraryGenerator<BPP>{
 		ArrayList<BPPInstance> instances = new ArrayList<BPPInstance>();
 
 		// Directory path here
-		String path = "../resources/instances_lib/MartelloToth";
+		String path = "./resources/instances_lib/MartelloToth";
 
 		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles(); 
@@ -105,9 +105,6 @@ public class MartelloTothBPPLibraryGenerator implements LibraryGenerator<BPP>{
 				}
 			}
 
-			//	Opens the file
-			File f = new File("src/binpacking/instances_lib/");
-
 			//	Lis le fichier. chaque ligne = nouvel item.
 			BufferedReader br;
 			int headerNumOfItems = 0;
@@ -120,19 +117,18 @@ public class MartelloTothBPPLibraryGenerator implements LibraryGenerator<BPP>{
 					if (lineCount == 1) {
 						headerNumOfItems = n;
 						if (headerNumOfItems != fileNameNumOfItems) {
-							br.close();
 							throw new ProblemInputDataException("Number of items in file name and number of items annouced in file header are different !"); 
 						}
 					}
 					else if (lineCount == 2) {
-						br.close();
+//						br.close();
 						if (p.getBinSize() != n) throw new ProblemInputDataException("Bin size in file and in file name are different !");
 					}
 					else itemSizes.add(new Integer(line));
 					lineCount++;
 				}
 				if (headerNumOfItems != itemSizes.size()){
-					br.close();
+//					br.close();
 					throw new ProblemInputDataException("Number of items in file name and number of items really in file are different !");
 				}
 				br.close();

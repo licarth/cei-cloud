@@ -5,10 +5,10 @@ import java.util.Arrays;
 import org.apache.commons.lang.ArrayUtils;
 
 import binpacking.BPP;
-import common.Algorithm;
-import common.ProblemInputDataException;
-import common.Solution;
 import common.Utils;
+import common.algorithm.Algorithm;
+import common.problem.ProblemInputDataException;
+import common.solution.Solution;
 
 public class CIFFD implements Algorithm<BPP>{
 

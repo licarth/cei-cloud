@@ -1,6 +1,6 @@
 package binpacking;
-import common.AbstractProblem;
-import common.Problem;
+import common.problem.AbstractProblem;
+import common.problem.Problem;
 
 
 /**

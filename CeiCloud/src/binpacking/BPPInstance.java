@@ -3,10 +3,10 @@ package binpacking;
 import java.math.BigInteger;
 import java.util.List;
 
-import common.AbstractInstance;
-import common.ProblemInputDataException;
 import common.StatUtils;
 import common.Utils;
+import common.problem.AbstractInstance;
+import common.problem.ProblemInputDataException;
 
 public class BPPInstance extends AbstractInstance<BPP> {
 

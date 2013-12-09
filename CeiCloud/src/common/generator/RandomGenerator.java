@@ -1,7 +1,10 @@
-package common;
+package common.generator;
 
 import java.util.List;
 import java.util.Random;
+
+import common.problem.Instance;
+import common.problem.Problem;
 
 public interface RandomGenerator<P extends Problem> extends Generator<P>{
 	

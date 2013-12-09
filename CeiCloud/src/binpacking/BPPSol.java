@@ -2,9 +2,9 @@ package binpacking;
 
 import java.util.List;
 
-import common.AbstractSolution;
-import common.Algorithm;
-import common.Solution;
+import common.algorithm.Algorithm;
+import common.solution.AbstractSolution;
+import common.solution.Solution;
 
 public class BPPSol extends AbstractSolution<BPPInstance>{
 	public List<List<Integer>> itemsInBins;
