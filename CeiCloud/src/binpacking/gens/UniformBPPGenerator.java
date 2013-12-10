@@ -8,24 +8,24 @@ import binpacking.BPP;
 import binpacking.BPPInstance;
 import common.problem.ProblemInputDataException;
 
-public class UniformBPPGenerator extends BPPGenerator {
+public class UniformBPPGenerator extends NumItemsFixedBPPGenerator {
 	
 	public UniformBPPGenerator(BPP problem, int numberOfItems) {
 		super(problem, numberOfItems);
 	}
 
-	Random r = getRandom();
+	Random r = resetRandom();
 	
 	@Override
-	public BPPInstance generateInstance(BPP problem) {
+	public BPPInstance generateInstance() {
 		BPPInstance inst = null;
 		List<Integer> itemSizes = new ArrayList<Integer>(getNumberOfItems());
 		for (int i = 0; i < getNumberOfItems(); i++) {
-			itemSizes.add(r.nextInt(problem.getItemMaxSize()) + 1);
+			itemSizes.add(getRandom().nextInt(getProblem().getItemMaxSize()) + 1);
 		}
 		
 		try {
-			inst = new BPPInstance(problem, itemSizes);
+			inst = new BPPInstance(getProblem(), itemSizes);
 		} catch (ProblemInputDataException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -42,7 +42,7 @@ public class UniformBPPGenerator extends BPPGenerator {
 	public List<BPPInstance> generateInstances(int n) {
 		List<BPPInstance> l = new ArrayList<BPPInstance>(n);
 		for (int i = 0; i < n; i++) {
-			l.add(generateInstance(problem));
+			l.add(generateInstance());
 		}
 		return l;
 	}

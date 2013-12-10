@@ -29,10 +29,10 @@ public class BPP extends AbstractBPP {
 		this.binSize = binSize;
 		this.itemMaxSize = binSize;
 	}
-	public BPP(int binSize, int itemMaxSize, int itemMinSize) {
+	public BPP(int binSize, int itemMinSize, int itemMaxSize) {
 		this(binSize);
-		this.itemMaxSize = itemMaxSize;
 		this.itemMinSize = itemMinSize;
+		this.itemMaxSize = itemMaxSize;
 	}
 	
 	@Override

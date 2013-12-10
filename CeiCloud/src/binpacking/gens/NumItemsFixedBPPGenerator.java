@@ -3,7 +3,7 @@ package binpacking.gens;
 import binpacking.BPP;
 import common.generator.AbstractRandomGenerator;
 
-abstract class BPPGenerator extends AbstractRandomGenerator<BPP>{
+public abstract class NumItemsFixedBPPGenerator extends AbstractRandomGenerator<BPP>{
 	
 	/**
 	 * Number of items to generate.
@@ -11,7 +11,7 @@ abstract class BPPGenerator extends AbstractRandomGenerator<BPP>{
 	protected int numberOfItems;
 	
 	
-	public BPPGenerator(BPP problem, int numberOfItems) {
+	public NumItemsFixedBPPGenerator(BPP problem, int numberOfItems) {
 		super(problem);
 		this.numberOfItems = numberOfItems;
 	}

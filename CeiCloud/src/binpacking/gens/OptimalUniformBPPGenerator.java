@@ -9,10 +9,11 @@ import javax.management.RuntimeErrorException;
 import binpacking.BPP;
 import binpacking.BPPInstance;
 import binpacking.OptimalKnownBPPInstance;
+
 import common.Utils;
 import common.problem.ProblemInputDataException;
 
-public class OptimalUniformBPPGenerator extends BPPGenerator {
+public class OptimalUniformBPPGenerator extends NumItemsFixedBPPGenerator {
 	
 	public OptimalUniformBPPGenerator(BPP problem, int numberOfItems) {
 		super(problem, numberOfItems);
@@ -22,11 +23,11 @@ public class OptimalUniformBPPGenerator extends BPPGenerator {
 	private int itemsPutIntoBins = 0;
 
 	private ArrayList<Bin> bins = new ArrayList<Bin>();
-
-	Random r = getRandom();
+	
+	Random r = resetRandom();
 
 	@Override
-	public OptimalKnownBPPInstance generateInstance(BPP problem) {
+	public OptimalKnownBPPInstance generateInstance() {
 
 		OptimalKnownBPPInstance inst = null;
 
@@ -35,7 +36,7 @@ public class OptimalUniformBPPGenerator extends BPPGenerator {
 		}
 		
 		try {
-			inst = new OptimalKnownBPPInstance(problem, getAllItemsRandom(), optimalSolution);
+			inst = new OptimalKnownBPPInstance(getProblem(), getAllItemsRandom(), optimalSolution);
 		} catch (ProblemInputDataException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -66,7 +67,7 @@ public class OptimalUniformBPPGenerator extends BPPGenerator {
 		while(itemsPutIntoBins < numberOfItems && !bin.isFull()){
 			if (itemsPutIntoBins > numberOfItems) throw new RuntimeErrorException(null, "IMPOSSIBLE!");
 			int nextItem = nextItem();
-			if (bin.sum() + nextItem > problem.getBinSize()) nextItem = problem.getBinSize() - bin.sum();
+			if (bin.sum() + nextItem > getProblem().getBinSize()) nextItem = getProblem().getBinSize() - bin.sum();
 			bin.put(nextItem);
 		}
 		optimalSolution++;
@@ -74,11 +75,11 @@ public class OptimalUniformBPPGenerator extends BPPGenerator {
 	}
 
 	private int nextItem() {
-		return r.nextInt(problem.getItemMaxSize()) + 1;
+		return r.nextInt(getProblem().getItemMaxSize()) + 1;
 	}
 
 	class Bin{
-		private int capacity = problem.getBinSize();
+		private int capacity = getProblem().getBinSize();
 		private ArrayList<Integer> items = new ArrayList<Integer>();
 		public boolean isFull() {
 			return sum() == this.capacity;
@@ -101,7 +102,7 @@ public class OptimalUniformBPPGenerator extends BPPGenerator {
 	public List<BPPInstance> generateInstances(int n) {
 			List<BPPInstance> l = new ArrayList<BPPInstance>();
 			for (int i = 0; i < n; i++) {
-				l.add(generateInstance(problem));
+				l.add(generateInstance());
 			}
 			return l;
 		}

@@ -25,7 +25,7 @@ public class VizUtils {
 				"Item Size", "Number of items", dataset, PlotOrientation.VERTICAL,
 				false, true, false);
 		try {
-			ChartUtilities.saveChartAsJPEG(new File("/home/thomas/chart.jpg"), chart, 2000, 800);
+			ChartUtilities.saveChartAsJPEG(new File("viz/chart.jpg"), chart, 2000, 800);
 		} catch (IOException e) {
 			System.err.println("Problem occurred creating chart.");
 		}

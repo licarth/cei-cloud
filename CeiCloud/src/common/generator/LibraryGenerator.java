@@ -7,6 +7,14 @@ import common.problem.Instance;
 import common.problem.Problem;
 import common.problem.ProblemInputDataException;
 
+/**
+ * Describes a generator that creates instances from an external source.
+ * e.g. a text file.
+ * 
+ * @author thomas
+ *
+ * @param <P>
+ */
 public interface LibraryGenerator<P extends Problem> extends Generator<P> {
 	
 	/**
