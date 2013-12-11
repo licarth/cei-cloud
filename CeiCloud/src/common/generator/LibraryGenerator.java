@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import common.problem.IInstance;
-import common.problem.Problem;
+import common.problem.IProblem;
 import common.problem.ProblemInputDataException;
 
 /**
@@ -15,7 +15,7 @@ import common.problem.ProblemInputDataException;
  *
  * @param <P>
  */
-public interface LibraryGenerator<P extends Problem, I extends IInstance<P>> extends Generator<P, I> {
+public interface LibraryGenerator<P extends IProblem, I extends IInstance<P>> extends IGenerator<P, I> {
 	
 	/**
 	 * Generates n instances of the problem, with one single seed.

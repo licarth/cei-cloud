@@ -1,7 +1,7 @@
 package common.generator;
 
 import common.problem.IInstance;
-import common.problem.Problem;
+import common.problem.IProblem;
 
 /**
  * General interface describing a generator of instances of problem P.
@@ -10,6 +10,6 @@ import common.problem.Problem;
  *
  * @param <P>
  */
-public interface Generator<P extends Problem, I extends IInstance<? extends P>> {
+public interface IGenerator<P extends IProblem, I extends IInstance<? extends P>> {
 	
 }

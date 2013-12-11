@@ -32,9 +32,9 @@ public class Main {
 		NF nf = new NF();
 		NFD nfd = new NFD();
 			
-//		BPP bpp = new BPP(10);		//Problem definition
-		MartelloTothBPPLibraryGenerator gen = new MartelloTothBPPLibraryGenerator();	//Generator choice
-//		OptimalUniformBPPGenerator gen = new OptimalUniformBPPGenerator(bpp, 200);	//Generator choice
+//		BPP bpp = new BPP(10);		//IProblem definition
+		MartelloTothBPPLibraryGenerator gen = new MartelloTothBPPLibraryGenerator();	//IGenerator choice
+//		OptimalUniformBPPGenerator gen = new OptimalUniformBPPGenerator(bpp, 200);	//IGenerator choice
 //		UniformBPPGenerator gen = new UniformBPPGenerator(bpp, 200);
 		List<BPPInstance> l = gen.generateInstances();
 //		System.out.println(l);

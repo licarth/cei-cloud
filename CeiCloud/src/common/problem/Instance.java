@@ -1,10 +1,10 @@
 package common.problem;
 
 
-public abstract class Instance<P extends Problem> implements IInstance<P> {
+public abstract class Instance<P extends IProblem> implements IInstance<P> {
 
 	/**
-	 * Problem this is an instance of.
+	 * IProblem this is an instance of.
 	 */
 	protected final P problem;
 	

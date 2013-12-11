@@ -1,11 +1,16 @@
 package common.algorithm;
 
 import common.problem.IInstance;
-import common.problem.Problem;
+import common.problem.IProblem;
+import common.problem.ProblemInputDataException;
+import common.solution.Solution;
 
-public abstract class Algorithm<P extends Problem, I extends IInstance<P>> implements IAlgorithm<P,I>  {
+public abstract class Algorithm<P extends IProblem, I extends IInstance<P>> implements IAlgorithm<P,I>  {
 	private String name;
 	private String abbrev;
+	
+	@Override
+	public	abstract Solution<P, I> solve(I instance) throws ProblemInputDataException;
 	
 	public Algorithm() {
 		// TODO Auto-generated constructor stub

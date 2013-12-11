@@ -2,9 +2,9 @@ package common.solution;
 
 import common.algorithm.IAlgorithm;
 import common.problem.IInstance;
-import common.problem.Problem;
+import common.problem.IProblem;
 
-public abstract class AbstractSolution<P extends Problem, I extends IInstance<P>> implements Solution<P,I> {
+public abstract class AbstractSolution<P extends IProblem, I extends IInstance<P>> implements Solution<P,I> {
 	
 	protected IAlgorithm<P, I> sourceAlgorithm;
 	

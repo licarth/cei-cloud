@@ -5,17 +5,17 @@ import java.util.Random;
 
 import common.problem.IInstance;
 import common.problem.Instance;
-import common.problem.Problem;
+import common.problem.IProblem;
 import common.problem.ProblemInputDataException;
 
 /**
- * Generator that creates random instances from a random seed.
+ * IGenerator that creates random instances from a random seed.
  * 
  * @author thomas
  *
  * @param <P>
  */
-public abstract class AbstractRandomGenerator<P extends Problem, I extends Instance<? extends P>> implements RandomGenerator<P,I> {
+public abstract class AbstractRandomGenerator<P extends IProblem, I extends IInstance<? extends P>> implements RandomGenerator<P,I> {
 
 	public static final long SEED = 4378578463L;
 
@@ -30,7 +30,7 @@ public abstract class AbstractRandomGenerator<P extends Problem, I extends Insta
 		this.e = problem;
 	}
 	
-	public abstract List<? extends Instance<P>> generateInstances(int n) throws ProblemInputDataException;
+	public abstract List<I> generateInstances(int n) throws ProblemInputDataException;
 
 	public Random getRandom() {
 		return random;

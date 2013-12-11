@@ -3,8 +3,8 @@ package common.benchmark;
 import common.algorithm.IAlgorithm;
 import common.generator.OptimalGenerator;
 import common.problem.IInstance;
-import common.problem.OptimalCostAware;
-import common.problem.Problem;
+import common.problem.IOptimalCostAware;
+import common.problem.IProblem;
 import common.problem.ProblemInputDataException;
 import common.solution.Solution;
 
@@ -19,40 +19,36 @@ import common.solution.Solution;
  * @param <A>
  * @param <G>
  */
-public class OptimalCostBenchmark<
-P extends Problem,
-A extends IAlgorithm,
-I extends IInstance<P> & OptimalCostAware,
-G extends OptimalGenerator<? extends P,? extends I>> implements IBenchmark{
+public abstract class OptimalCostBenchmark<P extends IProblem, 
+I extends IInstance<P> & IOptimalCostAware, A extends IAlgorithm<P, ? super I>, G extends OptimalGenerator<P,I>>
+implements IBenchmark<P,A,I,G>{
 	
 	private P problem;
 	private A algorithm;
 	private G generator;
-
+	
 	/**
 	 * How many instances we would like to create.
 	 */
 	private int instancesCount;
 
-	@Override
-	public void run() {
+	public BenchmarkStats<P, I> run() {
 		//Create instances
-		I i;
-		int k = 0;
-		for (int j = 0; j < 1000; j++) {
+		BenchmarkStats<P, I> bs = new BenchmarkStats<>();
+		for (int j = 0; j < getSampleSize(); j++) {
 			try {
-				i = getGenerator().generateInstance();
-				Solution<P, IInstance<P>> sol = getAlgorithm().solve(i);
-				//				System.out.println(sol);
-				if (sol.getCost() > i.getOptimalCost()){
-					++k;
-				}
+				I i = (I) getGenerator().generateInstance();
+				Solution<P, ? super I> sol = getAlgorithm().solve(i);
+//				System.out.println(sol);
+//				System.out.println(i.getOptimalCost());
+				bs.getRatios().add(new Float(((float)sol.getCost() / (float) i.getOptimalCost())));
+//				System.out.println(bs.getRatios());
 			} catch (ProblemInputDataException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-
+		return bs;
 	}
 
 	public OptimalCostBenchmark(P problem, A algorithm, G generator) {

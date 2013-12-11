@@ -1,6 +1,6 @@
 package binpacking;
 import common.problem.AbstractProblem;
-import common.problem.Problem;
+import common.problem.IProblem;
 
 
 /**
@@ -13,10 +13,10 @@ public abstract class AbstractBPP extends AbstractProblem {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof Problem)) return false;
-		return isSameProblemAs((Problem) obj);
+		if (!(obj instanceof IProblem)) return false;
+		return isSameProblemAs((IProblem) obj);
 	}
 
-	public abstract boolean isSameProblemAs(Problem other);
+	public abstract boolean isSameProblemAs(IProblem other);
 	
 }

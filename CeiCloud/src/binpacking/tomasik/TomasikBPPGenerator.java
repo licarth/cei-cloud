@@ -86,7 +86,7 @@ public class TomasikBPPGenerator extends OptimalGenerator<BPP, OptimalKnownBPPIn
 	}
 
 	@Override
-	public List<? extends BPPInstance> generateInstances(int n) throws ProblemInputDataException {
+	public List<OptimalKnownBPPInstance> generateInstances(int n) throws ProblemInputDataException {
 		List<OptimalKnownBPPInstance> instances = new ArrayList<OptimalKnownBPPInstance>(n);
 		for (int i = 1; i <= n; i++) {
 			instances.add((OptimalKnownBPPInstance) generateInstance());

@@ -1,5 +1,5 @@
 package common.problem;
 
-public interface OptimalCostAware {
+public interface IOptimalCostAware {
 	int getOptimalCost();
 }

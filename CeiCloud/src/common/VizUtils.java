@@ -27,7 +27,7 @@ public class VizUtils {
 		try {
 			ChartUtilities.saveChartAsJPEG(new File("viz/chart.jpg"), chart, 2000, 800);
 		} catch (IOException e) {
-			System.err.println("Problem occurred creating chart.");
+			System.err.println("IProblem occurred creating chart.");
 		}
 	}
 

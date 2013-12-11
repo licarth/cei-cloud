@@ -18,7 +18,7 @@ import binpacking.BPPInstance;
 import common.generator.LibraryGenerator;
 import common.problem.ProblemInputDataException;
 
-public class MartelloTothBPPLibraryGenerator implements LibraryGenerator<BPP>{
+public class MartelloTothBPPLibraryGenerator implements LibraryGenerator<BPP, BPPInstance>{
 
 	List<BPP> problems = new ArrayList<BPP>();
 	

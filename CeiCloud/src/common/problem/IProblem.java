@@ -7,6 +7,6 @@ package common.problem;
  * @author thomas
  *
  */
-public interface Problem {
+public interface IProblem {
 
 }

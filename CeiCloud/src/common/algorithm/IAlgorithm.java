@@ -1,13 +1,12 @@
 package common.algorithm;
 
 import common.problem.IInstance;
-import common.problem.Problem;
+import common.problem.Instance;
+import common.problem.IProblem;
 import common.problem.ProblemInputDataException;
 import common.solution.Solution;
 
-public interface IAlgorithm<P extends Problem, I extends IInstance<? extends P>> {
-	
-	Solution<P, I> solve(I instance) throws ProblemInputDataException;
+public interface IAlgorithm<P extends IProblem, I extends IInstance<P>> {
 	
 	I getInstance();
 	/**
@@ -24,4 +23,6 @@ public interface IAlgorithm<P extends Problem, I extends IInstance<? extends P>>
 	 * @return
 	 */
 	String getAbbrev();
+	
+	Solution<P, I> solve(I instance) throws ProblemInputDataException;
 }

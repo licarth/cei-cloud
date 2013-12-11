@@ -1,6 +1,6 @@
 package binpacking;
 
-import common.problem.Problem;
+import common.problem.IProblem;
 
 
 public class BPP extends AbstractBPP {
@@ -36,7 +36,7 @@ public class BPP extends AbstractBPP {
 	}
 	
 	@Override
-	public boolean isSameProblemAs(Problem other) {
+	public boolean isSameProblemAs(IProblem other) {
 		if (!(other instanceof BPP)) return false;
 		BPP o = (BPP) other;
 		return binSize == o.binSize
