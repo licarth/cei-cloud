@@ -14,10 +14,8 @@ public interface IBenchmark<P extends IProblem, A extends IAlgorithm<P, ? extend
 	 */
 	BenchmarkStats<P, I> run() throws BenchmarkRunException;
 	
-	/**
-	 * Returns the number of instances to generate for each algorithm.
-	 * 
-	 * @return
-	 */
-	int getSampleSize();
+	P getProblem();
+	A getAlgorithm();
+	G getGenerator();
+	
 }

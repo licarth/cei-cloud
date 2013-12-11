@@ -15,7 +15,7 @@ public class Main {
 
 	
 	public static void main(String[] args) throws ProblemInputDataException, BenchmarkRunException {
-
+		
 		//IProblem definition
 		BPP problem = new BPP(100, 1, 99);
 		
@@ -26,12 +26,10 @@ public class Main {
 		
 		TomasikBPPGenerator gen = new TomasikBPPGenerator(problem, 100);
 		
-		BPPOptimalBenchmark bench = new BPPOptimalBenchmark(problem, nf, gen);
-//		BPPBenchmark bench = new BPPBenchmark(problem, ffd, gen);
-		
-		BenchmarkStats<BPP, OptimalKnownBPPInstance> bs = bench.run();
-		
-		System.out.println(bs.getRatios());
+		System.out.println(new BPPOptimalBenchmark(problem, nf, gen, 1000).run());
+		System.out.println(new BPPOptimalBenchmark(problem, nfd, gen, 1000).run());
+		System.out.println(new BPPOptimalBenchmark(problem, ff, gen, 1000).run());
+		System.out.println(new BPPOptimalBenchmark(problem, ffd, gen, 1000).run());
 
 //		OptimalKnownBPPInstance i = null;
 //		int k = 0;

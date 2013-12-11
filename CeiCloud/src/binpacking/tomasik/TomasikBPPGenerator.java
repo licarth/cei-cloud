@@ -2,6 +2,7 @@ package binpacking.tomasik;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -40,7 +41,9 @@ public class TomasikBPPGenerator extends OptimalGenerator<BPP, OptimalKnownBPPIn
 			while (true) {
 				//ON insere des objets dans des boites online. Avec NF. On vise 100 boites utilisées.
 				final int itemSize = nextInt(getProblem().getItemMinSize(), getProblem().getItemMaxSize());
-				for (List<Integer> bin : bins) {
+				Iterator<List<Integer>> it = bins.iterator();
+				while (it.hasNext()) {
+					List<Integer> bin = it.next();
 					if (itemSize > getProblem().getBinSize()) throw new ProblemInputDataException("Item exceeds bin size!");
 
 					if (Utils.sum(bin) + itemSize <= getProblem().getBinSize()){
@@ -49,7 +52,7 @@ public class TomasikBPPGenerator extends OptimalGenerator<BPP, OptimalKnownBPPIn
 						break;
 					}
 					else { //If it doesn't fit
-						if (bins.indexOf(bin) == bins.size()-1){ //We are at the last bin
+						if (!it.hasNext()){ //We are at the last bin
 							break fill; //Stops filling bins.
 						}
 						//					else continue;
@@ -67,8 +70,7 @@ public class TomasikBPPGenerator extends OptimalGenerator<BPP, OptimalKnownBPPIn
 			}
 		}
 		
-//		System.out.println(itemSizes);
-		//Shuffle item sizes.
+		//Shuffle items.
 		Collections.shuffle(itemSizes, getRandom());
 		
 		OptimalKnownBPPInstance inst = new OptimalKnownBPPInstance(getProblem(), itemSizes, binCount);

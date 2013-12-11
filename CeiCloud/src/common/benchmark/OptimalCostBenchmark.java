@@ -23,39 +23,34 @@ public abstract class OptimalCostBenchmark<P extends IProblem,
 I extends IInstance<P> & IOptimalCostAware, A extends IAlgorithm<P, ? super I>, G extends OptimalGenerator<P,I>>
 implements IBenchmark<P,A,I,G>{
 	
+	private int runCount;
+	
 	private P problem;
 	private A algorithm;
 	private G generator;
 	
-	/**
-	 * How many instances we would like to create.
-	 */
-	private int instancesCount;
-
 	public BenchmarkStats<P, I> run() {
 		//Create instances
-		BenchmarkStats<P, I> bs = new BenchmarkStats<>();
-		for (int j = 0; j < getSampleSize(); j++) {
+		BenchmarkStats<P, I> bs = new BenchmarkStats<P,I>(this);
+		for (int j = 0; j < getRunCount(); j++) {
 			try {
 				I i = (I) getGenerator().generateInstance();
 				Solution<P, ? super I> sol = getAlgorithm().solve(i);
-//				System.out.println(sol);
-//				System.out.println(i.getOptimalCost());
-				bs.getRatios().add(new Float(((float)sol.getCost() / (float) i.getOptimalCost())));
-//				System.out.println(bs.getRatios());
+//				VizUtils.barChart(i., min, max);
+				bs.addRatio((float)sol.getCost() / (float) i.getOptimalCost());
 			} catch (ProblemInputDataException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		return bs;
 	}
 
-	public OptimalCostBenchmark(P problem, A algorithm, G generator) {
+	public OptimalCostBenchmark(P problem, A algorithm, G generator, int runCount) {
 		super();
 		this.problem = problem;
 		this.algorithm = algorithm;
 		this.generator = generator;
+		this.runCount = runCount;
 	}
 
 	public P getProblem() {
@@ -75,6 +70,14 @@ implements IBenchmark<P,A,I,G>{
 	}
 	public void setGenerator(G generator) {
 		this.generator = generator;
+	}
+
+	public int getRunCount() {
+		return runCount;
+	}
+
+	public void setRunCount(int runCount) {
+		this.runCount = runCount;
 	}
 
 }
