@@ -5,10 +5,10 @@ import java.util.List;
 
 import common.StatUtils;
 import common.Utils;
-import common.problem.AbstractInstance;
+import common.problem.Instance;
 import common.problem.ProblemInputDataException;
 
-public class BPPInstance extends AbstractInstance<BPP> {
+public class BPPInstance extends Instance<BPP> {
 
 	/**
 	 *	Items sizes. 

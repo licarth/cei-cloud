@@ -1,9 +1,10 @@
 package binpacking.gens;
 
 import binpacking.BPP;
+import binpacking.BPPInstance;
 import common.generator.AbstractRandomGenerator;
 
-public abstract class NumItemsFixedBPPGenerator extends AbstractRandomGenerator<BPP>{
+public abstract class NumItemsFixedBPPGenerator extends AbstractRandomGenerator<BPP, BPPInstance>{
 	
 	/**
 	 * Number of items to generate.

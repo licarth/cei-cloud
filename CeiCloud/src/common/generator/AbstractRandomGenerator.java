@@ -3,6 +3,7 @@ package common.generator;
 import java.util.List;
 import java.util.Random;
 
+import common.problem.IInstance;
 import common.problem.Instance;
 import common.problem.Problem;
 import common.problem.ProblemInputDataException;
@@ -14,7 +15,7 @@ import common.problem.ProblemInputDataException;
  *
  * @param <P>
  */
-public abstract class AbstractRandomGenerator<P extends Problem> implements RandomGenerator<P> {
+public abstract class AbstractRandomGenerator<P extends Problem, I extends Instance<? extends P>> implements RandomGenerator<P,I> {
 
 	public static final long SEED = 4378578463L;
 

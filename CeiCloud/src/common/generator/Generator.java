@@ -1,5 +1,6 @@
 package common.generator;
 
+import common.problem.IInstance;
 import common.problem.Problem;
 
 /**
@@ -9,6 +10,6 @@ import common.problem.Problem;
  *
  * @param <P>
  */
-public interface Generator<P extends Problem> {
+public interface Generator<P extends Problem, I extends IInstance<? extends P>> {
 	
 }

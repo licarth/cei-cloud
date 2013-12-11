@@ -3,6 +3,8 @@ package common.generator;
 import java.util.List;
 import java.util.Random;
 
+import common.benchmark.BenchmarkRunException;
+import common.problem.IInstance;
 import common.problem.Instance;
 import common.problem.Problem;
 import common.problem.ProblemInputDataException;
@@ -14,21 +16,21 @@ import common.problem.ProblemInputDataException;
  *
  * @param <P>
  */
-public interface RandomGenerator<P extends Problem> extends Generator<P>{
+public interface RandomGenerator<P extends Problem, I extends Instance<? extends P>> extends Generator<P,I>{
 	
 	/**
 	 * Generates one input instance of the problem.
 	 * @return
-	 * @throws ProblemInputDataException 
+	 * @throws BenchmarkRunException 
 	 */
-	Instance<P> generateInstance() throws ProblemInputDataException;
+	Instance<? extends P> generateInstance() throws ProblemInputDataException;
 	
 	/**
 	 * Generates n instances of the problem, with one single seed.
 	 * 
 	 * @param n qty of instances to generate.
 	 * @return
-	 * @throws ProblemInputDataException 
+	 * @throws BenchmarkRunException 
 	 */
 	List<? extends Instance<P>> generateInstances(int n) throws ProblemInputDataException;
 	

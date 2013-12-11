@@ -1,6 +1,9 @@
 package common.generator;
 
+import common.problem.Instance;
+import common.problem.OptimalCostAware;
 import common.problem.Problem;
+import common.problem.ProblemInputDataException;
 
 
 /**
@@ -10,8 +13,14 @@ import common.problem.Problem;
  *
  * @param <P>
  */
-public interface OptimalGenerator<P extends Problem> {
+public abstract class OptimalGenerator<P extends Problem, I extends Instance<? extends P> & OptimalCostAware> extends AbstractRandomGenerator<P,I>{
 	
-	long getOptimalCost();
+	public OptimalGenerator(P problem) {
+		super(problem);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public abstract I generateInstance() throws ProblemInputDataException;
 	
 }

@@ -3,7 +3,7 @@ package common.generator;
 import java.util.List;
 import java.util.Random;
 
-import common.problem.Instance;
+import common.problem.IInstance;
 import common.problem.Problem;
 import common.problem.ProblemInputDataException;
 
@@ -15,15 +15,15 @@ import common.problem.ProblemInputDataException;
  *
  * @param <P>
  */
-public interface LibraryGenerator<P extends Problem> extends Generator<P> {
+public interface LibraryGenerator<P extends Problem, I extends IInstance<P>> extends Generator<P, I> {
 	
 	/**
 	 * Generates n instances of the problem, with one single seed.
 	 * 
 	 * @param n qty of instances to generate.
 	 * @return
-	 * @throws ProblemInputDataException 
+	 * @throws BenchmarkRunException 
 	 */
-	List<? extends Instance<P>> generateInstances() throws ProblemInputDataException;
+	List<? extends IInstance<P>> generateInstances() throws ProblemInputDataException;
 	
 }

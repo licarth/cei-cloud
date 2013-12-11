@@ -9,8 +9,8 @@ import binpacking.BPP;
 import binpacking.BPPInstance;
 import binpacking.BPPSol;
 import common.Utils;
-import common.algorithm.Algorithm;
-import common.problem.Instance;
+import common.algorithm.IAlgorithm;
+import common.problem.IInstance;
 import common.problem.ProblemInputDataException;
 import common.solution.Solution;
 
@@ -24,7 +24,7 @@ import common.solution.Solution;
 public class NF extends BPPAlgorithm {
 
 	@Override
-	public Solution<BPPInstance> solve(BPPInstance ins) throws ProblemInputDataException {
+	public Solution<BPP, BPPInstance> solve(BPPInstance ins) throws ProblemInputDataException {
 
 		//Worst case : 1 bin per item.
 		List<List<Integer>> sol = new ArrayList<>();

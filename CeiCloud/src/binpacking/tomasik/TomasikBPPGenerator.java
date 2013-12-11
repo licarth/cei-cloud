@@ -1,19 +1,21 @@
 package binpacking.tomasik;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 import common.Utils;
 import common.generator.AbstractRandomGenerator;
-import common.problem.Instance;
+import common.generator.OptimalGenerator;
+import common.problem.IInstance;
 import common.problem.ProblemInputDataException;
 import binpacking.BPP;
 import binpacking.BPPInstance;
 import binpacking.OptimalKnownBPPInstance;
 import binpacking.gens.NumItemsFixedBPPGenerator;
 
-public class TomasikBPPGenerator extends AbstractRandomGenerator<BPP> {
+public class TomasikBPPGenerator extends OptimalGenerator<BPP, OptimalKnownBPPInstance> {
 
 	/**
 	 * Nombre de boites utilisées.
@@ -26,9 +28,9 @@ public class TomasikBPPGenerator extends AbstractRandomGenerator<BPP> {
 	}
 
 	@Override
-	public BPPInstance generateInstance() throws ProblemInputDataException {
+	public OptimalKnownBPPInstance generateInstance() throws ProblemInputDataException {
 
-		//		Instance<BPP> instance = new BPPInstance(problem, itemSizes)
+		//		IInstance<BPP> instance = new BPPInstance(problem, itemSizes)
 
 		List<Integer> itemSizes = new ArrayList<Integer>();
 
@@ -56,7 +58,7 @@ public class TomasikBPPGenerator extends AbstractRandomGenerator<BPP> {
 				}
 			}
 		
-		//TODO Fill bins that are not full
+		// Fill bins that are not full
 		for (List<Integer> bin : bins) {
 			int spaceLeft = getProblem().getBinSize() - Utils.sum(bin);
 			if (spaceLeft > 0){
@@ -64,6 +66,10 @@ public class TomasikBPPGenerator extends AbstractRandomGenerator<BPP> {
 				itemSizes.add(spaceLeft);
 			}
 		}
+		
+//		System.out.println(itemSizes);
+		//Shuffle item sizes.
+		Collections.shuffle(itemSizes, getRandom());
 		
 		OptimalKnownBPPInstance inst = new OptimalKnownBPPInstance(getProblem(), itemSizes, binCount);
 		return inst;

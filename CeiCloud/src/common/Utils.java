@@ -9,8 +9,12 @@ import java.util.List;
 import org.apache.commons.lang.ArrayUtils;
 
 
+/**
+ * @author thomas
+ *
+ */
 public class Utils {
-	
+
 	/**
 	 * @param a
 	 * 
@@ -22,7 +26,7 @@ public class Utils {
 		Arrays.sort(a);
 		ArrayUtils.reverse(a);
 	}
-	
+
 	/**
 	 * @param a
 	 * 
@@ -49,7 +53,7 @@ public class Utils {
 		}
 		return sum;
 	}
-	
+
 	/**
 	 * @param a
 	 * @return
@@ -64,8 +68,8 @@ public class Utils {
 		}
 		return sum;
 	}
-	
-	
+
+
 	/**
 	 * @param a
 	 * @return
@@ -80,8 +84,8 @@ public class Utils {
 		}
 		return sum;
 	}
-	
-	
+
+
 	/**
 	 * @param c
 	 * @return
@@ -90,14 +94,30 @@ public class Utils {
 	 * 
 	 */
 	public static <T extends Comparable<? super T>> List<T> asSortedList(Collection<T> c, boolean reversed) {
-	  List<T> list = new ArrayList<T>(c);
-	  if (reversed) Collections.sort(list, Collections.reverseOrder()); else Collections.sort(list);
-	  return list;
+		List<T> list = new ArrayList<T>(c);
+		if (reversed) Collections.sort(list, Collections.reverseOrder()); else Collections.sort(list);
+		return list;
 	}
 
 	public static List<Integer> cloneIntList(List<Integer> list) {
-		    List<Integer> clone = new ArrayList<Integer>(list.size());
-		    for(Integer item: list) clone.add(new Integer(item.intValue()));
-		    return clone;
+		List<Integer> clone = new ArrayList<Integer>(list.size());
+		for(Integer item: list) clone.add(new Integer(item.intValue()));
+		return clone;
 	}
+
+	/**
+	 * Executes a circular permutation described in the permutation array.
+	 * 
+	 * @param list
+	 * @param permutation
+	 * @return
+	 */
+	public static List<Integer> cyclicPermut(List<Integer> list, int[] permutation){
+		for (int k = 0; k < permutation.length-1; k++) {
+			Collections.swap(list, permutation[0], permutation[k+1]);
+		}
+		return list;
+	}
+	
+	
 }
