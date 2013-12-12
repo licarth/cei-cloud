@@ -1,4 +1,4 @@
-package VSCIFP.algos;
+package VSCIFP.algs;
 
 import VSCIFP.VSCIFP;
 

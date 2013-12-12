@@ -1,60 +1,89 @@
 package VSCIFP;
 
-import static common.Utils.*;
+import common.problem.AbstractProblem;
 
-import java.util.List;
-import java.util.Set;
-
-import common.problem.Problem;
-import common.problem.ProblemInputDataException;
-
-public class VSCIFP implements Problem{
+public class VSCIFP extends AbstractProblem{
 	
 	/**
 	 * Number of splits allowed per item
 	 */
-	public int maxNumSplits;	//D
+	public int maxNumSplits = 0;	//D
+	
+	/**
+	 * Number of splits allowed per item
+	 */
+	public int maxBinCapacity = 100;	//D
 	/**
 	 * Cost limit of the packing.
 	 */
 	public int costLimit;		//e
+	/**
+	 * Number of different types of bins.
+	 * 
+	 */
+	public int typesOfBinCount = 10; //m
 	
 	/**
-	 *	Bin Types (all different)
+	 *	Item max size (constraint of problem definition).
 	 */
-	private Set<BinType> binTypes;
+	protected int itemMaxSize = 99; //NONE
 	
-	public VSCIFP(Set<BinType> binTypes, int maxNumSplits,int costLimit) throws ProblemInputDataException {
-		super();
-		this.binTypes = binTypes;
+	/**
+	 *	Item min size. (constraint of problem definition).
+	 */
+	protected int itemMinSize = 1; //NONE
+	
+	
+	public int getMaxNumSplits() {
+		return maxNumSplits;
+	}
+
+	public void setMaxNumSplits(int maxNumSplits) {
 		this.maxNumSplits = maxNumSplits;
+	}
+
+	public int getCostLimit() {
+		return costLimit;
+	}
+
+	public void setCostLimit(int costLimit) {
 		this.costLimit = costLimit;
-		checkProblemInput();
-	}
-	
-	public VSCIFP(Set<BinType> binTypes, int maxNumSplits) {
-		super();
-		this.maxNumSplits = maxNumSplits;
-		this.costLimit = it
 	}
 
-	public int[] itemSizes;	//L	
-	public int[] binTypesCapacities;	//B
-	public int[] binCosts;	//C
-
-	@Override
-	public void checkProblemInput() throws ProblemInputDataException {
-		//TODO Check inputs.
-		//Checks that a bigger bin is never less efficient than a smaller bin.
-		List<BinType> sortedBinTypes = asSortedList(binTypes, false);
-		System.out.println(sortedBinTypes);
-		double eff = 0;
-		for (BinType binType : sortedBinTypes) {
-			if (eff > binType.efficiency()){
-				throw new ProblemInputDataException("Bin types (A,B) were found such as cap(A) > cap (B) and effiency(A) < efficiency(B)");
-			}
-			else eff = binType.efficiency();
-		}
+	public int getTypesOfBinCount() {
+		return typesOfBinCount;
 	}
-	
+
+	public void setTypesOfBinCount(int typesOfBinCount) {
+		this.typesOfBinCount = typesOfBinCount;
+	}
+
+	public int getMaxBinCapacity() {
+		return maxBinCapacity;
+	}
+
+	public void setMaxBinCapacity(int maxBinCapacity) {
+		this.maxBinCapacity = maxBinCapacity;
+	}
+
+	public int getItemMaxSize() {
+		return itemMaxSize;
+	}
+
+	public void setItemMaxSize(int itemMaxSize) {
+		this.itemMaxSize = itemMaxSize;
+	}
+
+	public int getItemMinSize() {
+		return itemMinSize;
+	}
+
+	public void setItemMinSize(int itemMinSize) {
+		this.itemMinSize = itemMinSize;
+	}
+
+//	public int[] itemSizes;	//L	
+//	public int[] binTypesCapacities;	//B
+//	public int[] binCosts;	//C
+
 }
