@@ -23,7 +23,7 @@ public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwar
 	public Set<BinType> binTypes = new HashSet<>();
 
 	//Generates bin types
-	int totalCost = 0;
+	int optimalCost = 0;
 	/**
 	 * Closed bins.
 	 */
@@ -53,14 +53,12 @@ public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwar
 
 	@Override
 	public String toStringDetailed() {
-		// TODO Auto-generated method stub
-		return null;
+		return getBins().toString();
 	}
 
 	@Override
 	public int getOptimalCost() {
-		// TODO Auto-generated method stub
-		return 0;
+		return optimalCost;
 	}
 
 	public List<Bin> getBins() {
@@ -71,21 +69,6 @@ public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwar
 		this.bins = bins;
 	}
 
-	/**
-	 * Closes the bin and adds 1 item.
-	 * 
-	 * @param bin
-	 */
-	public void closeBin(Bin bin) {
-		Integer itSize = bin.close();
-		if (itSize < 0){
-			itemsPut.add(itSize);
-			totalCost += itSize;
-		}
-		bins.add(bin);
-		openBins.remove(bin);
-	}
-
 	public void addItemToBin(Bin bin, int item) {
 		try {
 			bin.add(item);
@@ -94,7 +77,11 @@ public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwar
 			e.printStackTrace();
 		}
 		itemsPut.add(item);
-		totalCost += item;
+		optimalCost += item;
+	}
+
+	public void setOptimalCost(int optimalCost) {
+		this.optimalCost = optimalCost;
 	}
 
 

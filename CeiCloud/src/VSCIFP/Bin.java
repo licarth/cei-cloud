@@ -2,6 +2,7 @@ package VSCIFP;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 public class Bin {
@@ -35,16 +36,16 @@ public class Bin {
 	}
 
 	public Integer close() {
-		int itSize = 0;
+		int itemSize = 0;
 		try {
-			itSize = type.capacity - fillCount;
-			if (itSize > 0) add(itSize);
+			itemSize = type.capacity - fillCount;
+			if (itemSize > 0) add(itemSize);
 			this.open = false;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return itSize;
+		return itemSize;
 	}
 
 	public BinType getType() {
