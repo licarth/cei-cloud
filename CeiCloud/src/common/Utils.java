@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.ArrayUtils;
+
+import com.google.common.collect.Iterators;
 
 
 /**
@@ -117,6 +120,20 @@ public class Utils {
 			Collections.swap(list, permutation[0], permutation[k+1]);
 		}
 		return list;
+	}
+	
+	/**
+	 * Returns a bounded iterator that starts with an offset and makes exactly one cycle in the
+	 * list.
+	 * 
+	 * @return
+	 */
+	public static <T extends Object> Iterator<T> oneCycleIt(List<T> list, int offset) {
+		Iterator<T> it = Iterators.cycle(list);
+		for (int i = 0; i < offset; i++) {
+			it.next();
+		}
+		return Iterators.limit(it, list.size());
 	}
 	
 	

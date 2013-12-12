@@ -1,5 +1,6 @@
 package common.generator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -31,7 +32,13 @@ public abstract class AbstractRandomGenerator<P extends IProblem, I extends IIns
 		this.e = problem;
 	}
 	
-	public abstract List<I> generateInstances(int n) throws ProblemInputDataException;
+	public List<I> generateInstances(int n) throws ProblemInputDataException {
+		List<I> l = new ArrayList<I>();
+		for (int i = 0; i < n; i++) {
+			l.add(generateInstance());
+		}
+		return l;
+	};
 
 	public Random getRandom() {
 		return random;

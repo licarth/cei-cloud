@@ -3,9 +3,10 @@ package VSCIFP;
 import static common.Utils.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import common.VizUtils;
 import common.problem.IOptimalCostAware;
@@ -21,7 +22,7 @@ public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwar
 	/**
 	 *	Bin Types (all different)
 	 */
-	public Set<BinType> binTypes = new HashSet<>();
+	public Set<BinType> binTypes = new TreeSet<>();
 
 	//Generates bin types
 	int optimalCost = 0;
@@ -85,8 +86,8 @@ public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwar
 		this.optimalCost = optimalCost;
 	}
 	
-	public void displayBinTypeRepartition() {
-		VizUtils.drawHistogramBinCapacities(binTypes, getBinsCapacities());
+	public void displayBinTypeRepartition(int instanceCount) {
+		VizUtils.drawHistogramBinCapacities(binTypes, getBinsCapacities(), "", "-"+instanceCount);
 	}
 	
 //	public int[] getBinsCapacities() {
@@ -120,14 +121,17 @@ public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwar
 		this.binTypes = binTypes;
 	}
 
-	public List<Bin> getOpenBins() {
-		return openBins;
+	public final List<Bin> getOpenBins() {
+		return Collections.unmodifiableList(openBins);
 	}
 
 	public void setOpenBins(List<Bin> openBins) {
 		this.openBins = openBins;
 	}
 
+	public void addClosedBin(Bin bin) {
+		bins.add(bin);
+	}
 
 
 }
