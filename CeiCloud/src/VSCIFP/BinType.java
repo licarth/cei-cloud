@@ -44,5 +44,21 @@ public class BinType implements Comparable<BinType>{
 	public boolean fitsIfEmpty(Integer item) {
 		return (item <= capacity);
 	}
+
+	public int getCost() {
+		return cost;
+	}
+
+	public void setCost(int cost) {
+		this.cost = cost;
+	}
+
+	public int getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
 	
 }

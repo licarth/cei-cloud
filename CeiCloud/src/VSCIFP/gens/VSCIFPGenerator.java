@@ -11,7 +11,7 @@ public abstract class VSCIFPGenerator extends OptimalGenerator<VSCIFP, VSCIFPIns
 		super(problem);
 	}
 
-	private int maxPackingCost = 1000;
+	private int maxPackingCost = 10000;
 	
 //	public abstract getBinCost(cap)
 	

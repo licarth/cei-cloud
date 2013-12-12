@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import common.VizUtils;
 import common.problem.IOptimalCostAware;
 import common.problem.Instance;
 import common.problem.ProblemInputDataException;
@@ -27,9 +28,9 @@ public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwar
 	/**
 	 * Closed bins.
 	 */
-	public List<Bin> bins = new ArrayList<>();
-	public List<Bin> openBins = new ArrayList<>();
-	public List<Integer> itemsPut = new ArrayList<Integer>();
+	private List<Bin> bins = new ArrayList<>();
+	private List<Bin> openBins = new ArrayList<>();
+	private List<Integer> itemsPut = new ArrayList<Integer>();
 
 	public VSCIFPInstance(VSCIFP problem) throws ProblemInputDataException {
 		super(problem);
@@ -72,16 +73,59 @@ public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwar
 	public void addItemToBin(Bin bin, int item) {
 		try {
 			bin.add(item);
+			itemsPut.add(item);
+			optimalCost += item;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		itemsPut.add(item);
-		optimalCost += item;
 	}
 
 	public void setOptimalCost(int optimalCost) {
 		this.optimalCost = optimalCost;
+	}
+	
+	public void displayBinTypeRepartition() {
+		VizUtils.drawHistogramBinCapacities(binTypes, getBinsCapacities());
+	}
+	
+//	public int[] getBinsCapacities() {
+//		int[] capacities = new int[bins.size()];
+//		for (int i = 0; i < capacities.length; i++) {
+//			capacities[i] = bins.get(i).getType().capacity;
+//		}
+//		return capacities;
+//	}
+	public List<Integer> getBinsCapacities() {
+		List<Integer> capacities = new ArrayList<>();
+		for (Bin bin : bins) {
+			capacities.add(bin.getType().capacity);
+		}
+		return capacities;
+	}
+
+	public List<Integer> getItemsPut() {
+		return itemsPut;
+	}
+
+	public void setItemsPut(List<Integer> itemsPut) {
+		this.itemsPut = itemsPut;
+	}
+
+	public Set<BinType> getBinTypes() {
+		return binTypes;
+	}
+
+	public void setBinTypes(Set<BinType> binTypes) {
+		this.binTypes = binTypes;
+	}
+
+	public List<Bin> getOpenBins() {
+		return openBins;
+	}
+
+	public void setOpenBins(List<Bin> openBins) {
+		this.openBins = openBins;
 	}
 
 

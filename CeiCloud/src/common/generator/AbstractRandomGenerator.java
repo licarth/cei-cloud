@@ -18,6 +18,7 @@ import common.problem.ProblemInputDataException;
 public abstract class AbstractRandomGenerator<P extends IProblem, I extends IInstance<? extends P>> implements RandomGenerator<P,I> {
 
 	public static final long SEED = 4378578463L;
+//	public static final long SEED = 2378578463L;
 
 	private Random random = new Random(SEED);
 	

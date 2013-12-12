@@ -21,7 +21,7 @@ public class VSCIFP extends AbstractProblem{
 	 * Number of different types of bins.
 	 * 
 	 */
-	public int typesOfBinCount = 3; //m
+	public int typesOfBinCount = 10; //m
 	
 	/**
 	 *	Item max size (constraint of problem definition).
