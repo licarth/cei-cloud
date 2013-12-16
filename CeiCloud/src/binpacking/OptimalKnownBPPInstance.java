@@ -3,14 +3,14 @@ package binpacking;
 import java.util.List;
 
 import common.problem.IOptimalCostAware;
-import common.problem.ProblemInputDataException;
+import common.problem.InputDataException;
 
 public class OptimalKnownBPPInstance extends BPPInstance implements IOptimalCostAware {
 
 	private int optimalCost;
 	
 	public OptimalKnownBPPInstance(BPP problem, List<Integer> itemSizes, int optimalCost)
-			throws ProblemInputDataException {
+			throws InputDataException {
 		super(problem, itemSizes);
 		this.setOptimalCost(optimalCost);
 	}

@@ -6,11 +6,11 @@ import binpacking.algs.FFD;
 import binpacking.algs.NF;
 import binpacking.algs.NFD;
 import binpacking.gens.MartelloTothBPPLibraryGenerator;
-import common.problem.ProblemInputDataException;
+import common.problem.InputDataException;
 
 public class Main {
 
-	public static void main(String[] args) throws ProblemInputDataException {
+	public static void main(String[] args) throws InputDataException {
 		// TODO Auto-generated method stub
 		
 //		VSCIFP pb = new VSCIFP();
@@ -32,8 +32,8 @@ public class Main {
 		NF nf = new NF();
 		NFD nfd = new NFD();
 			
-//		BPP bpp = new BPP(10);		//IProblem definition
-		MartelloTothBPPLibraryGenerator gen = new MartelloTothBPPLibraryGenerator();	//IGenerator choice
+		BPP bpp = new BPP(10);		//IProblem definition
+		MartelloTothBPPLibraryGenerator gen = new MartelloTothBPPLibraryGenerator(bpp);	//IGenerator choice
 //		OptimalUniformBPPGenerator gen = new OptimalUniformBPPGenerator(bpp, 200);	//IGenerator choice
 //		UniformBPPGenerator gen = new UniformBPPGenerator(bpp, 200);
 		List<BPPInstance> l = gen.generateInstances();

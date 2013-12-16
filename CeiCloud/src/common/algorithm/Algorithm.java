@@ -2,7 +2,7 @@ package common.algorithm;
 
 import common.problem.IInstance;
 import common.problem.IProblem;
-import common.problem.ProblemInputDataException;
+import common.problem.InputDataException;
 import common.solution.Solution;
 
 public abstract class Algorithm<P extends IProblem, I extends IInstance<P>> implements IAlgorithm<P,I>  {
@@ -10,7 +10,7 @@ public abstract class Algorithm<P extends IProblem, I extends IInstance<P>> impl
 	private String abbrev;
 	
 	@Override
-	public	abstract Solution<P, I> solve(I instance) throws ProblemInputDataException;
+	public	abstract Solution<P, I> solve(I instance) throws InputDataException;
 	
 	public Algorithm() {
 		// TODO Auto-generated constructor stub

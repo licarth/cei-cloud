@@ -11,7 +11,7 @@ import binpacking.BPPSol;
 import common.Utils;
 import common.algorithm.IAlgorithm;
 import common.problem.IInstance;
-import common.problem.ProblemInputDataException;
+import common.problem.InputDataException;
 import common.solution.Solution;
 
 
@@ -24,7 +24,7 @@ import common.solution.Solution;
 public class FFD extends BPPAlgorithm {
 
 	@Override
-	public Solution<BPP, BPPInstance> solve(BPPInstance ins) throws ProblemInputDataException {
+	public Solution<BPP, BPPInstance> solve(BPPInstance ins) throws InputDataException {
 		// Sort desc. (OFF-LINE ALG)
 		List<Integer> sortedItemSizes = Utils.cloneIntList(ins.getItemSizes());
 		Utils.sortDesc(sortedItemSizes);
@@ -36,7 +36,7 @@ public class FFD extends BPPAlgorithm {
 		for (int i = 0; i < sortedItemSizes.size(); i++) {
 			final int itemSize = sortedItemSizes.get(i);
 			boolean itemPut = false;
-			if (itemSize > ins.getProblem().getBinSize()) throw new ProblemInputDataException("Item exceeds bin size!");
+			if (itemSize > ins.getProblem().getBinSize()) throw new InputDataException("Item exceeds bin size!");
 			
 			for (List<Integer> bin : sol) {
 				if (Utils.sum(bin) + itemSize <= ins.getProblem().getBinSize()){

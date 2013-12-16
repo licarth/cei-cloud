@@ -16,7 +16,7 @@ import VSCIFP.VSCIFP;
 import VSCIFP.VSCIFPInstance;
 import common.Utils;
 import common.VizUtils;
-import common.problem.ProblemInputDataException;
+import common.problem.InputDataException;
 
 public class LinearVSCIFPGenerator extends VSCIFPGenerator{
 
@@ -27,7 +27,7 @@ public class LinearVSCIFPGenerator extends VSCIFPGenerator{
 	private int instanceCount = 0;
 
 	@Override
-	public VSCIFPInstance generateInstance() throws ProblemInputDataException {
+	public VSCIFPInstance generateInstance() throws InputDataException {
 		instanceCount++;
 		//USES FIRSTFIT FOR NOW !
 		VSCIFPInstance i = new VSCIFPInstance(getProblem());
@@ -99,7 +99,7 @@ public class LinearVSCIFPGenerator extends VSCIFPGenerator{
 						}
 					}
 				//Throw exception
-				throw new ProblemInputDataException("Code should not be reached");
+				throw new InputDataException("Code should not be reached");
 			}
 		//Fill procedure terminated, close (open & non-empty) bins.
 		for (Bin bin : i.getOpenBins()) {

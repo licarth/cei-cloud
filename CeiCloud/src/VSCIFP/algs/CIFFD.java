@@ -8,13 +8,13 @@ import binpacking.BPP;
 
 import common.Utils;
 import common.algorithm.Algorithm;
-import common.problem.ProblemInputDataException;
+import common.problem.InputDataException;
 import common.solution.Solution;
 
 public class CIFFD extends Algorithm<BPP>{
 
 	@Override
-	public Solution<BPP> solve(BPP ins) throws ProblemInputDataException {
+	public Solution<BPP> solve(BPP ins) throws InputDataException {
 		// Sort desc. (OFF-LINE ALG)
 		int[] sortedItemSizes = ArrayUtils.clone(ins.getItemSizes());
 		Utils.sortDesc(sortedItemSizes);

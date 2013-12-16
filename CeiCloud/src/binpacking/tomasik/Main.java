@@ -9,12 +9,12 @@ import binpacking.algs.NFD;
 import binpacking.benchmark.BPPOptimalBenchmark;
 import common.benchmark.BenchmarkRunException;
 import common.benchmark.BenchmarkStats;
-import common.problem.ProblemInputDataException;
+import common.problem.InputDataException;
 
 public class Main {
 
 	
-	public static void main(String[] args) throws ProblemInputDataException, BenchmarkRunException {
+	public static void main(String[] args) throws InputDataException, BenchmarkRunException {
 		
 		//IProblem definition
 		BPP problem = new BPP(100, 1, 99);
@@ -44,7 +44,7 @@ public class Main {
 //				if (sol.getCost() > i.getOptimalCost()){
 //					++k;
 //				}
-//			} catch (ProblemInputDataException e) {
+//			} catch (InputDataException e) {
 //				// TODO Auto-generated catch block
 //				e.printStackTrace();
 //			}

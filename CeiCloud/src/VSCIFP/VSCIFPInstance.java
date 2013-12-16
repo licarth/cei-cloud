@@ -11,7 +11,7 @@ import java.util.TreeSet;
 import common.VizUtils;
 import common.problem.IOptimalCostAware;
 import common.problem.Instance;
-import common.problem.ProblemInputDataException;
+import common.problem.InputDataException;
 
 /**
  * @author thomas
@@ -33,13 +33,13 @@ public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwar
 	private List<Bin> openBins = new ArrayList<>();
 	private List<Integer> itemsPut = new ArrayList<Integer>();
 
-	public VSCIFPInstance(VSCIFP problem) throws ProblemInputDataException {
+	public VSCIFPInstance(VSCIFP problem) throws InputDataException {
 		super(problem);
 		checkProblemInput();
 	}
 
 	@Override
-	public void checkProblemInput() throws ProblemInputDataException {
+	public void checkProblemInput() throws InputDataException {
 		//TODO Check inputs.
 		//Checks that a bigger bin is never less efficient than a smaller bin.
 		List<BinType> sortedBinTypes = asSortedList(binTypes, false);
@@ -47,7 +47,7 @@ public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwar
 		double eff = 0;
 		for (BinType binType : sortedBinTypes) {
 			if (eff > binType.efficiency()){
-				throw new ProblemInputDataException("Bin types (A,B) were found such as cap(A) > cap (B) and effiency(A) < efficiency(B)");
+				throw new InputDataException("Bin types (A,B) were found such as cap(A) > cap (B) and effiency(A) < efficiency(B)");
 			}
 			else eff = binType.efficiency();
 		}		

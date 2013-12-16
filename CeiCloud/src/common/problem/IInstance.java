@@ -3,7 +3,7 @@ package common.problem;
 
 public interface IInstance<P extends IProblem> {
 	
-	void checkProblemInput() throws ProblemInputDataException;
+	void checkProblemInput() throws InputDataException;
 	P getProblem();
 	
 }

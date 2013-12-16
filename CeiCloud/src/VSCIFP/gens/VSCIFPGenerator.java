@@ -3,9 +3,9 @@ package VSCIFP.gens;
 import VSCIFP.VSCIFP;
 import VSCIFP.VSCIFPInstance;
 
-import common.generator.OptimalGenerator;
+import common.generator.OptimalRandomGenerator;
 
-public abstract class VSCIFPGenerator extends OptimalGenerator<VSCIFP, VSCIFPInstance> {
+public abstract class VSCIFPGenerator extends OptimalRandomGenerator<VSCIFP, VSCIFPInstance> {
 	
 	public VSCIFPGenerator(VSCIFP problem) {
 		super(problem);

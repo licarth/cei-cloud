@@ -6,7 +6,7 @@ import java.util.List;
 import common.StatUtils;
 import common.Utils;
 import common.problem.Instance;
-import common.problem.ProblemInputDataException;
+import common.problem.InputDataException;
 
 public class BPPInstance extends Instance<BPP> {
 
@@ -19,7 +19,7 @@ public class BPPInstance extends Instance<BPP> {
 	 */
 	private String name;
 
-	public BPPInstance(BPP problem, List<Integer> itemSizes) throws ProblemInputDataException{
+	public BPPInstance(BPP problem, List<Integer> itemSizes) throws InputDataException{
 		super(problem);
 		this.itemSizes = itemSizes;
 		checkProblemInput();
@@ -33,25 +33,25 @@ public class BPPInstance extends Instance<BPP> {
 //		}
 
 	@Override
-	public void checkProblemInput() throws ProblemInputDataException{
+	public void checkProblemInput() throws InputDataException{
 		//Check if we stays below MAXINT.
 		if (Utils.bigSum(itemSizes).compareTo(new BigInteger(Integer.MAX_VALUE+"")) > 0) 
-			throw new ProblemInputDataException(String.format(
+			throw new InputDataException(String.format(
 					"Sum must be smaller than biggest integer : here sum is %s and biggest int is %s",
 					Utils.bigSum(itemSizes),
 					Integer.MAX_VALUE));
 
 		if (problem.hasCostLimit()){
 			if (new BigInteger(problem.getCostLimit()+"").multiply(new BigInteger(problem.getBinSize()+"")).compareTo(new BigInteger(Integer.MAX_VALUE+"")) <= 0) {
-				if (Utils.sum(itemSizes) > problem.getCostLimit() * problem.getBinSize()) throw new ProblemInputDataException("There should be enough space for items to fit!");
+				if (Utils.sum(itemSizes) > problem.getCostLimit() * problem.getBinSize()) throw new InputDataException("There should be enough space for items to fit!");
 			}
 		}
 
 		for (int i : itemSizes) {
 			if (i > problem.getBinSize()){
-				throw new ProblemInputDataException("Items should be smaller than bins!");
+				throw new InputDataException("Items should be smaller than bins!");
 			}
-			if (i <= 0) throw new ProblemInputDataException("Items sizes should be stricly positive integers!");
+			if (i <= 0) throw new InputDataException("Items sizes should be stricly positive integers!");
 		}
 	}
 

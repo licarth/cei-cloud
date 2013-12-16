@@ -3,7 +3,7 @@ package common.algorithm;
 import common.problem.IInstance;
 import common.problem.Instance;
 import common.problem.IProblem;
-import common.problem.ProblemInputDataException;
+import common.problem.InputDataException;
 import common.solution.Solution;
 
 public interface IAlgorithm<P extends IProblem, I extends IInstance<P>> {
@@ -24,5 +24,5 @@ public interface IAlgorithm<P extends IProblem, I extends IInstance<P>> {
 	 */
 	String getAbbrev();
 	
-	Solution<P, I> solve(I instance) throws ProblemInputDataException;
+	Solution<P, I> solve(I instance) throws InputDataException;
 }

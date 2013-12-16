@@ -3,7 +3,7 @@ package common.generator;
 import common.problem.IInstance;
 import common.problem.IOptimalCostAware;
 import common.problem.IProblem;
-import common.problem.ProblemInputDataException;
+import common.problem.InputDataException;
 
 
 /**
@@ -13,14 +13,14 @@ import common.problem.ProblemInputDataException;
  *
  * @param <P>
  */
-public abstract class OptimalGenerator<P extends IProblem, I extends IInstance<P> & IOptimalCostAware> extends AbstractRandomGenerator<P,I>{
+public abstract class OptimalRandomGenerator<P extends IProblem, I extends IInstance<P> & IOptimalCostAware> extends AbstractRandomGenerator<P,I>{
 	
-	public OptimalGenerator(P problem) {
+	public OptimalRandomGenerator(P problem) {
 		super(problem);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public abstract I generateInstance() throws ProblemInputDataException;
+	public abstract I generateInstance() throws InputDataException;
 	
 }

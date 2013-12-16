@@ -11,7 +11,7 @@ import binpacking.BPPInstance;
 import binpacking.OptimalKnownBPPInstance;
 
 import common.Utils;
-import common.problem.ProblemInputDataException;
+import common.problem.InputDataException;
 
 public class OptimalUniformBPPGenerator extends NumItemsFixedBPPGenerator {
 	
@@ -37,7 +37,7 @@ public class OptimalUniformBPPGenerator extends NumItemsFixedBPPGenerator {
 		
 		try {
 			inst = new OptimalKnownBPPInstance(getProblem(), getAllItemsRandom(), optimalSolution);
-		} catch (ProblemInputDataException e) {
+		} catch (InputDataException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

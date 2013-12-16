@@ -8,15 +8,15 @@ import java.util.List;
 
 import common.Utils;
 import common.generator.AbstractRandomGenerator;
-import common.generator.OptimalGenerator;
+import common.generator.OptimalRandomGenerator;
 import common.problem.IInstance;
-import common.problem.ProblemInputDataException;
+import common.problem.InputDataException;
 import binpacking.BPP;
 import binpacking.BPPInstance;
 import binpacking.OptimalKnownBPPInstance;
 import binpacking.gens.NumItemsFixedBPPGenerator;
 
-public class TomasikBPPGenerator extends OptimalGenerator<BPP, OptimalKnownBPPInstance> {
+public class TomasikBPPGenerator extends OptimalRandomGenerator<BPP, OptimalKnownBPPInstance> {
 
 	/**
 	 * Nombre de boites utilisées.
@@ -29,7 +29,7 @@ public class TomasikBPPGenerator extends OptimalGenerator<BPP, OptimalKnownBPPIn
 	}
 
 	@Override
-	public OptimalKnownBPPInstance generateInstance() throws ProblemInputDataException {
+	public OptimalKnownBPPInstance generateInstance() throws InputDataException {
 
 		//		IInstance<BPP> instance = new BPPInstance(problem, itemSizes)
 
@@ -44,7 +44,7 @@ public class TomasikBPPGenerator extends OptimalGenerator<BPP, OptimalKnownBPPIn
 				Iterator<List<Integer>> it = bins.iterator();
 				while (it.hasNext()) {
 					List<Integer> bin = it.next();
-					if (itemSize > getProblem().getBinSize()) throw new ProblemInputDataException("Item exceeds bin size!");
+					if (itemSize > getProblem().getBinSize()) throw new InputDataException("Item exceeds bin size!");
 
 					if (Utils.sum(bin) + itemSize <= getProblem().getBinSize()){
 						bin.add(itemSize);
@@ -88,7 +88,7 @@ public class TomasikBPPGenerator extends OptimalGenerator<BPP, OptimalKnownBPPIn
 	}
 
 	@Override
-	public List<OptimalKnownBPPInstance> generateInstances(int n) throws ProblemInputDataException {
+	public List<OptimalKnownBPPInstance> generateInstances(int n) throws InputDataException {
 		List<OptimalKnownBPPInstance> instances = new ArrayList<OptimalKnownBPPInstance>(n);
 		for (int i = 1; i <= n; i++) {
 			instances.add((OptimalKnownBPPInstance) generateInstance());

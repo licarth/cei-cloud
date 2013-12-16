@@ -16,14 +16,19 @@ import org.apache.commons.lang.ArrayUtils;
 import binpacking.BPP;
 import binpacking.BPPInstance;
 import common.generator.LibraryGenerator;
-import common.problem.ProblemInputDataException;
+import common.problem.InputDataException;
 
-public class MartelloTothBPPLibraryGenerator implements LibraryGenerator<BPP, BPPInstance>{
+public class MartelloTothBPPLibraryGenerator extends LibraryGenerator<BPP, BPPInstance>{
+
+	public MartelloTothBPPLibraryGenerator(BPP problem) {
+		super(problem);
+		// TODO Auto-generated constructor stub
+	}
 
 	List<BPP> problems = new ArrayList<BPP>();
 	
 	@Override
-	public List<BPPInstance> generateInstances() throws ProblemInputDataException {
+	public List<BPPInstance> generateInstances() throws InputDataException {
 		ArrayList<BPPInstance> instances = new ArrayList<BPPInstance>();
 
 		// Directory path here
@@ -44,7 +49,7 @@ public class MartelloTothBPPLibraryGenerator implements LibraryGenerator<BPP, BP
 		return instances;
 	}
 
-	private BPPInstance generateInstance(File file) throws ProblemInputDataException {
+	private BPPInstance generateInstance(File file) throws InputDataException {
 
 		ArrayList<Integer> itemSizes = new ArrayList<Integer>();
 		BPP p = null;
@@ -76,7 +81,7 @@ public class MartelloTothBPPLibraryGenerator implements LibraryGenerator<BPP, BP
 					break;
 
 				default:
-					throw new ProblemInputDataException("Can't read bin size from file name.");
+					throw new InputDataException("Can't read bin size from file name.");
 				}
 				
 				p = new BPP(binSize);
@@ -89,7 +94,7 @@ public class MartelloTothBPPLibraryGenerator implements LibraryGenerator<BPP, BP
 				case 4:	fileNameNumOfItems = 500;	break;
 
 				default:
-					throw new ProblemInputDataException("Can't read number of items from file name.");
+					throw new InputDataException("Can't read number of items from file name.");
 				}
 				int z = new Integer(m.group(3));
 				switch (z) {
@@ -117,19 +122,19 @@ public class MartelloTothBPPLibraryGenerator implements LibraryGenerator<BPP, BP
 					if (lineCount == 1) {
 						headerNumOfItems = n;
 						if (headerNumOfItems != fileNameNumOfItems) {
-							throw new ProblemInputDataException("Number of items in file name and number of items annouced in file header are different !"); 
+							throw new InputDataException("Number of items in file name and number of items annouced in file header are different !"); 
 						}
 					}
 					else if (lineCount == 2) {
 //						br.close();
-						if (p.getBinSize() != n) throw new ProblemInputDataException("Bin size in file and in file name are different !");
+						if (p.getBinSize() != n) throw new InputDataException("Bin size in file and in file name are different !");
 					}
 					else itemSizes.add(new Integer(line));
 					lineCount++;
 				}
 				if (headerNumOfItems != itemSizes.size()){
 //					br.close();
-					throw new ProblemInputDataException("Number of items in file name and number of items really in file are different !");
+					throw new InputDataException("Number of items in file name and number of items really in file are different !");
 				}
 				br.close();
 			} catch (FileNotFoundException e) {
@@ -143,7 +148,7 @@ public class MartelloTothBPPLibraryGenerator implements LibraryGenerator<BPP, BP
 			try {
 				pInstance = new BPPInstance(p, itemSizes);
 				pInstance.setName(fileName);
-			} catch (ProblemInputDataException e) {
+			} catch (InputDataException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

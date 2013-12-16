@@ -6,7 +6,7 @@ import java.util.Random;
 import common.benchmark.BenchmarkRunException;
 import common.problem.IInstance;
 import common.problem.IProblem;
-import common.problem.ProblemInputDataException;
+import common.problem.InputDataException;
 
 /**
  * IGenerator that creates random instances from a random seed.
@@ -15,14 +15,18 @@ import common.problem.ProblemInputDataException;
  *
  * @param <P>
  */
-public interface RandomGenerator<P extends IProblem, I extends IInstance<? extends P>> extends IGenerator<P,I>{
+public abstract class RandomGenerator<P extends IProblem, I extends IInstance<? extends P>> extends AbstractGenerator<P,I>{
 	
+	public RandomGenerator(P problem) {
+		super(problem);
+	}
+
 	/**
 	 * Generates one input instance of the problem.
 	 * @return
 	 * @throws BenchmarkRunException 
 	 */
-	I generateInstance() throws ProblemInputDataException;
+	abstract public I generateInstance() throws InputDataException;
 	
 	/**
 	 * Generates n instances of the problem, with one single seed.
@@ -31,17 +35,17 @@ public interface RandomGenerator<P extends IProblem, I extends IInstance<? exten
 	 * @return
 	 * @throws BenchmarkRunException 
 	 */
-	List<I> generateInstances(int n) throws ProblemInputDataException;
+	abstract public List<I> generateInstances(int n) throws InputDataException;
 	
 	/**
 	 * Generates a seed for random method. Here it's a constant.
 	 * @return
 	 */
-	long getSeed();
+	abstract public long getSeed();
 	
 	/**
 	 * Generates a random object.
 	 * @return
 	 */
-	Random getRandom();
+	abstract public Random getRandom();
 }

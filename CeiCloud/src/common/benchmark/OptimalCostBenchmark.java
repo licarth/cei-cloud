@@ -1,11 +1,11 @@
 package common.benchmark;
 
 import common.algorithm.IAlgorithm;
-import common.generator.OptimalGenerator;
+import common.generator.OptimalRandomGenerator;
 import common.problem.IInstance;
 import common.problem.IOptimalCostAware;
 import common.problem.IProblem;
-import common.problem.ProblemInputDataException;
+import common.problem.InputDataException;
 import common.solution.Solution;
 
 /**
@@ -20,7 +20,7 @@ import common.solution.Solution;
  * @param <G>
  */
 public abstract class OptimalCostBenchmark<P extends IProblem, 
-I extends IInstance<P> & IOptimalCostAware, A extends IAlgorithm<P, ? super I>, G extends OptimalGenerator<P,I>>
+I extends IInstance<P> & IOptimalCostAware, A extends IAlgorithm<P, ? super I>, G extends OptimalRandomGenerator<P,I>>
 implements IBenchmark<P,A,I,G>{
 	
 	private int runCount;
@@ -38,7 +38,7 @@ implements IBenchmark<P,A,I,G>{
 				Solution<P, ? super I> sol = getAlgorithm().solve(i);
 //				VizUtils.barChart(i., min, max);
 				bs.addRatio((float)sol.getCost() / (float) i.getOptimalCost());
-			} catch (ProblemInputDataException e) {
+			} catch (InputDataException e) {
 				e.printStackTrace();
 			}
 		}

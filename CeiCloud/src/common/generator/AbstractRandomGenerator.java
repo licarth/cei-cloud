@@ -7,7 +7,7 @@ import java.util.Random;
 import common.problem.IInstance;
 import common.problem.Instance;
 import common.problem.IProblem;
-import common.problem.ProblemInputDataException;
+import common.problem.InputDataException;
 
 /**
  * IGenerator that creates random instances from a random seed.
@@ -16,23 +16,19 @@ import common.problem.ProblemInputDataException;
  *
  * @param <P>
  */
-public abstract class AbstractRandomGenerator<P extends IProblem, I extends IInstance<? extends P>> implements RandomGenerator<P,I> {
+public abstract class AbstractRandomGenerator<P extends IProblem, I extends IInstance<? extends P>> extends RandomGenerator<P,I> {
+
+	public AbstractRandomGenerator(P problem) {
+		super(problem);
+		// TODO Auto-generated constructor stub
+	}
 
 	public static final long SEED = 4378578463L;
 //	public static final long SEED = 2378578463L;
 
 	private Random random = new Random(SEED);
 	
-	/**
-	 * The e this generator creates instances for. e.g. Bin packing with bin capacity = 10.
-	 */
-	private final P e;
-	
-	public AbstractRandomGenerator(P problem) {
-		this.e = problem;
-	}
-	
-	public List<I> generateInstances(int n) throws ProblemInputDataException {
+	public List<I> generateInstances(int n) throws InputDataException {
 		List<I> l = new ArrayList<I>();
 		for (int i = 0; i < n; i++) {
 			l.add(generateInstance());
@@ -60,10 +56,6 @@ public abstract class AbstractRandomGenerator<P extends IProblem, I extends IIns
 	 */
 	public int nextInt(int min, int max){
 		return getRandom().nextInt(max-min+1)+min;
-	}
-
-	public P getProblem() {
-		return e;
 	}
 
 }
