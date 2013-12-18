@@ -1,7 +1,7 @@
 package common.generator;
 
 import common.problem.IInstance;
-import common.problem.IOptimalCostAware;
+import common.problem.IOptimalCostAwareInstance;
 import common.problem.IProblem;
 import common.problem.InputDataException;
 
@@ -13,7 +13,7 @@ import common.problem.InputDataException;
  *
  * @param <P>
  */
-public abstract class OptimalRandomGenerator<P extends IProblem, I extends IInstance<P> & IOptimalCostAware> extends AbstractRandomGenerator<P,I>{
+public abstract class OptimalRandomGenerator<P extends IProblem, I extends IInstance<P> & IOptimalCostAwareInstance> extends AbstractRandomGenerator<P,I>{
 	
 	public OptimalRandomGenerator(P problem) {
 		super(problem);

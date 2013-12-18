@@ -8,9 +8,10 @@ import common.solution.Solution;
 public abstract class Algorithm<P extends IProblem, I extends IInstance<P>> implements IAlgorithm<P,I>  {
 	private String name;
 	private String abbrev;
+	private I instance;
 	
 	@Override
-	public	abstract Solution<P, I> solve(I instance) throws InputDataException;
+	public abstract Solution<P, I> solve(I instance) throws InputDataException;
 	
 	public Algorithm() {
 		// TODO Auto-generated constructor stub
@@ -32,5 +33,13 @@ public abstract class Algorithm<P extends IProblem, I extends IInstance<P>> impl
 
 	public void setAbbrev(String abbrev) {
 		this.abbrev = abbrev;
+	}
+
+	public I getInstance() {
+		return instance;
+	}
+
+	public void setInstance(I instance) {
+		this.instance = instance;
 	};
 }

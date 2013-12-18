@@ -2,10 +2,10 @@ package binpacking;
 
 import java.util.List;
 
-import common.problem.IOptimalCostAware;
+import common.problem.IOptimalCostAwareInstance;
 import common.problem.InputDataException;
 
-public class OptimalKnownBPPInstance extends BPPInstance implements IOptimalCostAware {
+public class OptimalKnownBPPInstance extends BPPInstance implements IOptimalCostAwareInstance {
 
 	private int optimalCost;
 	
@@ -14,7 +14,6 @@ public class OptimalKnownBPPInstance extends BPPInstance implements IOptimalCost
 		super(problem, itemSizes);
 		this.setOptimalCost(optimalCost);
 	}
-
 
 	@Override
 	public String toStringDetailed() {

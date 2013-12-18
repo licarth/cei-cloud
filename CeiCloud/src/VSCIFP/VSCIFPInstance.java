@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import common.VizUtils;
-import common.problem.IOptimalCostAware;
+import common.problem.IOptimalCostAwareInstance;
 import common.problem.Instance;
 import common.problem.InputDataException;
 
@@ -17,7 +17,7 @@ import common.problem.InputDataException;
  * @author thomas
  *
  */
-public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAware {
+public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwareInstance {
 
 	/**
 	 *	Bin Types (all different)

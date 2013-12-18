@@ -6,7 +6,7 @@ import common.problem.IProblem;
 import common.problem.InputDataException;
 import common.solution.Solution;
 
-public interface IAlgorithm<P extends IProblem, I extends IInstance<P>> {
+public interface IAlgorithm<P extends IProblem, I extends IInstance<? extends P>> {
 	
 	I getInstance();
 	/**

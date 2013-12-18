@@ -1,7 +1,7 @@
 package common.generator;
 
 import common.problem.IInstance;
-import common.problem.IOptimalCostAware;
+import common.problem.IOptimalCostAwareInstance;
 import common.problem.IProblem;
 
 /**
@@ -9,7 +9,7 @@ import common.problem.IProblem;
  *
  * @param <P>
  */
-public abstract class OptimalLibraryGenerator<P extends IProblem, I extends IInstance<P> & IOptimalCostAware> extends LibraryGenerator<P, I> {
+public abstract class OptimalLibraryGenerator<P extends IProblem, I extends IInstance<P> & IOptimalCostAwareInstance> extends LibraryGenerator<P, I> {
 
 	public OptimalLibraryGenerator(P problem) {
 		super(problem);

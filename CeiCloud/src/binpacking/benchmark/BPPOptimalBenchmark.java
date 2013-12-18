@@ -4,14 +4,15 @@ import binpacking.BPP;
 import binpacking.BPPInstance;
 import binpacking.OptimalKnownBPPInstance;
 import binpacking.algs.BPPAlgorithm;
-
+import common.algorithm.OfflineAlgorithm;
 import common.benchmark.BenchmarkStats;
 import common.benchmark.OptimalCostBenchmark;
 import common.generator.OptimalRandomGenerator;
 import common.problem.InputDataException;
+import common.solution.OptimalCostAwareSolution;
 import common.solution.Solution;
 
-public class BPPOptimalBenchmark extends OptimalCostBenchmark<BPP, OptimalKnownBPPInstance, BPPAlgorithm, OptimalRandomGenerator<BPP, OptimalKnownBPPInstance>> {
+public class BPPOptimalBenchmark extends OptimalCostBenchmark<BPP, OptimalKnownBPPInstance, OfflineAlgorithm<BPP, OptimalKnownBPPInstance>, OptimalRandomGenerator<BPP, OptimalKnownBPPInstance>> {
 	
 	public BPPOptimalBenchmark(BPP problem, BPPAlgorithm algorithm,
 			OptimalRandomGenerator<BPP, OptimalKnownBPPInstance> generator, int runCount) {
@@ -26,10 +27,10 @@ public class BPPOptimalBenchmark extends OptimalCostBenchmark<BPP, OptimalKnownB
 		for (int j = 0; j < getRunCount(); j++) {
 			try {
 				OptimalKnownBPPInstance i = getGenerator().generateInstance();
-				Solution<BPP, BPPInstance> sol = getAlgorithm().solve(i);
+				OptimalCostAwareSolution<BPP, OptimalKnownBPPInstance> sol = getAlgorithm().solve(i);
 				
 				//For the stats
-				bs.addRatio((float)sol.getCost() / (float) i.getOptimalCost());
+				bs.addRatio(sol.getErrorRatio());
 //				VizUtils.barChart(i.getItemSizes(), getProblem().getItemMinSize(), getProblem().getItemMaxSize());
 			} catch (InputDataException e) {
 				e.printStackTrace();

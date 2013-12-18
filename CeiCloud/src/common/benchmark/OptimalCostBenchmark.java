@@ -3,7 +3,7 @@ package common.benchmark;
 import common.algorithm.IAlgorithm;
 import common.generator.OptimalRandomGenerator;
 import common.problem.IInstance;
-import common.problem.IOptimalCostAware;
+import common.problem.IOptimalCostAwareInstance;
 import common.problem.IProblem;
 import common.problem.InputDataException;
 import common.solution.Solution;
@@ -20,7 +20,7 @@ import common.solution.Solution;
  * @param <G>
  */
 public abstract class OptimalCostBenchmark<P extends IProblem, 
-I extends IInstance<P> & IOptimalCostAware, A extends IAlgorithm<P, ? super I>, G extends OptimalRandomGenerator<P,I>>
+I extends IInstance<P> & IOptimalCostAwareInstance, A extends IAlgorithm<P, ? super I>, G extends OptimalRandomGenerator<P,I>>
 implements IBenchmark<P,A,I,G>{
 	
 	private int runCount;
