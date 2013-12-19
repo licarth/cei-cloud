@@ -48,7 +48,7 @@ public class FF extends BPPAlgorithm {
 			}
 		}
 
-		return new BPPSol(sol, this);
+		return new BPPSol(sol, this, ins);
 	}
 
 }

@@ -11,13 +11,13 @@ public class BinType implements Comparable<BinType>{
 		this.capacity = capacity;
 	}
 	
-	public double efficiency() {
-		return (double) capacity/cost;
+	public double unitCost() {
+		return (double) cost/capacity;
 	}
 	
 	@Override
 	public String toString() {
-		return String.format("[cap : %s, (cost : %s, eff : %.2f)]", capacity, cost, efficiency());
+		return String.format("[cap : %s, (cost : %s, unitCost : %.2f)]", capacity, cost, unitCost());
 	}
 
 	@Override

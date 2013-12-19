@@ -11,8 +11,8 @@ public class BPPSol extends AbstractSolution<BPP, BPPInstance>{
 
 	BPPInstance instance;
 	
-	public BPPSol(List<List<Integer>> itemsInBins, IAlgorithm<BPP, BPPInstance> sourceAlgorithm) {
-		super(sourceAlgorithm);
+	public BPPSol(List<List<Integer>> itemsInBins, IAlgorithm<BPP, BPPInstance> sourceAlgorithm, BPPInstance instance) {
+		super(sourceAlgorithm, instance);
 		this.itemsInBins = itemsInBins;
 	}
 	

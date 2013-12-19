@@ -18,12 +18,12 @@ public class OptimalKnownBPPInstance extends BPPInstance implements IOptimalCost
 	@Override
 	public String toStringDetailed() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(String.format("optimalCost=%s, ", getOptimalCost()));
+		sb.append(String.format("totalCost=%s, ", getTotalCost()));
 		sb.append(super.toStringDetailed());
 		return sb.toString();
 	}
 
-	public int getOptimalCost() {
+	public int getTotalCost() {
 		return optimalCost;
 	}
 

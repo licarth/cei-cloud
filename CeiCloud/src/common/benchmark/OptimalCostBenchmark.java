@@ -37,7 +37,7 @@ implements IBenchmark<P,A,I,G>{
 				I i = (I) getGenerator().generateInstance();
 				Solution<P, ? super I> sol = getAlgorithm().solve(i);
 //				VizUtils.barChart(i., min, max);
-				bs.addRatio((float)sol.getCost() / (float) i.getOptimalCost());
+				bs.addRatio((float)sol.getCost() / (float) i.getTotalCost());
 			} catch (InputDataException e) {
 				e.printStackTrace();
 			}

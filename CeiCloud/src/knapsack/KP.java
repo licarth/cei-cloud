@@ -10,7 +10,5 @@ import common.problem.AbstractProblem;
  */
 public class KP extends AbstractProblem {
 	
-	private 
-	
 	
 }

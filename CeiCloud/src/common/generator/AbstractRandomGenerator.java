@@ -48,14 +48,22 @@ public abstract class AbstractRandomGenerator<P extends IProblem, I extends IIns
 	public long getSeed() {
 		return SEED;
 	}
-	
 	/**
 	 * @param min
 	 * @param max
-	 * @return a uniformly distributed number in [min,max] both included.
+	 * @return a uniformly distributed int in [min,max] both included.
 	 */
 	public int nextInt(int min, int max){
 		return getRandom().nextInt(max-min+1)+min;
 	}
+	/**
+	 * @param min
+	 * @param max
+	 * @return a uniformly distributed double in [min,max[ both included.
+	 */
+	public double nextDouble(double min, double max){
+		return min + (getRandom().nextDouble() * (max-min));
+	}
+	
 
 }

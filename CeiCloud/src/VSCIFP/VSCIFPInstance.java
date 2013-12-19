@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import common.Utils;
 import common.VizUtils;
 import common.problem.IOptimalCostAwareInstance;
 import common.problem.Instance;
@@ -22,16 +23,16 @@ public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwar
 	/**
 	 *	Bin Types (all different)
 	 */
-	public Set<BinType> binTypes = new TreeSet<>();
+	public TreeSet<BinType> binTypes = new TreeSet<>();
 
 	//Generates bin types
-	int optimalCost = 0;
+	int totalCost = 0;
 	/**
 	 * Closed bins.
 	 */
 	private List<Bin> bins = new ArrayList<>();
 	private List<Bin> openBins = new ArrayList<>();
-	private List<Integer> itemsPut = new ArrayList<Integer>();
+	private List<Integer> itemSizes = new ArrayList<Integer>();
 
 	public VSCIFPInstance(VSCIFP problem) throws InputDataException {
 		super(problem);
@@ -43,24 +44,24 @@ public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwar
 		//TODO Check inputs.
 		//Checks that a bigger bin is never less efficient than a smaller bin.
 		List<BinType> sortedBinTypes = asSortedList(binTypes, false);
-		System.out.println(sortedBinTypes);
+//		System.out.println(sortedBinTypes);
 		double eff = 0;
 		for (BinType binType : sortedBinTypes) {
-			if (eff > binType.efficiency()){
+			if (eff > binType.unitCost()){
 				throw new InputDataException("Bin types (A,B) were found such as cap(A) > cap (B) and effiency(A) < efficiency(B)");
 			}
-			else eff = binType.efficiency();
+			else eff = binType.unitCost();
 		}		
 	}
 
 	@Override
 	public String toStringDetailed() {
-		return getBins().toString();
+		return "totalCost: "+totalCost+", bins: "+getBins().toString();
 	}
 
 	@Override
-	public int getOptimalCost() {
-		return optimalCost;
+	public int getTotalCost() {
+		return totalCost;
 	}
 
 	public List<Bin> getBins() {
@@ -73,17 +74,22 @@ public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwar
 
 	public void addItemToBin(Bin bin, int item) {
 		try {
+			if (bin.isEmpty() & item != 0) {
+				//When we need to put the first item in the bin
+				//Then we have used this bin, its total cost gets counted
+				//in total cost.
+				totalCost += bin.getType().getCost();
+			}
 			bin.add(item);
-			itemsPut.add(item);
-			optimalCost += item;
+			itemSizes.add(item);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public void setOptimalCost(int optimalCost) {
-		this.optimalCost = optimalCost;
+	public void setTotalCost(int totalCost) {
+		this.totalCost = totalCost;
 	}
 	
 	public void displayBinTypeRepartition(int instanceCount) {
@@ -105,19 +111,19 @@ public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwar
 		return capacities;
 	}
 
-	public List<Integer> getItemsPut() {
-		return itemsPut;
+	public List<Integer> getItemSizes() {
+		return itemSizes;
 	}
 
-	public void setItemsPut(List<Integer> itemsPut) {
-		this.itemsPut = itemsPut;
+	public void setItemSizes(List<Integer> itemSizes) {
+		this.itemSizes = itemSizes;
 	}
 
 	public Set<BinType> getBinTypes() {
 		return binTypes;
 	}
 
-	public void setBinTypes(Set<BinType> binTypes) {
+	public void setBinTypes(TreeSet<BinType> binTypes) {
 		this.binTypes = binTypes;
 	}
 

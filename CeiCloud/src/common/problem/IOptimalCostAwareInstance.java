@@ -7,6 +7,6 @@ package common.problem;
  *
  */
 public interface IOptimalCostAwareInstance {
-	int getOptimalCost();
+	int getTotalCost();
 
 }
