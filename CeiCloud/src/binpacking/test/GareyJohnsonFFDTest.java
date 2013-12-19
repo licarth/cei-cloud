@@ -1,9 +1,10 @@
 package binpacking.test;
 
+import static org.junit.Assert.*;
+
 import java.util.List;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 import binpacking.BPP;
 import binpacking.BPPInstance;
@@ -12,7 +13,7 @@ import binpacking.algs.FFD;
 import binpacking.gens.GareyJohnsonWorstGenerator;
 
 import common.problem.InputDataException;
-import common.solution.Solution;
+import common.solution.ISolution;
 
 public class GareyJohnsonFFDTest {
 
@@ -33,7 +34,7 @@ public class GareyJohnsonFFDTest {
 			List<OptimalKnownBPPInstance> l;
 			try {
 				l = gen.generateInstances();
-				Solution<BPP, BPPInstance> sol = ffd.solve(l.get(0));
+				ISolution<BPP, BPPInstance> sol = ffd.solve(l.get(0));
 				assertEquals(11 * m, sol.getCost());
 			} catch (InputDataException e) {
 				fail(e.getMessage());

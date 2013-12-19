@@ -3,7 +3,7 @@ package common.algorithm;
 import common.problem.IInstance;
 import common.problem.IProblem;
 import common.problem.InputDataException;
-import common.solution.Solution;
+import common.solution.ISolution;
 
 public abstract class Algorithm<P extends IProblem, I extends IInstance<P>> implements IAlgorithm<P,I>  {
 	private String name;
@@ -11,7 +11,7 @@ public abstract class Algorithm<P extends IProblem, I extends IInstance<P>> impl
 	private I instance;
 	
 	@Override
-	public abstract Solution<P, I> solve(I instance) throws InputDataException;
+	public abstract ISolution<P, I> solve(I instance) throws InputDataException;
 	
 	public Algorithm() {
 		// TODO Auto-generated constructor stub

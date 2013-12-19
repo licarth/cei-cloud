@@ -3,13 +3,14 @@ package binpacking.benchmark;
 import binpacking.BPP;
 import binpacking.BPPInstance;
 import binpacking.OptimalKnownBPPInstance;
+
 import common.algorithm.OfflineAlgorithm;
 import common.benchmark.BenchmarkStats;
 import common.benchmark.OptimalCostBenchmark;
 import common.generator.OptimalRandomGenerator;
 import common.problem.InputDataException;
+import common.solution.ISolution;
 import common.solution.OptimalCostNotKnownException;
-import common.solution.Solution;
 
 /**
  * A benchmark that compares solutions to 
@@ -34,7 +35,7 @@ public class BPPOptimalBenchmark extends OptimalCostBenchmark<BPP, OptimalKnownB
 		for (int j = 0; j < getRunCount(); j++) {
 			try {
 				OptimalKnownBPPInstance i = getGenerator().generateInstance();
-				Solution<BPP, BPPInstance> sol = getAlgorithm().solve(i);
+				ISolution<BPP, BPPInstance> sol = getAlgorithm().solve(i);
 				
 				//For the stats
 				try {

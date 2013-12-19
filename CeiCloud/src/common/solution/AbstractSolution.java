@@ -5,7 +5,7 @@ import common.problem.IInstance;
 import common.problem.IOptimalCostAwareInstance;
 import common.problem.IProblem;
 
-public abstract class AbstractSolution<P extends IProblem, I extends IInstance<? extends P>> implements Solution<P,I> {
+public abstract class AbstractSolution<P extends IProblem, I extends IInstance<? extends P>> implements ISolution<P,I> {
 	
 	protected IAlgorithm<P, I> sourceAlgorithm;
 	
@@ -27,9 +27,9 @@ public abstract class AbstractSolution<P extends IProblem, I extends IInstance<?
 	}
 	
 	@Override
-	public float getErrorRatio() throws OptimalCostNotKnownException{
+	public double getErrorRatio() throws OptimalCostNotKnownException{
 		if (instance instanceof IOptimalCostAwareInstance){
-			return (float) getCost() / (float) ((IOptimalCostAwareInstance) instance).getTotalCost();
+			return (double) getCost() / (double) ((IOptimalCostAwareInstance) instance).getTotalCost();
 		}
 		else throw new OptimalCostNotKnownException("This instance is not OptimalCost-aware.");
 	}

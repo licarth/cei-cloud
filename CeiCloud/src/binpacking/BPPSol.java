@@ -4,7 +4,6 @@ import java.util.List;
 
 import common.algorithm.IAlgorithm;
 import common.solution.AbstractSolution;
-import common.solution.Solution;
 
 public class BPPSol extends AbstractSolution<BPP, BPPInstance>{
 	public List<List<Integer>> itemsInBins;

@@ -6,7 +6,8 @@ import common.problem.IInstance;
 import common.problem.IOptimalCostAwareInstance;
 import common.problem.IProblem;
 import common.problem.InputDataException;
-import common.solution.Solution;
+import common.solution.ISolution;
+import common.solution.OptimalCostNotKnownException;
 
 /**
  * 
@@ -35,10 +36,10 @@ implements IBenchmark<P,A,I,G>{
 		for (int j = 0; j < getRunCount(); j++) {
 			try {
 				I i = (I) getGenerator().generateInstance();
-				Solution<P, ? super I> sol = getAlgorithm().solve(i);
+				ISolution<P, ? super I> sol = getAlgorithm().solve(i);
 //				VizUtils.barChart(i., min, max);
-				bs.addRatio((float)sol.getCost() / (float) i.getTotalCost());
-			} catch (InputDataException e) {
+				bs.addRatio(sol.getErrorRatio());
+			} catch (InputDataException | OptimalCostNotKnownException e) {
 				e.printStackTrace();
 			}
 		}

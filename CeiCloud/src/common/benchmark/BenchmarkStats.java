@@ -15,7 +15,7 @@ public class BenchmarkStats<P extends IProblem, I extends IInstance<? extends P>
 	
 	DescriptiveStatistics ratios = new DescriptiveStatistics();
 
-	public void addRatio(float ratio){
+	public void addRatio(double ratio){
 		ratios.addValue(ratio);
 	}
 	

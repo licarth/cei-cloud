@@ -6,4 +6,5 @@ import common.problem.IProblem;
 public interface ISolution<P extends IProblem, I extends IInstance<? extends P>> {
 	int getCost();
 	I getInstance();
+	double getErrorRatio() throws OptimalCostNotKnownException;
 }

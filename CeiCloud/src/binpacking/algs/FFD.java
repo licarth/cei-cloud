@@ -1,18 +1,14 @@
 package binpacking.algs;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import org.apache.commons.lang.ArrayUtils;
 
 import binpacking.BPP;
 import binpacking.BPPInstance;
 import binpacking.BPPSol;
+
 import common.Utils;
-import common.algorithm.IAlgorithm;
-import common.problem.IInstance;
 import common.problem.InputDataException;
-import common.solution.Solution;
+import common.solution.ISolution;
 
 
 /**
@@ -24,7 +20,7 @@ import common.solution.Solution;
 public class FFD extends BPPAlgorithm {
 
 	@Override
-	public Solution<BPP, BPPInstance> solve(BPPInstance ins) throws InputDataException {
+	public ISolution<BPP, BPPInstance> solve(BPPInstance ins) throws InputDataException {
 		// Sort desc. (OFF-LINE ALG)
 		List<Integer> sortedItemSizes = Utils.cloneIntList(ins.getItemSizes());
 		Utils.sortDesc(sortedItemSizes);
