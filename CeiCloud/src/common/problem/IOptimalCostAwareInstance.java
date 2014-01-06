@@ -1,5 +1,7 @@
 package common.problem;
 
+import common.solution.ISolution;
+
 /**
  * Interface for instances.
  * 
@@ -7,6 +9,6 @@ package common.problem;
  *
  */
 public interface IOptimalCostAwareInstance {
-	int getTotalCost();
+	ISolution getOptimalSolution();
 
 }

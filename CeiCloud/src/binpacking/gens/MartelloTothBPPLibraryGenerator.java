@@ -15,10 +15,11 @@ import org.apache.commons.lang.ArrayUtils;
 
 import binpacking.BPP;
 import binpacking.BPPInstance;
+import binpacking.OptimalKnownBPPInstance;
 import common.generator.LibraryGenerator;
 import common.problem.InputDataException;
 
-public class MartelloTothBPPLibraryGenerator extends LibraryGenerator<BPP, BPPInstance>{
+public class MartelloTothBPPLibraryGenerator extends LibraryGenerator<BPP, OptimalKnownBPPInstance>{
 
 	public MartelloTothBPPLibraryGenerator(BPP problem) {
 		super(problem);
@@ -28,8 +29,8 @@ public class MartelloTothBPPLibraryGenerator extends LibraryGenerator<BPP, BPPIn
 	List<BPP> problems = new ArrayList<BPP>();
 	
 	@Override
-	public List<BPPInstance> generateInstances() throws InputDataException {
-		ArrayList<BPPInstance> instances = new ArrayList<BPPInstance>();
+	public List<OptimalKnownBPPInstance> generateInstances() throws InputDataException {
+		ArrayList<OptimalKnownBPPInstance> instances = new ArrayList<OptimalKnownBPPInstance>();
 
 		// Directory path here
 		String path = "./resources/instances_lib/MartelloToth";
@@ -49,11 +50,11 @@ public class MartelloTothBPPLibraryGenerator extends LibraryGenerator<BPP, BPPIn
 		return instances;
 	}
 
-	private BPPInstance generateInstance(File file) throws InputDataException {
+	private OptimalKnownBPPInstance generateInstance(File file) throws InputDataException {
 
 		ArrayList<Integer> itemSizes = new ArrayList<Integer>();
 		BPP p = null;
-		BPPInstance pInstance = null;
+		OptimalKnownBPPInstance pInstance = null;
 		
 		String fileName = file.getName();
 		if (fileName.endsWith(".bpp") || fileName.endsWith(".BPP"))
@@ -146,7 +147,7 @@ public class MartelloTothBPPLibraryGenerator extends LibraryGenerator<BPP, BPPIn
 			}
 			
 			try {
-				pInstance = new BPPInstance(p, itemSizes);
+				pInstance = new OptimalKnownBPPInstance(p, itemSizes, ????);
 				pInstance.setName(fileName);
 			} catch (InputDataException e) {
 				// TODO Auto-generated catch block

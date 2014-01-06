@@ -2,8 +2,8 @@ package VSCIFP;
 
 
 public class BinType implements Comparable<BinType>{
-	int cost;
-	int capacity;
+	public int cost;
+	public int capacity;
 	
 	public BinType(int capacity, int cost) {
 		super();

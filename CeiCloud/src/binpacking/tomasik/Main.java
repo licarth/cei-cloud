@@ -26,9 +26,6 @@ public class Main {
 		
 		TomasikBPPGenerator gen = new TomasikBPPGenerator(problem, 100);
 		
-		OptimalKnownBPPInstance i = gen.generateInstance();
-		System.out.println(i.getItemSizes().size());
-		
 		System.out.println(new BPPOptimalBenchmark(problem, nf, gen, 1000).run());
 		System.out.println(new BPPOptimalBenchmark(problem, nfd, gen, 1000).run());
 		System.out.println(new BPPOptimalBenchmark(problem, ff, gen, 1000).run());

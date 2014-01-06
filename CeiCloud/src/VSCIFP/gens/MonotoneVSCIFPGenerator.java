@@ -1,19 +1,16 @@
 package VSCIFP.gens;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
-import javax.swing.plaf.ListUI;
-
-import org.apache.commons.lang.ArrayUtils;
 
 import VSCIFP.Bin;
 import VSCIFP.BinType;
 import VSCIFP.VSCIFP;
 import VSCIFP.VSCIFPInstance;
+import VSCIFP.VSCIFPSolution;
+
 import common.Utils;
 import common.VizUtils;
 import common.problem.InputDataException;
@@ -31,6 +28,8 @@ public class MonotoneVSCIFPGenerator extends VSCIFPGenerator{
 		instanceCount++;
 		//USES FIRSTFIT FOR NOW !
 		VSCIFPInstance i = new VSCIFPInstance(getProblem());
+		//Create the optimal Solution.
+		i.setOptimalSolution(new VSCIFPSolution(null, i));
 
 		//For the largest bin, capacity = cost = maxBinCapacity
 		i.binTypes.add(new BinType(getProblem().getMaxBinCapacity(), getProblem().getMaxBinCapacity()));
@@ -57,32 +56,33 @@ public class MonotoneVSCIFPGenerator extends VSCIFPGenerator{
 		for (BinType type : i.binTypes) {
 			openBins.add(new Bin(type));
 		}
-		i.setOpenBins(openBins);
+		i.getOptimalSolution().setOpenBins(openBins);
 		
 		System.out.println(i.binTypes);
 
 		//Cycling bounded Iterator used for openBins
-		Iterator<Bin> openBinsIt = Utils.oneCycleIt(i.getOpenBins(), 0);
+		Iterator<Bin> openBinsIt = Utils.oneCycleIt(i.getOptimalSolution().getOpenBins(), 0);
 
 		//On remplit les sacs avec des objets jusqu'à ce que le prix du packing vale getMaxPackingCost().
 		fill:
-			while(i.getTotalCost() < getMaxPackingCost()){
+			while(i.getOptimalSolution().getCost() < getMaxPackingCost()){
 				//Carry on...
 				//On insere des objets dans des boites online. Avec NF. On vise 100 boites utilisées.
 				final int item = nextInt(getProblem().getItemMinSize(), getProblem().getItemMaxSize());
-
+ 
+				//Let's fill those bins...
 				//Let's fill those bins...
 				while (openBinsIt.hasNext()) { //Always the case (cycling), but ok...
 					Bin bin = (Bin) openBinsIt.next();
 					if (bin.fits(item)) {
-						i.addItemToBin(bin, item);
+						i.getOptimalSolution().addItemToBin(bin, item);
 						//If full, close it:
 						if (bin.isFull())
 						{
-							i.addClosedBin(bin.copyToNewBin()); //Clears current bin. add a copy of it to the closed bins list.
+							i.getOptimalSolution().addClosedBin(bin.copyToNewBin()); //Clears current bin. add a copy of it to the closed bins list.
 						}
 						//Reinitialize iterator to same position+1. Attention! indexOf is ok because openbins is small !
-						openBinsIt = Utils.oneCycleIt(i.getOpenBins(), i.getOpenBins().indexOf(bin)+1);
+						openBinsIt = Utils.oneCycleIt(i.getOptimalSolution().getOpenBins(), i.getOptimalSolution().getOpenBins().indexOf(bin)+1);
 						continue fill;
 					}
 				}
@@ -90,7 +90,7 @@ public class MonotoneVSCIFPGenerator extends VSCIFPGenerator{
 				//oops, no bin found for this item, then close & flush bin of bestBinType.
 				BinType bestBinType = getSmallestBinTypeWhereItemFits(i.binTypes, item);
 				//Look for open bin of that type to close it.
-				openBinsIt = i.getOpenBins().iterator();	//Reset Iterator to a normal it.
+				openBinsIt = i.getOptimalSolution().getOpenBins().iterator();	//Reset Iterator to a normal it.
 				closeBin:
 					while (openBinsIt.hasNext()){
 						Bin bin = openBinsIt.next();
@@ -100,13 +100,13 @@ public class MonotoneVSCIFPGenerator extends VSCIFPGenerator{
 							if (!bin.isEmpty()) {
 								if (!bin.isFull()){
 									//Fill it with an item.
-									i.addItemToBin(bin, spaceLeft);
+									i.getOptimalSolution().addItemToBin(bin, spaceLeft);
 									//Bin is full
-									i.addClosedBin(bin.copyToNewBin()); //Clears current bin. adds a copy of it to the closed bins list.
+									i.getOptimalSolution().addClosedBin(bin.copyToNewBin()); //Clears current bin. adds a copy of it to the closed bins list.
 								}
 							}
 							//Reinitialize iterator to same position+1. Attention! indexOf is ok because openbins is small !
-							openBinsIt = Utils.oneCycleIt(i.getOpenBins(), i.getOpenBins().indexOf(bin)+1);
+							openBinsIt = Utils.oneCycleIt(i.getOptimalSolution().getOpenBins(), i.getOptimalSolution().getOpenBins().indexOf(bin)+1);
 							continue fill;	//We added the new needed bin and put the item in it.
 						}
 					}
@@ -114,26 +114,26 @@ public class MonotoneVSCIFPGenerator extends VSCIFPGenerator{
 				throw new InputDataException("Code should not be reached");
 			}
 		//Fill procedure terminated, close (open & non-empty) bins.
-		for (Bin bin : i.getOpenBins()) {
+		for (Bin bin : i.getOptimalSolution().getOpenBins()) {
 			if (!bin.isEmpty()) {
 				if (!bin.isFull()){
 					//Fill it with items.
 					while (bin.fits(getProblem().getItemMaxSize())){
-						i.addItemToBin(bin, nextInt(getProblem().getItemMinSize(), getProblem().getItemMaxSize()));
+						i.getOptimalSolution().addItemToBin(bin, nextInt(getProblem().getItemMinSize(), getProblem().getItemMaxSize()));
 					}
 					if (!bin.isFull()){
 						int spaceLeft = bin.getSpaceLeft();
-						i.addItemToBin(bin, spaceLeft);
+						i.getOptimalSolution().addItemToBin(bin, spaceLeft);
 					}
 				}
-				i.getBins().add(bin);
+				i.getOptimalSolution().getBins().add(bin);
 				bin.close();
 			}
 		}
 
 //		System.out.println(i);
 		i.displayBinTypeRepartition(instanceCount);
-		VizUtils.drawHistogramItemsRepartition(i.getItemSizes(), getProblem().getItemMinSize(), getProblem().getItemMaxSize(), "", "-"+instanceCount);
+		VizUtils.drawHistogramItemsRepartition(i.getOptimalSolution().getItemSizes(), getProblem().getItemMinSize(), getProblem().getItemMaxSize(), "", "-"+instanceCount);
 		return i;
 	}
 

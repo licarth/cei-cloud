@@ -11,18 +11,19 @@ import binpacking.BPPInstance;
 import binpacking.OptimalKnownBPPInstance;
 import binpacking.algs.FFD;
 import binpacking.gens.GareyJohnsonWorstGenerator;
-
 import common.problem.InputDataException;
 import common.solution.ISolution;
+import common.solution.OptimalCostNotKnownException;
 
 public class GareyJohnsonFFDTest {
 
 	/**
 	 * Tests FFD performance on GareyJohnson's worst instance. FFD cost should be 11m
 	 * where optimal cost is 9m.
+	 * @throws OptimalCostNotKnownException 
 	 */
 	@Test
-	public void optimalityTest(){
+	public void optimalityTest() throws OptimalCostNotKnownException{
 
 		//Problem & algorithm declarations
 		BPP problem = new BPP(100, 1, 100);
@@ -35,6 +36,8 @@ public class GareyJohnsonFFDTest {
 			try {
 				l = gen.generateInstances();
 				ISolution<BPP, BPPInstance> sol = ffd.solve(l.get(0));
+				System.out.println(sol.getCost());
+				System.out.println(sol.getErrorRatio());
 				assertEquals(11 * m, sol.getCost());
 			} catch (InputDataException e) {
 				fail(e.getMessage());

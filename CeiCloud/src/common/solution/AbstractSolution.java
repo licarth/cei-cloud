@@ -29,7 +29,7 @@ public abstract class AbstractSolution<P extends IProblem, I extends IInstance<?
 	@Override
 	public double getErrorRatio() throws OptimalCostNotKnownException{
 		if (instance instanceof IOptimalCostAwareInstance){
-			return (double) getCost() / (double) ((IOptimalCostAwareInstance) instance).getTotalCost();
+			return (double) getCost() / (double) ((IOptimalCostAwareInstance) instance).getOptimalSolution().getCost();
 		}
 		else throw new OptimalCostNotKnownException("This instance is not OptimalCost-aware.");
 	}

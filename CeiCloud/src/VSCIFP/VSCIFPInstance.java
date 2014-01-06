@@ -3,16 +3,16 @@ package VSCIFP;
 import static common.Utils.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import common.Utils;
+import VSCIFP.algs.Item;
+
 import common.VizUtils;
 import common.problem.IOptimalCostAwareInstance;
-import common.problem.Instance;
 import common.problem.InputDataException;
+import common.problem.Instance;
 
 /**
  * @author thomas
@@ -21,18 +21,14 @@ import common.problem.InputDataException;
 public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwareInstance {
 
 	/**
+	 * This solution is used for creating the instance.
+	 */
+	private VSCIFPSolution optimalSolution;
+	
+	/**
 	 *	Bin Types (all different)
 	 */
 	public TreeSet<BinType> binTypes = new TreeSet<>();
-
-	//Generates bin types
-	int totalCost = 0;
-	/**
-	 * Closed bins.
-	 */
-	private List<Bin> bins = new ArrayList<>();
-	private List<Bin> openBins = new ArrayList<>();
-	private List<Integer> itemSizes = new ArrayList<Integer>();
 
 	public VSCIFPInstance(VSCIFP problem) throws InputDataException {
 		super(problem);
@@ -54,71 +50,22 @@ public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwar
 		}		
 	}
 
-	@Override
 	public String toStringDetailed() {
-		return "totalCost: "+totalCost+", bins: "+getBins().toString();
+		return "bins: "+getBinTypes().toString();
 	}
 
-	@Override
-	public int getTotalCost() {
-		return totalCost;
-	}
-
-	public List<Bin> getBins() {
-		return bins;
-	}
-
-	public void setBins(List<Bin> bins) {
-		this.bins = bins;
-	}
-
-	public void addItemToBin(Bin bin, int item) {
-		try {
-			if (bin.isEmpty() & item != 0) {
-				//When we need to put the first item in the bin
-				//Then we have used this bin, its total cost gets counted
-				//in total cost.
-				totalCost += bin.getType().getCost();
-			}
-			bin.add(item);
-			itemSizes.add(item);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	public void setTotalCost(int totalCost) {
-		this.totalCost = totalCost;
-	}
-	
 	public void displayBinTypeRepartition(int instanceCount) {
-		VizUtils.drawHistogramBinCapacities(binTypes, getBinsCapacities(), "", "-"+instanceCount);
+		VizUtils.drawHistogramBinCapacities(binTypes, getBinTypesCapacities(), "", "-"+instanceCount);
 	}
 	
-//	public int[] getBinsCapacities() {
-//		int[] capacities = new int[bins.size()];
-//		for (int i = 0; i < capacities.length; i++) {
-//			capacities[i] = bins.get(i).getType().capacity;
-//		}
-//		return capacities;
-//	}
-	public List<Integer> getBinsCapacities() {
+	public List<Integer> getBinTypesCapacities() {
 		List<Integer> capacities = new ArrayList<>();
-		for (Bin bin : bins) {
-			capacities.add(bin.getType().capacity);
+		for (BinType binType : binTypes) {
+			capacities.add(binType.capacity);
 		}
 		return capacities;
 	}
-
-	public List<Integer> getItemSizes() {
-		return itemSizes;
-	}
-
-	public void setItemSizes(List<Integer> itemSizes) {
-		this.itemSizes = itemSizes;
-	}
-
+	
 	public Set<BinType> getBinTypes() {
 		return binTypes;
 	}
@@ -127,17 +74,23 @@ public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwar
 		this.binTypes = binTypes;
 	}
 
-	public final List<Bin> getOpenBins() {
-		return Collections.unmodifiableList(openBins);
+	public VSCIFPSolution getOptimalSolution() {
+		return optimalSolution;
 	}
 
-	public void setOpenBins(List<Bin> openBins) {
-		this.openBins = openBins;
+	public void setOptimalSolution(VSCIFPSolution optimalSolution) {
+		this.optimalSolution = optimalSolution;
 	}
 
-	public void addClosedBin(Bin bin) {
-		bins.add(bin);
+	public List<Integer> getItemSizes() {
+		return optimalSolution.getItemSizes();
 	}
-
-
+	
+	public List<Item> getItems() {
+		List<Item> l = new ArrayList<Item>();
+		for (Integer i : getItemSizes()) {
+			l.add(new Item(i));
+		}
+		return l;
+	}
 }

@@ -60,7 +60,7 @@ public class Main {
 //		binTypes.add(new BinType(15, 12));
 //		VSCIFP p = new VSCIFP(binTypes, 10, 99999);
 //		
-//		GloutonD c = new GloutonD();
+//		CIFFD c = new CIFFD();
 		
 	}
 

@@ -4,6 +4,8 @@ import java.util.List;
 
 import common.problem.IOptimalCostAwareInstance;
 import common.problem.InputDataException;
+import common.solution.FakeSolution;
+import common.solution.ISolution;
 
 public class OptimalKnownBPPInstance extends BPPInstance implements IOptimalCostAwareInstance {
 
@@ -29,5 +31,10 @@ public class OptimalKnownBPPInstance extends BPPInstance implements IOptimalCost
 
 	public void setOptimalCost(int optimalCost) {
 		this.optimalCost = optimalCost;
+	}
+
+	@Override
+	public ISolution getOptimalSolution() {
+		return new FakeSolution(this, optimalCost);
 	}
 }

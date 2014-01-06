@@ -9,6 +9,8 @@ import java.util.List;
 
 import org.apache.commons.lang.ArrayUtils;
 
+import VSCIFP.algs.Item;
+
 import com.google.common.collect.Iterators;
 
 
@@ -37,7 +39,7 @@ public class Utils {
 	 * This method edits a directly.
 	 * 
 	 */
-	public static void sortDesc(List<Integer> l){
+	public static void sortDesc(List l){
 		Collections.sort(l);
 		Collections.reverse(l);
 	}
@@ -72,6 +74,14 @@ public class Utils {
 		return sum;
 	}
 
+	public static int sumItems(List<Item> l) {
+		int sum = 0;
+		for (Item i : l) {
+			sum = sum + i.getSize();
+		}
+		return sum;
+	}
+	
 
 	/**
 	 * @param a
@@ -105,6 +115,12 @@ public class Utils {
 	public static List<Integer> cloneIntList(List<Integer> list) {
 		List<Integer> clone = new ArrayList<Integer>(list.size());
 		for(Integer item: list) clone.add(new Integer(item.intValue()));
+		return clone;
+	}
+	
+	public static List<Item> cloneItemList(List<Item> list) {
+		List<Item> clone = new ArrayList<Item>(list.size());
+		for(Item item: list) clone.add(new Item(item.getSize()));
 		return clone;
 	}
 
