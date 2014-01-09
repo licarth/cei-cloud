@@ -8,7 +8,6 @@ import common.solution.ISolution;
 public abstract class Algorithm<P extends IProblem, I extends IInstance<P>> implements IAlgorithm<P,I>  {
 	private String name;
 	private String abbrev;
-	private I instance;
 	
 	@Override
 	public abstract ISolution<P, I> solve(I instance) throws InputDataException;
@@ -35,11 +34,4 @@ public abstract class Algorithm<P extends IProblem, I extends IInstance<P>> impl
 		this.abbrev = abbrev;
 	}
 
-	public I getInstance() {
-		return instance;
-	}
-
-	public void setInstance(I instance) {
-		this.instance = instance;
-	};
 }

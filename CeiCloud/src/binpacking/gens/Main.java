@@ -6,6 +6,7 @@ import common.problem.InputDataException;
 import common.solution.OptimalCostNotKnownException;
 import binpacking.BPP;
 import binpacking.BPPInstance;
+import binpacking.OptimalKnownBPPInstance;
 import binpacking.algs.FFD;
 
 public class Main {
@@ -18,7 +19,7 @@ public class Main {
 		
 		MartelloTothBPPLibraryGenerator gen = new MartelloTothBPPLibraryGenerator(problem);
 		
-		List<BPPInstance> instances = gen.generateInstances();
+		List<OptimalKnownBPPInstance> instances = gen.generateInstances();
 		
 		for (BPPInstance bppInstance : instances) {
 			System.out.println(ffd.solve(bppInstance).getErrorRatio());

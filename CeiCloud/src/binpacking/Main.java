@@ -5,7 +5,7 @@ import binpacking.algs.FF;
 import binpacking.algs.FFD;
 import binpacking.algs.NF;
 import binpacking.algs.NFD;
-import binpacking.gens.MartelloTothBPPLibraryGenerator;
+import binpacking.gens.UniformBPPGenerator;
 
 import common.problem.InputDataException;
 
@@ -34,18 +34,18 @@ public class Main {
 		NFD nfd = new NFD();
 			
 		BPP bpp = new BPP(10);		//IProblem definition
-		MartelloTothBPPLibraryGenerator gen = new MartelloTothBPPLibraryGenerator(bpp);	//IGenerator choice
+//		MartelloTothBPPLibraryGenerator gen = new MartelloTothBPPLibraryGenerator(bpp);	//IGenerator choice
 //		OptimalUniformBPPGenerator gen = new OptimalUniformBPPGenerator(bpp, 200);	//IGenerator choice
-//		UniformBPPGenerator gen = new UniformBPPGenerator(bpp, 200);
-		List<BPPInstance> l = gen.generateInstances();
+		UniformBPPGenerator gen = new UniformBPPGenerator(bpp, 200);
+		List<BPPInstance> l = gen.generateInstances(10);
 //		System.out.println(l);
 		for (BPPInstance iBpp : l) {
 //			System.out.println(iBpp);
 //			VizUtils.barChart(iBpp.getItemSizes(),iBpp.getProblem().getItemMinSize(), iBpp.getProblem().getItemMaxSize());
 //			iBpp.checkUniformItemsRepartition();
 //			VizUtils.barChart(iBpp, max);
-			System.out.println(ff.solve(iBpp).getCost());
-//			System.out.println(ff.solve(iBpp));
+			System.out.println(ff.solve(iBpp));
+			System.out.println(nf.solve(iBpp));
 //			System.out.println(nfd.solve(iBpp));
 //			System.out.println(nf.solve(iBpp));
 		}

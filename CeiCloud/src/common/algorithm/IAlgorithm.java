@@ -7,7 +7,7 @@ import common.solution.ISolution;
 
 public interface IAlgorithm<P extends IProblem, I extends IInstance<? extends P>> {
 	
-	I getInstance();
+//	I getInstance();
 	/**
 	 * 
 	 * A short name for this algorithm.

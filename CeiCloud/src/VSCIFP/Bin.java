@@ -4,16 +4,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import VSCIFP.algs.Item;
+
 public class Bin {
 
 	private final BinType type;
 	private boolean open = true;
-	private final List<Integer> content;
+	private final List<Item> content;
 	private int fillCount = 0;
 
 	@Override
 	public String toString() {
-		return "{capacity : "+type.capacity+", content: "+content.toString();
+		return "{fillCount : "+fillCount+"/"+type.capacity+", content: "+content.toString();
 	}
 
 	public Bin(BinType type) {
@@ -22,7 +24,7 @@ public class Bin {
 		this.type = type;
 	}
 	
-	public Bin(BinType type, List<Integer> content) {
+	public Bin(BinType type, List<Item> content) {
 		super();
 		this.content = content;
 		this.type = type;
@@ -32,11 +34,11 @@ public class Bin {
 		return open;
 	}
 
-	public void add(Integer item) throws Exception {
-		if (item == null || item == 0) throw new Exception("Null item or item size = 0!");
+	public void add(Item item) throws Exception {
+		if (item == null || item.getSize() == 0) throw new Exception("Null item or item size = 0!");
 		if (fits(item)) {
 			content.add(item);
-			fillCount += item;
+			fillCount += item.getSize();
 		} else {
 			throw new Exception();
 		}
@@ -54,12 +56,12 @@ public class Bin {
 		return type;
 	}
 
-	public List<Integer> getContent() {
+	public List<Item> getContent() {
 		return Collections.unmodifiableList(content);
 	}
 
-	public boolean fits(Integer item) {
-		return (item <= type.capacity - fillCount);
+	public boolean fits(Item item) {
+		return (item.getSize() <= type.capacity - fillCount);
 	}
 
 	public int getFillCount() {
@@ -93,7 +95,7 @@ public class Bin {
 	
 	@Override
 	protected Bin clone() throws CloneNotSupportedException {
-		ArrayList<Integer> cloneContent = new ArrayList<Integer>(this.content);
+		ArrayList<Item> cloneContent = new ArrayList<Item>(this.content);
 		Bin clone = new Bin(this.type, cloneContent);
 		clone.setFillCount(this.fillCount);
 		return clone;

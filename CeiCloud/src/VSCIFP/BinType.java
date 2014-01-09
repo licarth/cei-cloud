@@ -1,5 +1,7 @@
 package VSCIFP;
 
+import VSCIFP.algs.Item;
+
 
 public class BinType implements Comparable<BinType>{
 	public int cost;
@@ -41,8 +43,8 @@ public class BinType implements Comparable<BinType>{
 		return Integer.signum(this.capacity - o.capacity);
 	}
 	
-	public boolean fitsIfEmpty(Integer item) {
-		return (item <= capacity);
+	public boolean fitsIfEmpty(Item item) {
+		return (item.getSize() <= capacity);
 	}
 
 	public int getCost() {

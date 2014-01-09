@@ -3,12 +3,12 @@ package VSCIFP;
 import static common.Utils.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
 import VSCIFP.algs.Item;
-
 import common.VizUtils;
 import common.problem.IOptimalCostAwareInstance;
 import common.problem.InputDataException;
@@ -24,11 +24,13 @@ public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwar
 	 * This solution is used for creating the instance.
 	 */
 	private VSCIFPSolution optimalSolution;
-	
+
 	/**
 	 *	Bin Types (all different)
 	 */
 	public TreeSet<BinType> binTypes = new TreeSet<>();
+	
+	public List<Item> items = new ArrayList<>();
 
 	public VSCIFPInstance(VSCIFP problem) throws InputDataException {
 		super(problem);
@@ -40,7 +42,7 @@ public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwar
 		//TODO Check inputs.
 		//Checks that a bigger bin is never less efficient than a smaller bin.
 		List<BinType> sortedBinTypes = asSortedList(binTypes, false);
-//		System.out.println(sortedBinTypes);
+		//		System.out.println(sortedBinTypes);
 		double eff = 0;
 		for (BinType binType : sortedBinTypes) {
 			if (eff > binType.unitCost()){
@@ -57,7 +59,7 @@ public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwar
 	public void displayBinTypeRepartition(int instanceCount) {
 		VizUtils.drawHistogramBinCapacities(binTypes, getBinTypesCapacities(), "", "-"+instanceCount);
 	}
-	
+
 	public List<Integer> getBinTypesCapacities() {
 		List<Integer> capacities = new ArrayList<>();
 		for (BinType binType : binTypes) {
@@ -65,7 +67,7 @@ public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwar
 		}
 		return capacities;
 	}
-	
+
 	public Set<BinType> getBinTypes() {
 		return binTypes;
 	}
@@ -83,14 +85,33 @@ public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwar
 	}
 
 	public List<Integer> getItemSizes() {
-		return optimalSolution.getItemSizes();
-	}
-	
-	public List<Item> getItems() {
-		List<Item> l = new ArrayList<Item>();
-		for (Integer i : getItemSizes()) {
-			l.add(new Item(i));
+		List<Integer> l = new ArrayList<Integer>();
+		for (Item i : getItems()) {
+			l.add(i.getSize());
 		}
 		return l;
 	}
+	
+	public List<Item> getItems() {
+		return items;
+	}
+
+	/**
+	 * Returns the bin type of given capacity (unique, binTypes is a set!).
+	 * 
+	 * @param i
+	 * @return
+	 * @throws Exception 
+	 */
+	public BinType getBinTypeOfCapacity(int capacity) throws Exception {
+		if (!(capacity>0 && capacity<=getProblem().getMaxBinCapacity()))
+			throw new ArrayIndexOutOfBoundsException("Capacity must be over 0 and below problem's max capacity.");
+		Iterator<BinType> it = getBinTypes().iterator();
+		BinType res = null;
+		for (BinType bt : getBinTypes()) {
+			if (bt.getCapacity() == capacity) return bt;
+		}
+		throw new Exception(String.format("Bin type of capacity %s does not exist", capacity));
+	}
+
 }

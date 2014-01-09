@@ -1,20 +1,17 @@
 package VSCIFP.gens;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
-import javax.swing.plaf.ListUI;
-
-import org.apache.commons.lang.ArrayUtils;
 
 import VSCIFP.Bin;
 import VSCIFP.BinType;
 import VSCIFP.VSCIFP;
 import VSCIFP.VSCIFPInstance;
 import VSCIFP.VSCIFPSolution;
+import VSCIFP.algs.Item;
+
 import common.Utils;
 import common.VizUtils;
 import common.problem.InputDataException;
@@ -60,13 +57,13 @@ public class LinearVSCIFPGenerator extends VSCIFPGenerator{
 			while(i.getOptimalSolution().getCost() < getMaxPackingCost()){
 				//Carry on...
 				//On insere des objets dans des boites online. Avec NF. On vise 100 boites utilisées.
-				final int item = nextInt(getProblem().getItemMinSize(), getProblem().getItemMaxSize());
+				final Item item = new Item(nextInt(getProblem().getItemMinSize(), getProblem().getItemMaxSize()));
 
 				//Let's fill those bins...
 				while (openBinsIt.hasNext()) { //Always the case (cycling), but ok...
 					Bin bin = (Bin) openBinsIt.next();
 					if (bin.fits(item)) {
-						i.getOptimalSolution().addItemToBin(bin, item);
+						i.getOptimalSolution().addItemToBinForOptimalSolutionBuilding(bin, item);
 						//If full, close it:
 						if (bin.isFull())
 						{
@@ -91,7 +88,7 @@ public class LinearVSCIFPGenerator extends VSCIFPGenerator{
 							if (!bin.isEmpty()) {
 								if (!bin.isFull()){
 									//Fill it with an item.
-									i.getOptimalSolution().addItemToBin(bin, spaceLeft);
+									i.getOptimalSolution().addItemToBinForOptimalSolutionBuilding(bin, new Item(spaceLeft));
 									//Bin is full
 									i.getOptimalSolution().addClosedBin(bin.copyToNewBin()); //Clears current bin. adds a copy of it to the closed bins list.
 								}
@@ -109,12 +106,12 @@ public class LinearVSCIFPGenerator extends VSCIFPGenerator{
 			if (!bin.isEmpty()) {
 				if (!bin.isFull()){
 					//Fill it with items.
-					while (bin.fits(getProblem().getItemMaxSize())){
-						i.getOptimalSolution().addItemToBin(bin, nextInt(getProblem().getItemMinSize(), getProblem().getItemMaxSize()));
+					while (bin.fits(new Item(getProblem().getItemMaxSize()))){
+						i.getOptimalSolution().addItemToBinForOptimalSolutionBuilding(bin, new Item(nextInt(getProblem().getItemMinSize(), getProblem().getItemMaxSize())));
 					}
 					if (!bin.isFull()){
 						int spaceLeft = bin.getSpaceLeft();
-						i.getOptimalSolution().addItemToBin(bin, spaceLeft);
+						i.getOptimalSolution().addItemToBinForOptimalSolutionBuilding(bin, new Item(spaceLeft));
 					}
 				}
 				i.getOptimalSolution().getBins().add(bin);
@@ -124,11 +121,12 @@ public class LinearVSCIFPGenerator extends VSCIFPGenerator{
 
 		System.out.println(i);
 		i.displayBinTypeRepartition(instanceCount);
-		VizUtils.drawHistogramItemsRepartition(i.getOptimalSolution().getItemSizes(), getProblem().getItemMinSize(), getProblem().getItemMaxSize(), "", "-"+instanceCount);
+		VizUtils.drawHistogramItemsRepartition(i.getItemSizes(), getProblem().getItemMinSize(), getProblem().getItemMaxSize(), "", "-"+instanceCount);
 		return i;
 	}
-
-	private BinType getSmallestBinTypeWhereItemFits(Set<BinType> binTypes, Integer item){
+	
+	
+	private BinType getSmallestBinTypeWhereItemFits(Set<BinType> binTypes, Item item){
 		BinType bestBinType = null;
 		for (BinType binType : binTypes) {
 			if (binType.fitsIfEmpty(item)) {

@@ -20,7 +20,7 @@ public class GareyJohnsonFFDTest {
 	/**
 	 * Tests FFD performance on GareyJohnson's worst instance. FFD cost should be 11m
 	 * where optimal cost is 9m.
-	 * @throws OptimalCostNotKnownException 
+	 * @throws ItemCutException 
 	 */
 	@Test
 	public void optimalityTest() throws OptimalCostNotKnownException{

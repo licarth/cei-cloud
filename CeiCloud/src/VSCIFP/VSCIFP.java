@@ -4,6 +4,17 @@ import common.problem.AbstractProblem;
 
 public class VSCIFP extends AbstractProblem{
 	
+	
+	public VSCIFP(int maxBinCapacity, int typesOfBinCount, int itemMinSize,
+			int itemMaxSize, int maxNumSplits) {
+		super();
+		this.maxBinCapacity = maxBinCapacity;
+		this.typesOfBinCount = typesOfBinCount;
+		this.itemMinSize = itemMinSize;
+		this.itemMaxSize = itemMaxSize;
+		this.maxNumSplits = maxNumSplits;
+	}
+
 	/**
 	 * Number of splits allowed per item
 	 */

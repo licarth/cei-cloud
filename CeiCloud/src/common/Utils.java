@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang.ArrayUtils;
 
@@ -81,7 +82,7 @@ public class Utils {
 		}
 		return sum;
 	}
-	
+
 
 	/**
 	 * @param a
@@ -117,7 +118,7 @@ public class Utils {
 		for(Integer item: list) clone.add(new Integer(item.intValue()));
 		return clone;
 	}
-	
+
 	public static List<Item> cloneItemList(List<Item> list) {
 		List<Item> clone = new ArrayList<Item>(list.size());
 		for(Item item: list) clone.add(new Item(item.getSize()));
@@ -137,7 +138,7 @@ public class Utils {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * Returns a bounded iterator that starts with an offset and makes exactly one cycle in the
 	 * list.
@@ -151,6 +152,20 @@ public class Utils {
 		}
 		return Iterators.limit(it, list.size());
 	}
-	
-	
+
+	/**
+	 * Transforms a set of Items into the list of their sizes.
+	 * 
+	 * @param items
+	 * @return
+	 */
+	public static List<Integer> fromItemsToIntegers(Set<Item> items) {
+		List<Integer> l = new ArrayList<Integer>();
+		for (Item i : items) {
+			l.add(i.getSize());
+		}
+		return l;
+	}
+
+
 }
