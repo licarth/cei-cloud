@@ -36,7 +36,7 @@ public class OptimalUniformBPPGenerator extends NumItemsFixedBPPGenerator {
 		}
 		
 		try {
-			inst = new OptimalKnownBPPInstance(getProblem(), getAllItemsRandom(), optimalSolution);
+			inst = new OptimalKnownBPPInstance(getProblem(), Utils.fromIntegersToItems(getAllItemsRandom()), optimalSolution);
 		} catch (InputDataException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -6,6 +6,7 @@ import java.util.Random;
 
 import binpacking.BPP;
 import binpacking.BPPInstance;
+import common.Utils;
 import common.problem.InputDataException;
 
 public class UniformBPPGenerator extends NumItemsFixedBPPGenerator {
@@ -25,7 +26,7 @@ public class UniformBPPGenerator extends NumItemsFixedBPPGenerator {
 		}
 		
 		try {
-			inst = new BPPInstance(getProblem(), itemSizes);
+			inst = new BPPInstance(getProblem(), Utils.fromIntegersToItems(itemSizes));
 		} catch (InputDataException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

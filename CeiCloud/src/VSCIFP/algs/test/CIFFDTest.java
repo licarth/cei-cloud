@@ -29,26 +29,21 @@ public class CIFFDTest {
 					add(new BinType(getProblem().getMaxBinCapacity(), getProblem().getMaxBinCapacity()));
 					add(new BinType(5, 5));
 					add(new BinType(3, 3));
-					
 //					add(new BinType((int)Math.floor(getProblem().getMaxBinCapacity() / 3), (int)Math.floor(getProblem().getMaxBinCapacity() / 3)));
 //					add(new BinType((int)Math.floor(getProblem().getMaxBinCapacity() / 5), (int)Math.floor(getProblem().getMaxBinCapacity() / 5)));
 				}};
 //				instance.getItems().add(new Item(nextInt(getProblem().getItemMinSize(),getProblem().getItemMaxSize())));
 				instance.getItems().add(new Item(5));
-				instance.getItems().add(new Item(3));
-				instance.getItems().add(new Item(11));
+				instance.getItems().add(new Item(4));
+				instance.getItems().add(new Item(12));
 				
 				return instance;
 			}
 		};
 		
-		
 		VSCIFPInstance i = gen.generateInstance();
 		
 		System.out.println(ciffd.solve(i));
-		
-		
-		
 		
 	}
 

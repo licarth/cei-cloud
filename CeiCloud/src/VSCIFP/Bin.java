@@ -1,6 +1,7 @@
 package VSCIFP;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -112,6 +113,12 @@ public class Bin {
 
 	private void setFillCount(int fillCount) {
 		this.fillCount = fillCount;
+	}
+	
+	public void addAll(Collection<Item> items) throws Exception {
+		for (Item item : items) {
+			add(item);
+		}
 	}
 
 }

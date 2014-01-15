@@ -79,6 +79,10 @@ public class VSCIFPSolution extends AbstractSolution<VSCIFP, VSCIFPInstance> imp
 			e.printStackTrace();
 		}
 	}
+	
+	public void unpack(Bin bin) {
+		bins.
+	}
 
 	public void setTotalCost(int totalCost) {
 		this.totalCost = totalCost;

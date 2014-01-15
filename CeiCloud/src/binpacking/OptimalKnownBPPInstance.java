@@ -2,6 +2,8 @@ package binpacking;
 
 import java.util.List;
 
+import VSCIFP.algs.Item;
+
 import common.problem.IOptimalCostAwareInstance;
 import common.problem.InputDataException;
 import common.solution.FakeSolution;
@@ -11,9 +13,9 @@ public class OptimalKnownBPPInstance extends BPPInstance implements IOptimalCost
 
 	private int optimalCost;
 	
-	public OptimalKnownBPPInstance(BPP problem, List<Integer> itemSizes, int optimalCost)
+	public OptimalKnownBPPInstance(BPP problem, List<Item> items, int optimalCost)
 			throws InputDataException {
-		super(problem, itemSizes);
+		super(problem, items);
 		this.setOptimalCost(optimalCost);
 	}
 

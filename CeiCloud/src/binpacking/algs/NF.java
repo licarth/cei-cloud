@@ -1,7 +1,10 @@
 package binpacking.algs;
+import static common.Utils.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import VSCIFP.algs.Item;
 import binpacking.BPP;
 import binpacking.BPPInstance;
 import binpacking.BPPSol;
@@ -23,21 +26,21 @@ public class NF extends BPPAlgorithm {
 	public ISolution<BPP, BPPInstance> solve(BPPInstance ins) throws InputDataException {
 
 		//Worst case : 1 bin per item.
-		List<List<Integer>> sol = new ArrayList<>();
+		List<List<Item>> sol = new ArrayList<>();
 		//Create first bin.
-		sol.add(new ArrayList<Integer>());
-		List<Integer> currentBin = sol.get(0);
+		sol.add(new ArrayList<Item>());
+		List<Item> currentBin = sol.get(0);
 		
 		for (int i = 0; i < ins.getItemSizes().size(); i++) {
-			final int itemSize = ins.getItemSizes().get(i);
-			if (itemSize > ins.getProblem().getBinSize()) throw new InputDataException("Item exceeds bin size!");
+			final Item item = ins.getItems().get(i);
+			if (item.getSize() > ins.getProblem().getBinSize()) throw new InputDataException("Item exceeds bin size!");
 			
-			if (Utils.sum(currentBin) + itemSize <= ins.getProblem().getBinSize()){
-				currentBin.add(itemSize);
+			if (Utils.sum(fromItemsToIntegers(currentBin)) + item.getSize() <= ins.getProblem().getBinSize()){
+				currentBin.add(item);
 			}
 			else {
-				currentBin = new ArrayList<Integer>();
-				currentBin.add(itemSize);
+				currentBin = new ArrayList<Item>();
+				currentBin.add(item);
 				sol.add(currentBin);
 			}
 		}

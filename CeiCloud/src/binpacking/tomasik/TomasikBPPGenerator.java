@@ -73,7 +73,7 @@ public class TomasikBPPGenerator extends OptimalRandomGenerator<BPP, OptimalKnow
 		//Shuffle items.
 		Collections.shuffle(itemSizes, getRandom());
 		
-		OptimalKnownBPPInstance inst = new OptimalKnownBPPInstance(getProblem(), itemSizes, binCount);
+		OptimalKnownBPPInstance inst = new OptimalKnownBPPInstance(getProblem(), Utils.fromIntegersToItems(itemSizes), binCount);
 		return inst;
 
 	}

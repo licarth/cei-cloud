@@ -2,6 +2,7 @@ package binpacking.algs;
 import java.util.ArrayList;
 import java.util.List;
 
+import VSCIFP.algs.Item;
 import binpacking.BPP;
 import binpacking.BPPInstance;
 import binpacking.BPPSol;
@@ -23,23 +24,23 @@ public class FF extends BPPAlgorithm {
 	public ISolution<BPP, BPPInstance> solve(BPPInstance ins) throws InputDataException {
 
 		//Worst case : 1 bin per item.
-		List<List<Integer>> sol = new ArrayList<>();
+		List<List<Item>> sol = new ArrayList<>();
 
 		for (int i = 0; i < ins.getItemSizes().size(); i++) {
-			final int itemSize = ins.getItemSizes().get(i);
+			final Item item = ins.getItems().get(i);
 			boolean itemPut = false;
-			if (itemSize > ins.getProblem().getBinSize()) throw new InputDataException("Item exceeds bin size!");
+			if (item.getSize() > ins.getProblem().getBinSize()) throw new InputDataException("Item exceeds bin size!");
 			
-			for (List<Integer> bin : sol) {
-				if (Utils.sum(bin) + itemSize <= ins.getProblem().getBinSize()){
-					bin.add(itemSize);
+			for (List<Item> bin : sol) {
+				if (Utils.sum(Utils.fromItemsToIntegers(bin)) + item.getSize() <= ins.getProblem().getBinSize()){
+					bin.add(item);
 					itemPut = true;
 					break;
 				}
 			}
 			if (!itemPut) {
 				//Item has not been put in any bin. We need to create a new bin with it.
-				sol.add(new ArrayList<Integer>(){{add(itemSize);}});
+				sol.add(new ArrayList<Item>(){{add(item);}});
 				itemPut = true;
 			}
 		}

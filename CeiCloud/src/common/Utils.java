@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.lang.ArrayUtils;
 
@@ -159,7 +160,7 @@ public class Utils {
 	 * @param items
 	 * @return
 	 */
-	public static List<Integer> fromItemsToIntegers(Set<Item> items) {
+	public static List<Integer> fromItemsToIntegers(Collection<Item> items) {
 		List<Integer> l = new ArrayList<Integer>();
 		for (Item i : items) {
 			l.add(i.getSize());
@@ -167,5 +168,27 @@ public class Utils {
 		return l;
 	}
 
+	public static List<Item> fromIntegersToItems(List<Integer> itemSizes) {
+		List<Item> l = new ArrayList<Item>();
+		for (Integer i : itemSizes) {
+			l.add(new Item(i));
+		}
+		return l;
+	}
+
+	/**
+	 * Union of two sets
+	 * 
+	 * @param setA
+	 * @param setB
+	 * @return
+	 */
+	public static <T> Set<T> union(Set<T> setA, Set<T> setB) {
+		Set<T> tmp = new TreeSet<T>(setA);
+		tmp.addAll(setB);
+		return tmp;
+	}
+	
+	
 
 }

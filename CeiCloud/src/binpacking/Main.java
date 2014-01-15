@@ -46,8 +46,8 @@ public class Main {
 //			VizUtils.barChart(iBpp, max);
 			System.out.println(ff.solve(iBpp));
 			System.out.println(nf.solve(iBpp));
-//			System.out.println(nfd.solve(iBpp));
-//			System.out.println(nf.solve(iBpp));
+			System.out.println(nfd.solve(iBpp));
+			System.out.println(nf.solve(iBpp));
 		}
 //		------------------------------------
 		

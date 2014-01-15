@@ -5,6 +5,7 @@ import java.util.List;
 
 import binpacking.BPP;
 import binpacking.OptimalKnownBPPInstance;
+import common.Utils;
 import common.generator.OptimalLibraryGenerator;
 import common.problem.InputDataException;
 
@@ -56,7 +57,7 @@ public class GareyJohnsonWorstGenerator extends OptimalLibraryGenerator<BPP, Opt
 			itemSizes.add(getProblem().getBinSize() / 4 - 2*epsilon);
 		}
 		
-		l.add(new OptimalKnownBPPInstance(getProblem(), itemSizes, 9 * m));
+		l.add(new OptimalKnownBPPInstance(getProblem(), Utils.fromIntegersToItems(itemSizes), 9 * m));
 		return l;
 	}
 

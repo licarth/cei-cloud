@@ -5,10 +5,11 @@ import static common.Utils.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import VSCIFP.algs.Item;
+
 import common.VizUtils;
 import common.problem.IOptimalCostAwareInstance;
 import common.problem.InputDataException;
@@ -36,7 +37,7 @@ public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwar
 		super(problem);
 		checkProblemInput();
 	}
-
+	
 	@Override
 	public void checkProblemInput() throws InputDataException {
 		//TODO Check inputs.
@@ -68,7 +69,7 @@ public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwar
 		return capacities;
 	}
 
-	public Set<BinType> getBinTypes() {
+	public TreeSet<BinType> getBinTypes() {
 		return binTypes;
 	}
 
