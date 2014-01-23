@@ -16,7 +16,7 @@ public class Bin {
 
 	@Override
 	public String toString() {
-		return "{fillCount : "+fillCount+"/"+type.capacity+", content: "+content.toString();
+		return content.toString()+"("+fillCount+"/"+type.capacity+")";
 	}
 
 	public Bin(BinType type) {
@@ -119,6 +119,10 @@ public class Bin {
 		for (Item item : items) {
 			add(item);
 		}
+	}
+
+	public void flush() {
+		content.clear();
 	}
 
 }

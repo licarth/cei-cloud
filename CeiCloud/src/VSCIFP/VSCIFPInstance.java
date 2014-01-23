@@ -8,8 +8,9 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import VSCIFP.algs.Item;
+import com.google.common.collect.Iterators;
 
+import VSCIFP.algs.Item;
 import common.VizUtils;
 import common.problem.IOptimalCostAwareInstance;
 import common.problem.InputDataException;
@@ -113,6 +114,16 @@ public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwar
 			if (bt.getCapacity() == capacity) return bt;
 		}
 		throw new Exception(String.format("Bin type of capacity %s does not exist", capacity));
+	}
+
+	/**
+	 * Returns binType number i in size decreasing order.
+	 * 
+	 * @param i
+	 * @return
+	 */
+	public BinType getBinTypeByIndex(int i) {
+		return Iterators.get(getBinTypes().descendingIterator(), i);
 	}
 
 }

@@ -1,6 +1,7 @@
 package VSCIFP.gens;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -11,15 +12,14 @@ import VSCIFP.VSCIFP;
 import VSCIFP.VSCIFPInstance;
 import VSCIFP.VSCIFPSolution;
 import VSCIFP.algs.Item;
-
 import common.Utils;
 import common.VizUtils;
 import common.problem.InputDataException;
 
 public class LinearVSCIFPGenerator extends VSCIFPGenerator{
 
-	public LinearVSCIFPGenerator(VSCIFP problem) {
-		super(problem);
+	public LinearVSCIFPGenerator(VSCIFP problem, int maxPackingCost) {
+		super(problem, maxPackingCost);
 	}
 
 	private int instanceCount = 0;
@@ -30,7 +30,6 @@ public class LinearVSCIFPGenerator extends VSCIFPGenerator{
 		//USES FIRSTFIT FOR NOW !
 		VSCIFPInstance i = new VSCIFPInstance(getProblem());
 		i.setOptimalSolution(new VSCIFPSolution(null, i));
-		
 		
 		//For the largest bin, capacity = cost = maxBinCapacity
 		i.binTypes.add(new BinType(getProblem().getMaxBinCapacity(), getProblem().getMaxBinCapacity()));
@@ -76,7 +75,7 @@ public class LinearVSCIFPGenerator extends VSCIFPGenerator{
 				}
 
 				//oops, no bin found for this item, then close & flush bin of bestBinType.
-				BinType bestBinType = getSmallestBinTypeWhereItemFits(i.binTypes, item);
+				BinType bestBinType = getBestBinForItem(i, item);
 				//Look for open bin of that type to close it.
 				openBinsIt = i.getOptimalSolution().getOpenBins().iterator();	//Reset Iterator to a normal it.
 				closeBin:
@@ -126,14 +125,27 @@ public class LinearVSCIFPGenerator extends VSCIFPGenerator{
 	}
 	
 	
-	private BinType getSmallestBinTypeWhereItemFits(Set<BinType> binTypes, Item item){
+	private BinType getSmallestBinTypeWhereItemFits(VSCIFPInstance ins, Item item){
 		BinType bestBinType = null;
-		for (BinType binType : binTypes) {
+		for (BinType binType : ins.binTypes) {
 			if (binType.fitsIfEmpty(item)) {
 				if (bestBinType == null) bestBinType = binType;
 				else if (binType.getCapacity() < bestBinType.getCapacity()) bestBinType = binType;
 			}
 		}
+		return bestBinType;
+	}
+	
+	private BinType getBestBinForItem(VSCIFPInstance ins, Item item){
+		BinType bestBinType = getSmallestBinTypeWhereItemFits(ins, item);
+		if (bestBinType != null) return bestBinType;
+		else
+			try {
+				bestBinType = ins.getBinTypeOfCapacity(ins.getProblem().getMaxBinCapacity());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		return bestBinType;
 	}
 

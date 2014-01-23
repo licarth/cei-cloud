@@ -7,6 +7,7 @@ import binpacking.algs.FFD;
 import binpacking.algs.NF;
 import binpacking.algs.NFD;
 import binpacking.benchmark.BPPOptimalBenchmark;
+import binpacking.gens.MartelloTothBPPLibraryGenerator;
 import common.benchmark.BenchmarkRunException;
 import common.benchmark.BenchmarkStats;
 import common.problem.InputDataException;
@@ -24,7 +25,8 @@ public class Main {
 		NF nf = new NF();
 		NFD nfd = new NFD();
 		
-		TomasikBPPGenerator gen = new TomasikBPPGenerator(problem, 100);
+//		TomasikBPPGenerator gen = new TomasikBPPGenerator(problem, 100);
+		MartelloTothBPPLibraryGenerator gen = new MartelloTothBPPLibraryGenerator(problem);
 		
 		System.out.println(new BPPOptimalBenchmark(problem, nf, gen, 1000).run());
 		System.out.println(new BPPOptimalBenchmark(problem, nfd, gen, 1000).run());

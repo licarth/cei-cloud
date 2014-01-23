@@ -25,9 +25,5 @@ public class Main {
 			System.out.println(ffd.solve(bppInstance).getErrorRatio());
 			
 		}
-		
-		
-	
 	}
-
 }

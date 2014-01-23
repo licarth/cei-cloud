@@ -4,20 +4,23 @@ import java.util.List;
 
 import VSCIFP.algs.CIFFD;
 import VSCIFP.gens.LinearVSCIFPGenerator;
-
 import common.problem.InputDataException;
+import common.solution.OptimalCostNotKnownException;
 
 public class Main {
-	public static void main(String[] args) throws InputDataException {
-		VSCIFP p = new VSCIFP(10, 3, 1, 30, 1);
+	public static void main(String[] args) throws InputDataException, OptimalCostNotKnownException {
+		VSCIFP p = new VSCIFP(10, 5, 1, 30, 1);
 //		MonotoneVSCIFPGenerator gen = new MonotoneVSCIFPGenerator(p);
-		LinearVSCIFPGenerator gen = new LinearVSCIFPGenerator(p);
-		List<VSCIFPInstance> instances = gen.generateInstances(1);
+		LinearVSCIFPGenerator gen = new LinearVSCIFPGenerator(p, 1000);
+		List<VSCIFPInstance> instances = gen.generateInstances(10);
 		
-		CIFFD ciffd = new CIFFD();
 		
 		for (VSCIFPInstance ins : instances) {
-			ciffd.solve(ins);
+			CIFFD ciffd = new CIFFD();
+			System.out.println(ins.getOptimalSolution().getCost());
+			VSCIFPSolution sol = ciffd.solve(ins);
+			System.out.println(sol.getCost()+" --> " +sol.getErrorRatio());
+			System.out.println();
 		}
 		
 	}

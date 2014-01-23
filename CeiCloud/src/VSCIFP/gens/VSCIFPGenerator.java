@@ -7,8 +7,9 @@ import common.generator.OptimalRandomGenerator;
 
 public abstract class VSCIFPGenerator extends OptimalRandomGenerator<VSCIFP, VSCIFPInstance> {
 	
-	public VSCIFPGenerator(VSCIFP problem) {
+	public VSCIFPGenerator(VSCIFP problem, int maxPackingCost) {
 		super(problem);
+		this.maxPackingCost = maxPackingCost;
 	}
 
 	private int maxPackingCost = 10000;

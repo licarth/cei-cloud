@@ -1,10 +1,15 @@
 package VSCIFP;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import VSCIFP.algs.Item;
-
 import common.algorithm.IAlgorithm;
 import common.problem.IOptimalCostAwareSolution;
 import common.solution.AbstractSolution;
@@ -20,21 +25,28 @@ public class VSCIFPSolution extends AbstractSolution<VSCIFP, VSCIFPInstance> imp
 
 	int totalCost = 0;
 	/**
-	 * Closed bins.
+	 * Closed bins. It can be a big set.
 	 */
-	private List<Bin> bins = new ArrayList<>();
+	private HashSet<Bin> bins = new HashSet<>();
+	/**
+	 * Small list usually.
+	 */
 	private List<Bin> openBins = new ArrayList<>();
+	/**
+	 * List of items that already have been split, and resulting parts in the list.
+	 */
+	private Map<Bin, HashSet<Item>> itemsCut = new HashMap<Bin, HashSet<Item>>();
 
 	//	/**
 	//	 * Item sizes.
 	//	 */
 	//	private List<Item> items = new ArrayList<Item>();
 
-	public List<Bin> getBins() {
+	public Set<Bin> getBins() {
 		return bins;
 	}
 
-	public void setBins(List<Bin> bins) {
+	public void setBins(HashSet<Bin> bins) {
 		this.bins = bins;
 	}
 
@@ -79,9 +91,27 @@ public class VSCIFPSolution extends AbstractSolution<VSCIFP, VSCIFPInstance> imp
 			e.printStackTrace();
 		}
 	}
-	
-	public void unpack(Bin bin) {
-		bins.
+
+	/**
+	 * Unpacks and remove given bin.
+	 * 
+	 * @param bin
+	 * @throws Exception 
+	 */
+	public List<Item> unpack(Bin bin) throws Exception {
+		if (bins.remove(bin)){
+			totalCost -= bin.getType().getCost();
+			//Make a local copy of contents before flushing it.
+			List<Item> content = new ArrayList<>(bin.getContent());
+			bin.flush();
+			return content;
+		} else throw new Exception("Bin not found in solution packing.");
+	}
+
+	public int getTimesCut(Item item){
+		if (itemsCut.containsKey(item)){
+			return itemsCut.get(item).size();
+		} else return 0;
 	}
 
 	public void setTotalCost(int totalCost) {
@@ -116,5 +146,9 @@ public class VSCIFPSolution extends AbstractSolution<VSCIFP, VSCIFPInstance> imp
 
 	public void setOpenBins(List<Bin> openBins) {
 		this.openBins = openBins;
+	}
+
+	public Set<Item> getChildren(Item i) {
+		return itemsCut.get(i);
 	}
 }

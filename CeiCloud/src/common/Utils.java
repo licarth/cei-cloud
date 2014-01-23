@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -146,12 +147,12 @@ public class Utils {
 	 * 
 	 * @return
 	 */
-	public static <T extends Object> Iterator<T> oneCycleIt(List<T> list, int offset) {
-		Iterator<T> it = Iterators.cycle(list);
+	public static <T extends Object> Iterator<T> oneCycleIt(Collection<T> col, int offset) {
+		Iterator<T> it = Iterators.cycle(col);
 		for (int i = 0; i < offset; i++) {
 			it.next();
 		}
-		return Iterators.limit(it, list.size());
+		return Iterators.limit(it, col.size());
 	}
 
 	/**
@@ -184,7 +185,7 @@ public class Utils {
 	 * @return
 	 */
 	public static <T> Set<T> union(Set<T> setA, Set<T> setB) {
-		Set<T> tmp = new TreeSet<T>(setA);
+		Set<T> tmp = new HashSet<T>(setA);
 		tmp.addAll(setB);
 		return tmp;
 	}

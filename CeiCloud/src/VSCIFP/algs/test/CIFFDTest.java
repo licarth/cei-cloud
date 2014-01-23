@@ -1,5 +1,7 @@
 package VSCIFP.algs.test;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.TreeSet;
 
 import org.junit.Test;
@@ -20,7 +22,7 @@ public class CIFFDTest {
 	public void test() throws InputDataException {
 		
 		//A generator for test purposes only that generates only one type of instance, always the same.
-		VSCIFPGenerator gen = new VSCIFPGenerator(problem) {
+		VSCIFPGenerator gen = new VSCIFPGenerator(problem, 1000) {
 			
 			@Override
 			public VSCIFPInstance generateInstance() throws InputDataException {
@@ -36,7 +38,13 @@ public class CIFFDTest {
 				instance.getItems().add(new Item(5));
 				instance.getItems().add(new Item(4));
 				instance.getItems().add(new Item(12));
-				
+				Item a = new Item(12);
+				Item b = new Item(12);
+				System.out.println(a.equals(b));
+				instance.getItems().add(new Item(12));
+				Set<Item> s = new HashSet<>();
+				s.add(a);
+				s.add(b);
 				return instance;
 			}
 		};
