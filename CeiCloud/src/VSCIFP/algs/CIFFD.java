@@ -32,32 +32,42 @@ import common.problem.InputDataException;
  */
 public class CIFFD extends Algorithm<VSCIFP, VSCIFPInstance>{
 
-	private List<Set<Item>> T = new LinkedList<Set<Item>>();
-	private List<Set<Item>> Tp = new LinkedList<Set<Item>>();
-	private List<Set<Item>> Tm = new LinkedList<Set<Item>>();
+	private List<VSCIFPSolution> solutions = new LinkedList<>();
+	
+	private List<Set<SolutionItem>> T = new LinkedList<Set<SolutionItem>>();
+	private List<Set<SolutionItem>> Tp = new LinkedList<Set<SolutionItem>>();
+	private List<Set<SolutionItem>> Tm = new LinkedList<Set<SolutionItem>>();
 
 	private VSCIFPSolution sol;
 
+	public CIFFD() {
+		T = new LinkedList<Set<SolutionItem>>();
+		Tp = new LinkedList<Set<SolutionItem>>();
+		Tm = new LinkedList<Set<SolutionItem>>();
+	}
+	
 	@Override
 	public VSCIFPSolution solve(VSCIFPInstance ins)
 			throws InputDataException {
 		sol = new VSCIFPSolution(this, ins);
-		
+		T = new LinkedList<Set<SolutionItem>>();
+		Tp = new LinkedList<Set<SolutionItem>>();
+		Tm = new LinkedList<Set<SolutionItem>>();
 //		System.out.println(ins.getItems());
 
 		//T, Tp, Tm initialisation
 		for (int i =0; i < ins.getBinTypes().size(); i++) {
-			T.add(new HashSet<Item>());
-			Tp.add(new HashSet<Item>());
-			Tm.add(new HashSet<Item>());
+			T.add(new HashSet<SolutionItem>());
+			Tp.add(new HashSet<SolutionItem>());
+			Tm.add(new HashSet<SolutionItem>());
 		}
 
 		int costMin;
 
 		List<Bin> bins = new ArrayList<Bin>();
 		// Sort desc. (OFF-LINE ALG)
-		List<Item> sortedItems = Utils.cloneItemList(ins.getItems());
-		Utils.sortDesc(sortedItems);
+		Utils.sortDesc(sol.getItems());
+//		List<SolutionItem> sortedItems = Utils.cloneItemList(ins.getItems());
 
 		//		int toPut = Utils.sumItems(sortedItems); //Counts how much we still have to put
 
@@ -68,7 +78,7 @@ public class CIFFD extends Algorithm<VSCIFP, VSCIFPInstance>{
 		//called T1-.
 		try {
 
-			divide(sortedItems, ins.getProblem().getMaxBinCapacity(), 0);
+			divide(sol.getItems(), ins.getProblem().getMaxBinCapacity(), 0);
 
 			//Pack items in T1p, put the remainders in T1m
 			packBig(ins, 0);
@@ -77,22 +87,30 @@ public class CIFFD extends Algorithm<VSCIFP, VSCIFPInstance>{
 			packSmallToBPP(ins,0);
 //			System.out.println(sol);
 //			System.out.println(sol.getBins());
-
-			
-			for (int j = 1; j < ins.getProblem().getTypesOfBinCount(); j++) {
+			solutions.add(sol.clone());
+			System.out.println("j =0, " + sol);
+			for (int j = 1; j < ins.getBinTypes().size(); j++) {
 				//Repack less filled bin.
 				unpackAndDivide(ins,j); //includes call to divide()
 				packBig(ins, j);
 				packSmallToBPP(ins, j);
 //				System.out.println(sol);
 //				System.out.println(sol.getBins());
+				solutions.add(sol.clone());
+				System.out.println("j ="+j +", "+ sol);
 			}
 
+		} catch (ItemCutException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		System.out.println(solutions);
 
+		//TODO return best solution.
+		
 		return sol;
 	}
 
@@ -109,7 +127,7 @@ public class CIFFD extends Algorithm<VSCIFP, VSCIFPInstance>{
 		BinType currentBinType;
 		currentBinType = ins.getBinTypeOfCapacity(capacity);
 		//		System.out.println(T.get(j));
-		ArrayList<Item> union = new ArrayList<Item>();
+		ArrayList<SolutionItem> union = new ArrayList<SolutionItem>();
 		union.addAll(Utils.union(T.get(j),Tm.get(j)));
 //				System.out.println(union);
 		BPPSol s = (BPPSol) nf.solve(new BPPInstance(bpp, union));
@@ -123,30 +141,20 @@ public class CIFFD extends Algorithm<VSCIFP, VSCIFPInstance>{
 			}
 			sol.addClosedBin(b);
 		}
-		//		System.out.println(s);
-		//		System.out.println(sol.getBins());
-		//		System.out.println(sol);		
 	}
 
-	private void packBig(VSCIFPInstance ins, int j) {
-		for (Item i : Tp.get(j)) {
-			List<Item> cutChildren = null;
-			try {
+	private void packBig(VSCIFPInstance ins, int j) throws ItemCutException  {
+		for (SolutionItem i : Tp.get(j)) {
+			List<SolutionItem> cutChildren = null;
 				BinType bt = ins.getBinTypeByIndex(j);
-				cutChildren = i.cut(bt.getCapacity());
+				cutChildren = i.cut(ins.getProblem().getMaxNumSplits(), bt.getCapacity());
 				Bin newBin = new Bin(bt);
 				sol.addItemToBin(newBin, cutChildren.get(0));
 				//Bin is full
 				sol.addClosedBin(newBin);
 				//Put the remainder into T1m
 				Tm.get(j).add(cutChildren.get(1));
-			} catch (ItemCutException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+
 		}		
 	}
 
@@ -170,13 +178,21 @@ public class CIFFD extends Algorithm<VSCIFP, VSCIFPInstance>{
 	 * @param items
 	 * @param binCapacity
 	 */
-	private void divide(Collection<Item> items, int binCapacity, int j) {
+	private void divide(Collection<? extends Item> items, int binCapacity, int j) {
 		for (Item i : items) {
 			if (i.getSize() <= binCapacity){
-				T.get(j).add(i);
+				T.get(j).add((SolutionItem)i);
 			} else {
-				Tp.get(j).add(i);
+				Tp.get(j).add((SolutionItem)i);
 			}
 		}
+	}
+
+	public List<VSCIFPSolution> getSolutions() {
+		return solutions;
+	}
+
+	public void setSolutions(List<VSCIFPSolution> solutions) {
+		this.solutions = solutions;
 	}
 }

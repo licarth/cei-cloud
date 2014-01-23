@@ -6,10 +6,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
+
+import javax.rmi.CORBA.Util;
 
 import VSCIFP.algs.Item;
+import VSCIFP.algs.SolutionItem;
+import common.Utils;
 import common.algorithm.IAlgorithm;
 import common.problem.IOptimalCostAwareSolution;
 import common.solution.AbstractSolution;
@@ -23,6 +25,17 @@ import common.solution.AbstractSolution;
  */
 public class VSCIFPSolution extends AbstractSolution<VSCIFP, VSCIFPInstance> implements IOptimalCostAwareSolution {
 
+	@Override
+	public VSCIFPSolution clone() throws CloneNotSupportedException {
+		
+		VSCIFPSolution clone = new VSCIFPSolution(this.sourceAlgorithm, getInstance());
+		
+		clone.setTotalCost(totalCost);
+		clone.setBins(Utils.cloneBinHashSet(bins));
+		
+		return clone;
+	}
+
 	int totalCost = 0;
 	/**
 	 * Closed bins. It can be a big set.
@@ -32,15 +45,15 @@ public class VSCIFPSolution extends AbstractSolution<VSCIFP, VSCIFPInstance> imp
 	 * Small list usually.
 	 */
 	private List<Bin> openBins = new ArrayList<>();
-	/**
-	 * List of items that already have been split, and resulting parts in the list.
-	 */
-	private Map<Bin, HashSet<Item>> itemsCut = new HashMap<Bin, HashSet<Item>>();
-
 	//	/**
-	//	 * Item sizes.
+	//	 * List of items that already have been split, and resulting parts in the list.
 	//	 */
-	//	private List<Item> items = new ArrayList<Item>();
+	//	private Map<Item, HashSet<Item>> itemsCut = new HashMap<Item, HashSet<Item>>();
+
+	/**
+	 * Item sizes.
+	 */
+	private List<SolutionItem> items = new ArrayList<SolutionItem>();
 
 	public Set<Bin> getBins() {
 		return bins;
@@ -108,11 +121,12 @@ public class VSCIFPSolution extends AbstractSolution<VSCIFP, VSCIFPInstance> imp
 		} else throw new Exception("Bin not found in solution packing.");
 	}
 
-	public int getTimesCut(Item item){
-		if (itemsCut.containsKey(item)){
-			return itemsCut.get(item).size();
-		} else return 0;
-	}
+	//	public int getTimesCut(Item item){
+	//		Item root = item.getRoot();
+	//		if (itemsCut.containsKey(root)){
+	//			return itemsCut.get(root).size() - 1;
+	//		} else return 0;
+	//	}
 
 	public void setTotalCost(int totalCost) {
 		this.totalCost = totalCost;
@@ -133,6 +147,13 @@ public class VSCIFPSolution extends AbstractSolution<VSCIFP, VSCIFPInstance> imp
 	public VSCIFPSolution(IAlgorithm<VSCIFP, VSCIFPInstance> sourceAlgorithm,
 			VSCIFPInstance instance) {
 		super(sourceAlgorithm, instance);
+		setItemsFromInstance(instance);
+	}
+
+	private void setItemsFromInstance(VSCIFPInstance instance) {
+		for (Item i : instance.getItems()) {
+			items.add(new SolutionItem(i, this));
+		}
 	}
 
 	@Override
@@ -148,7 +169,11 @@ public class VSCIFPSolution extends AbstractSolution<VSCIFP, VSCIFPInstance> imp
 		this.openBins = openBins;
 	}
 
-	public Set<Item> getChildren(Item i) {
-		return itemsCut.get(i);
+	public List<SolutionItem> getItems() {
+		return items;
+	}
+
+	public void setItems(List<SolutionItem> items) {
+		this.items = items;
 	}
 }

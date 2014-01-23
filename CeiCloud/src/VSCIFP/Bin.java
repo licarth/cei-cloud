@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import VSCIFP.algs.Item;
+import VSCIFP.algs.SolutionItem;
 
 public class Bin {
 
@@ -41,7 +42,7 @@ public class Bin {
 			content.add(item);
 			fillCount += item.getSize();
 		} else {
-			throw new Exception();
+			throw new Exception("Item does not fit in bin.");
 		}
 	}
 
@@ -57,7 +58,7 @@ public class Bin {
 		return type;
 	}
 
-	public List<Item> getContent() {
+	public List<? extends Item> getContent() {
 		return Collections.unmodifiableList(content);
 	}
 
@@ -95,7 +96,7 @@ public class Bin {
 	}
 	
 	@Override
-	protected Bin clone() throws CloneNotSupportedException {
+	public Bin clone() throws CloneNotSupportedException {
 		ArrayList<Item> cloneContent = new ArrayList<Item>(this.content);
 		Bin clone = new Bin(this.type, cloneContent);
 		clone.setFillCount(this.fillCount);
@@ -115,8 +116,8 @@ public class Bin {
 		this.fillCount = fillCount;
 	}
 	
-	public void addAll(Collection<Item> items) throws Exception {
-		for (Item item : items) {
+	public void addAll(Collection<SolutionItem> items) throws Exception {
+		for (SolutionItem item : items) {
 			add(item);
 		}
 	}

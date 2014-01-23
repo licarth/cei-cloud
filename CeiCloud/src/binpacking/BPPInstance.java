@@ -16,17 +16,19 @@ public class BPPInstance extends Instance<BPP> {
 	/**
 	 *	Items sizes. 
 	 */
-	private List<Item> items;		//L
+	private List<? extends Item> items;		//L
 	/**
 	 * Optional, name of the instance.
 	 */
 	private String name;
 
-	public BPPInstance(BPP problem, List<Item> items) throws InputDataException{
+	public BPPInstance(BPP problem, List<? extends Item> items) throws InputDataException{
 		super(problem);
 		setItems(items);
 		checkProblemInput();
 	}
+	
+	
 
 //		@Override
 //		public String toStringDetailed() {
@@ -104,11 +106,11 @@ public class BPPInstance extends Instance<BPP> {
 		return l;
 	}
 
-	public List<Item> getItems() {
+	public List<? extends Item> getItems() {
 		return items;
 	}
 
-	public void setItems(List<Item> items) {
+	public void setItems(List<? extends Item> items) {
 		this.items = items;
 	}
 	

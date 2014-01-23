@@ -8,10 +8,10 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.apache.commons.lang.ArrayUtils;
 
+import VSCIFP.Bin;
 import VSCIFP.algs.Item;
 
 import com.google.common.collect.Iterators;
@@ -121,9 +121,26 @@ public class Utils {
 		return clone;
 	}
 
-	public static List<Item> cloneItemList(List<Item> list) {
+	public static List<Item> cloneItemList(List<? extends Item> list) {
 		List<Item> clone = new ArrayList<Item>(list.size());
 		for(Item item: list) clone.add(new Item(item.getSize()));
+		return clone;
+	}
+	
+//	public static <T extends CloneVisible> List<T> cloneListRecursive(List<T> list) {
+//		List<T> clone = new ArrayList<T>(list.size());
+//		for(T i: list) clone.add(((Object)i).clone());
+//		return clone;
+//	}
+	public static List<Bin> cloneBinList(List<Bin> list) throws CloneNotSupportedException {
+		List<Bin> clone = new ArrayList<>(list.size());
+		for(Bin bin: list) clone.add(bin.clone());
+		return clone;
+	}
+	
+	public static HashSet<Bin> cloneBinHashSet(HashSet<Bin> set) throws CloneNotSupportedException {
+		HashSet<Bin> clone = new HashSet<>(set.size());
+		for(Bin bin: set) clone.add(bin.clone());
 		return clone;
 	}
 
