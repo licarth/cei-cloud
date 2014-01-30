@@ -10,7 +10,7 @@ import VSCIFP.algs.SolutionItem;
 
 public class Bin {
 
-	private final BinType type;
+	private BinType type;
 	private boolean open = true;
 	private final List<Item> content;
 	private int fillCount = 0;
@@ -124,6 +124,10 @@ public class Bin {
 
 	public void flush() {
 		content.clear();
+	}
+
+	public void setType(BinType type) {
+		this.type = type;
 	}
 
 }

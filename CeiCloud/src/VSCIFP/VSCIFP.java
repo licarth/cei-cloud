@@ -4,7 +4,6 @@ import common.problem.AbstractProblem;
 
 public class VSCIFP extends AbstractProblem{
 	
-	
 	public VSCIFP(int maxBinCapacity, int typesOfBinCount, int itemMinSize,
 			int itemMaxSize, int maxNumSplits) {
 		super();
@@ -13,7 +12,13 @@ public class VSCIFP extends AbstractProblem{
 		this.itemMinSize = itemMinSize;
 		this.itemMaxSize = itemMaxSize;
 		this.maxNumSplits = maxNumSplits;
+		checkFeasibility();
 	}
+	
+	private void checkFeasibility() {
+		if (maxBinCapacity * (maxNumSplits +1) < itemMaxSize) throw new RuntimeException("Problem is potentially not feasible.");
+	}
+	
 
 	/**
 	 * Number of splits allowed per item

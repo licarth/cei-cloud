@@ -25,8 +25,8 @@ public class Main {
 		NF nf = new NF();
 		NFD nfd = new NFD();
 		
-//		TomasikBPPGenerator gen = new TomasikBPPGenerator(problem, 100);
-		MartelloTothBPPLibraryGenerator gen = new MartelloTothBPPLibraryGenerator(problem);
+		TomasikBPPGenerator gen = new TomasikBPPGenerator(problem, 100);
+//		MartelloTothBPPLibraryGenerator gen = new MartelloTothBPPLibraryGenerator(problem);
 		
 		System.out.println(new BPPOptimalBenchmark(problem, nf, gen, 1000).run());
 		System.out.println(new BPPOptimalBenchmark(problem, nfd, gen, 1000).run());

@@ -1,10 +1,13 @@
 package VSCIFP.algs;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import VSCIFP.ItemCutException;
-import VSCIFP.VSCIFPSolution;
 import common.solution.ISolution;
 
 public class SolutionItem extends Item{
@@ -100,6 +103,26 @@ public class SolutionItem extends Item{
 	public int getTimesCut() {
 		if (comesFromCut()) return getRoot().getTimesCut();
 		else return timesCut;
+	}
+	
+	public Set<SolutionItem> getLeaves(){
+		return this.getLeavesRecursive(new TreeSet<SolutionItem>(Collections.reverseOrder()));
+	}
+	
+	private TreeSet<SolutionItem> getLeavesRecursive(TreeSet<SolutionItem> leaves){
+		
+		if (filsG != null){
+			leaves = filsG.getLeavesRecursive(leaves);
+		} else if (filsD == null){
+			leaves.add(this);
+			return leaves;
+		}
+		
+		if (filsD != null){
+			filsD.getLeavesRecursive(leaves);			
+		}
+		
+		return leaves;
 	}
 	
 }

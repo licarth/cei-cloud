@@ -1,10 +1,8 @@
 package VSCIFP.gens;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import VSCIFP.Bin;
 import VSCIFP.BinType;
@@ -12,6 +10,7 @@ import VSCIFP.VSCIFP;
 import VSCIFP.VSCIFPInstance;
 import VSCIFP.VSCIFPSolution;
 import VSCIFP.algs.Item;
+
 import common.Utils;
 import common.VizUtils;
 import common.problem.InputDataException;

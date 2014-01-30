@@ -15,7 +15,7 @@ import VSCIFP.gens.VSCIFPGenerator;
 import common.problem.InputDataException;
 
 public class CIFFDTest {
-	final VSCIFP problem = new VSCIFP(10, 3, 1, 100, 1);
+	final VSCIFP problem = new VSCIFP(20, 3, 1, 100, 1);
 	final CIFFD ciffd = new CIFFD();
 	
 	/**
@@ -67,8 +67,35 @@ public class CIFFDTest {
 			}
 		};
 		
+VSCIFPGenerator genDiv = new VSCIFPGenerator(problem, 1000) {
+			
+			@Override
+			public VSCIFPInstance generateInstance() throws InputDataException {
+				VSCIFPInstance instance = new VSCIFPInstance(problem);
+				instance.binTypes = new TreeSet<BinType>(){{
+					add(new BinType(getProblem().getMaxBinCapacity(), getProblem().getMaxBinCapacity()));
+					add(new BinType(20, 20));
+					add(new BinType(8, 8));
+//					add(new BinType(10, 10));
+					add(new BinType(5, 5));
+				}};
+				instance.getItems().add(new Item(14));
+				instance.getItems().add(new Item(14));
+				instance.getItems().add(new Item(14));
+				instance.getItems().add(new Item(14));
+				instance.getItems().add(new Item(5));
+				instance.getItems().add(new Item(6));
+				instance.getItems().add(new Item(7));
+				instance.getItems().add(new Item(8));
+				instance.getItems().add(new Item(4));
+				instance.getItems().add(new Item(12));
+				return instance;
+			}
+		};
+		
 //		VSCIFPInstance i = gen.generateInstance();
-		VSCIFPInstance i = genFail.generateInstance();
+//		VSCIFPInstance i = genFail.generateInstance();
+		VSCIFPInstance i = genDiv.generateInstance();
 		
 //		System.out.println(ciffd.solve(i));
 		System.out.println(ciffd.solve(i).getBins());

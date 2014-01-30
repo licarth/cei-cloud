@@ -1,13 +1,11 @@
 package VSCIFP;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-
-import javax.rmi.CORBA.Util;
+import java.util.TreeSet;
 
 import VSCIFP.algs.Item;
 import VSCIFP.algs.SolutionItem;
@@ -54,6 +52,11 @@ public class VSCIFPSolution extends AbstractSolution<VSCIFP, VSCIFPInstance> imp
 	 * Item sizes.
 	 */
 	private List<SolutionItem> items = new ArrayList<SolutionItem>();
+	
+	/**
+	 * Items are sorted in a binary tree.
+	 */
+	private TreeSet<SolutionItem> itemsBinaryTree = new TreeSet<>(Collections.reverseOrder());
 
 	public Set<Bin> getBins() {
 		return bins;
@@ -171,6 +174,13 @@ public class VSCIFPSolution extends AbstractSolution<VSCIFP, VSCIFPInstance> imp
 
 	public List<SolutionItem> getItems() {
 		return items;
+	}
+	
+	public List<SolutionItem> getItemLeaves() {
+		//Traverses all the trees whose roots are items. Return all leaves.
+		for (SolutionItem item : items) {
+			
+		}
 	}
 
 	public void setItems(List<SolutionItem> items) {

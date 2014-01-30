@@ -78,7 +78,7 @@ public class CIFFD extends Algorithm<VSCIFP, VSCIFPInstance>{
 		//called T1-.
 		try {
 
-			divide(sol.getItems(), ins.getProblem().getMaxBinCapacity(), 0);
+			divide(sol.getItems(), ins.getBinTypeByIndex(0).getCapacity() , 0);
 
 			//Pack items in T1p, put the remainders in T1m
 			packBig(ins, 0);
@@ -102,15 +102,28 @@ public class CIFFD extends Algorithm<VSCIFP, VSCIFPInstance>{
 
 		} catch (ItemCutException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			throw new RuntimeException(e1);
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			throw new RuntimeException(e1);
 		}
 		System.out.println(solutions);
 
 		//TODO return best solution.
 		
+		
+		//Repack what can be repacked.
+		int i = 0;
+		for (Bin bin : sol.getBins()) {
+			for (BinType newType : ins.binTypes) {
+				if (bin.getFillCount() <= newType.capacity && newType.capacity < bin.getType().capacity){
+					i = i+ (bin.getType().cost - newType.cost);
+					sol.setTotalCost(sol.getCost() - (bin.getType().cost - newType.cost));
+					bin.setType(newType);
+				}
+			}
+		}
+		System.out.println("meilleur de "+i);
 		return sol;
 	}
 
@@ -154,7 +167,6 @@ public class CIFFD extends Algorithm<VSCIFP, VSCIFPInstance>{
 				sol.addClosedBin(newBin);
 				//Put the remainder into T1m
 				Tm.get(j).add(cutChildren.get(1));
-
 		}		
 	}
 
