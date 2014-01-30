@@ -31,11 +31,11 @@ import common.problem.InputDataException;
  * @author thomas
  *
  */
-public class NFL extends Algorithm<VSCIFP, VSCIFPInstance>{
+public class NFLWithBinTypeOptimization extends Algorithm<VSCIFP, VSCIFPInstance>{
 
 	private VSCIFPSolution sol;
 
-	public NFL() {
+	public NFLWithBinTypeOptimization() {
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class NFL extends Algorithm<VSCIFP, VSCIFPInstance>{
 			throws InputDataException {
 		sol = new VSCIFPSolution(this, ins);
 
-		
+
 		BinType maxBinType = sol.getInstance().getBinTypeOfMaxCapacity();
 		int maxBinCapacity = maxBinType.getCapacity();
 
@@ -52,16 +52,16 @@ public class NFL extends Algorithm<VSCIFP, VSCIFPInstance>{
 		Utils.sortDesc(sol.getItems());
 
 		try {
-			
+
 			for (SolutionItem item : sol.getItems()) {
 				cutRecursively(item);
-//				System.out.println(item.getLeaves());
+				//				System.out.println(item.getLeaves());
 			}
-			
+
 			BPP bpp = new BPP(maxBinCapacity);
 			NFD nfd = new NFD();
 			BPPInstance bppInstance = new BPPInstance(bpp, sol.getItemLeaves());
-		
+
 			BPPSol s = (BPPSol) nfd.solve(bppInstance);
 
 			//Re-Use this solution and pack according to it in bins of size b1
@@ -72,7 +72,19 @@ public class NFL extends Algorithm<VSCIFP, VSCIFPInstance>{
 				}
 				sol.addClosedBin(b);
 			}
-			
+
+			//Repack what can be repacked.
+			int i = 0;
+			for (Bin bin : sol.getBins()) {
+				for (BinType newType : ins.binTypes) {
+					if (bin.getFillCount() <= newType.capacity && newType.capacity < bin.getType().capacity){
+						i = i+ (bin.getType().cost - newType.cost);
+						sol.setTotalCost(sol.getCost() - (bin.getType().cost - newType.cost));
+						bin.setType(newType);
+					}
+				}
+			}
+
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			throw new RuntimeException(e1);

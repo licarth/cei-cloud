@@ -1,9 +1,5 @@
 package VSCIFP.algs;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import VSCIFP.ItemCutException;
 
 public class Item implements Comparable<Item>{
 	private int size;
@@ -22,7 +18,9 @@ public class Item implements Comparable<Item>{
 	
 	@Override
 	public int compareTo(Item o) {
-		return getSize() - o.getSize();
+		if (getSize() != o.getSize())
+			return getSize() - o.getSize();
+		else return hashCode() - o.hashCode();
 	}
 
 	@Override

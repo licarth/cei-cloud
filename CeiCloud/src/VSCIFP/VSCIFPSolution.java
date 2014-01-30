@@ -53,10 +53,10 @@ public class VSCIFPSolution extends AbstractSolution<VSCIFP, VSCIFPInstance> imp
 	 */
 	private List<SolutionItem> items = new ArrayList<SolutionItem>();
 	
-	/**
-	 * Items are sorted in a binary tree.
-	 */
-	private TreeSet<SolutionItem> itemsBinaryTree = new TreeSet<>(Collections.reverseOrder());
+//	/**
+//	 * Items are sorted in a binary tree.
+//	 */
+//	private TreeSet<SolutionItem> itemsBinaryTree = new TreeSet<>(Collections.reverseOrder());
 
 	public Set<Bin> getBins() {
 		return bins;
@@ -176,11 +176,18 @@ public class VSCIFPSolution extends AbstractSolution<VSCIFP, VSCIFPInstance> imp
 		return items;
 	}
 	
+	/**
+	 * Retourne tous les items en parcourant tous les arbres.
+	 * 
+	 * @return
+	 */
 	public List<SolutionItem> getItemLeaves() {
 		//Traverses all the trees whose roots are items. Return all leaves.
+		List<SolutionItem> itemLeaves = new ArrayList<SolutionItem>();
 		for (SolutionItem item : items) {
-			
+			itemLeaves.addAll(item.getLeaves());
 		}
+		return itemLeaves;
 	}
 
 	public void setItems(List<SolutionItem> items) {

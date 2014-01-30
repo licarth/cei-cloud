@@ -126,4 +126,8 @@ public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwar
 		return Iterators.get(getBinTypes().descendingIterator(), i);
 	}
 
+	public BinType getBinTypeOfMaxCapacity() {
+		return getBinTypeByIndex(0);
+	}
+
 }

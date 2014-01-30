@@ -105,7 +105,8 @@ public class CIFFD extends Algorithm<VSCIFP, VSCIFPInstance>{
 			throw new RuntimeException(e1);
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
-			throw new RuntimeException(e1);
+			System.out.println("Stopped because algorithm failed.");
+//			throw new RuntimeException(e1);
 		}
 		System.out.println(solutions);
 
@@ -123,7 +124,7 @@ public class CIFFD extends Algorithm<VSCIFP, VSCIFPInstance>{
 				}
 			}
 		}
-		System.out.println("meilleur de "+i);
+//		System.out.println("meilleur de "+i);
 		return sol;
 	}
 
