@@ -18,6 +18,11 @@ public class SolutionItem extends Item{
 	private SolutionItem filsG;
 	private SolutionItem filsD;
 	
+	public SolutionItem(int size) {
+		super(size);
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * From original item. To create the root SolutionItem
 	 * 
@@ -123,6 +128,26 @@ public class SolutionItem extends Item{
 		}
 		
 		return leaves;
+	}
+
+	public SolutionItem getFilsG() {
+		return filsG;
+	}
+
+	public void setFilsG(SolutionItem filsG) {
+		this.filsG = filsG;
+	}
+
+	public SolutionItem getFilsD() {
+		return filsD;
+	}
+
+	public void setFilsD(SolutionItem filsD) {
+		this.filsD = filsD;
+	}
+
+	public void setTimesCut(int timesCut) {
+		this.timesCut = timesCut;
 	}
 	
 }

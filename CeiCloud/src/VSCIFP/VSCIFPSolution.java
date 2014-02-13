@@ -1,14 +1,13 @@
 package VSCIFP;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 import VSCIFP.algs.Item;
 import VSCIFP.algs.SolutionItem;
+
 import common.Utils;
 import common.algorithm.IAlgorithm;
 import common.problem.IOptimalCostAwareSolution;
@@ -73,7 +72,7 @@ public class VSCIFPSolution extends AbstractSolution<VSCIFP, VSCIFPInstance> imp
 	 * @param bin
 	 * @param item
 	 */
-	public void addItemToBinForOptimalSolutionBuilding(Bin bin, Item item) {
+	public void addItemToBinForOptimalSolutionBuilding(Bin bin, SolutionItem item) {
 		try {
 			if (bin.isEmpty() & item.getSize() != 0) {
 				//When we need to put the first item in the bin

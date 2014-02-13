@@ -11,7 +11,7 @@ import common.solution.OptimalCostNotKnownException;
 
 public class Main {
 	public static void main(String[] args) throws InputDataException, OptimalCostNotKnownException {
-		VSCIFP p = new VSCIFP(10, 3, 1, 20, 1);
+		VSCIFP p = new VSCIFP(100, 3, 10, 20, 1);
 //		MonotoneVSCIFPGenerator gen = new MonotoneVSCIFPGenerator(p);
 		LinearVSCIFPGenerator gen = new LinearVSCIFPGenerator(p, 1000);
 		List<VSCIFPInstance> instances = gen.generateInstances(10);
