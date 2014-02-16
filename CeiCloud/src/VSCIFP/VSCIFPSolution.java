@@ -80,8 +80,9 @@ public class VSCIFPSolution extends AbstractSolution<VSCIFP, VSCIFPInstance> imp
 				//in total cost.
 				totalCost += bin.getType().getCost();
 			}
+			items.add(item);
 			bin.add(item);
-			getInstance().getItems().add(item);		//Adds it to the instance list of items that have been put in bins.
+//			getInstance().getItems().add(item);		//Adds it to the instance list of items that have been put in bins.
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

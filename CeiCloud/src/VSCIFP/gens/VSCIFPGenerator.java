@@ -21,11 +21,11 @@ public abstract class VSCIFPGenerator extends OptimalRandomGenerator<VSCIFP, VSC
 //
 //		//Generates bin types
 //		Set<BinType> binTypes = new HashSet<>();
-//		//For the largest bin, capacity = cost = maxBinCapacity
-//		binTypes.add(new BinType(maxBinCapacity, maxBinCapacity));
+//		//For the largest bin, capacity = cost = binCapacity
+//		binTypes.add(new BinType(binCapacity, binCapacity));
 //		//For other bins, 
 //		for (int i = 0; i < numBinTypes-1; i++) {
-//			int n = r.nextInt(maxBinCapacity - 1)+1; // uniform number in [1, maxBinCapacity - 1].
+//			int n = r.nextInt(binCapacity - 1)+1; // uniform number in [1, binCapacity - 1].
 //			binTypes.add(new BinType(n, n)); //Linear cost
 //		}
 //		return new VSCIFPInstance(getProblem());

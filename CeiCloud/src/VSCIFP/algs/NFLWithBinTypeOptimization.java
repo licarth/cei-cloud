@@ -1,28 +1,20 @@
 package VSCIFP.algs;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-
-import com.google.common.collect.Iterators;
 
 import VSCIFP.Bin;
 import VSCIFP.BinType;
-import VSCIFP.ItemCutException;
 import VSCIFP.VSCIFP;
 import VSCIFP.VSCIFPInstance;
 import VSCIFP.VSCIFPSolution;
 import binpacking.BPP;
 import binpacking.BPPInstance;
 import binpacking.BPPSol;
-import binpacking.algs.NF;
 import binpacking.algs.NFD;
+
 import common.Utils;
-import common.algorithm.Algorithm;
+import common.algorithm.OfflineAlgorithm;
 import common.problem.InputDataException;
 
 /**
@@ -31,7 +23,7 @@ import common.problem.InputDataException;
  * @author thomas
  *
  */
-public class NFLWithBinTypeOptimization extends Algorithm<VSCIFP, VSCIFPInstance>{
+public class NFLWithBinTypeOptimization extends OfflineAlgorithm<VSCIFP, VSCIFPInstance>{
 
 	private VSCIFPSolution sol;
 

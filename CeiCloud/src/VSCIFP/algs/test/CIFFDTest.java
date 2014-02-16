@@ -15,7 +15,7 @@ import VSCIFP.gens.VSCIFPGenerator;
 import common.problem.InputDataException;
 
 public class CIFFDTest {
-	final VSCIFP problem = new VSCIFP(20, 3, 1, 100, 1);
+	final VSCIFP problem = new VSCIFP(20, 3, 1, 20, 1);
 	final CIFFD ciffd = new CIFFD();
 	
 	/**

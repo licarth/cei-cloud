@@ -46,8 +46,9 @@ public class Bin {
 		}
 	}
 
-	public void close() {
+	public Bin close() {
 		this.open = false;
+		return this;
 	}
 	
 	public int getSpaceLeft() {
@@ -71,7 +72,15 @@ public class Bin {
 	}
 
 	public boolean isFull() {
-		return (fillCount >= type.capacity);
+		return (fillCount == type.capacity);
+	}
+	
+	/**
+	 * Checks if bin is not iverloaded
+	 * @throws Exception 
+	 */
+	private void checkValid() throws Exception {
+		if (fillCount > type.getCapacity()) throw new Exception("Bin is overloaded !");
 	}
 	
 	public boolean isEmpty() {
@@ -128,6 +137,10 @@ public class Bin {
 
 	public void setType(BinType type) {
 		this.type = type;
+	}
+	
+	public int getCost() {
+		return type.cost;
 	}
 
 }

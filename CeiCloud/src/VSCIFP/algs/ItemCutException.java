@@ -1,4 +1,4 @@
-package VSCIFP;
+package VSCIFP.algs;
 
 public class ItemCutException extends Exception {
 	/**

@@ -19,12 +19,17 @@ import common.problem.Instance;
  * @author thomas
  *
  */
-public class VSCIFPInstance extends Instance<VSCIFP> implements IOptimalCostAwareInstance {
+public class VSIFPInstance extends Instance<VSIFP> implements IOptimalCostAwareInstance {
+
+	public VSIFPInstance(VSIFP problem) {
+		super(problem);
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * This solution is used for creating the instance.
 	 */
-	private VSCIFPSolution optimalSolution;
+	private VSIFPSolution optimalSolution;
 
 	/**
 	 *	Bin Types (all different)

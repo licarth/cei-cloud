@@ -7,17 +7,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import VSCIFP.ItemCutException;
 import common.solution.ISolution;
 
 public class SolutionItem extends Item{
 
 	private int timesCut = 0;
 //	private ISolution solution;
-	private Item parent;
-	private SolutionItem filsG;
-	private SolutionItem filsD;
-	
+
 	public SolutionItem(int size) {
 		super(size);
 		// TODO Auto-generated constructor stub
@@ -63,8 +59,8 @@ public class SolutionItem extends Item{
 		filsG = new SolutionItem(this, where);
 		filsD = new SolutionItem(this, getSize() - where);
 		getRoot().countCut(); //Update times cut.
-		children.add(filsG);
-		children.add(filsD);
+		children.add((SolutionItem)filsG);
+		children.add((SolutionItem)filsD);
 		return children;
 	}
 	
@@ -93,10 +89,6 @@ public class SolutionItem extends Item{
 		} else return this;
 	}
 	
-	public Item getParent() {
-		return parent;
-	}
-	
 	public Item getOriginalItem(){
 		return getRoot().getParent();
 	}
@@ -117,33 +109,17 @@ public class SolutionItem extends Item{
 	private TreeSet<SolutionItem> getLeavesRecursive(TreeSet<SolutionItem> leaves){
 		
 		if (filsG != null){
-			leaves = filsG.getLeavesRecursive(leaves);
+			leaves = ((SolutionItem)filsG).getLeavesRecursive(leaves);
 		} else if (filsD == null){
 			leaves.add(this);
 			return leaves;
 		}
 		
 		if (filsD != null){
-			filsD.getLeavesRecursive(leaves);			
+			((SolutionItem)filsD).getLeavesRecursive(leaves);			
 		}
 		
 		return leaves;
-	}
-
-	public SolutionItem getFilsG() {
-		return filsG;
-	}
-
-	public void setFilsG(SolutionItem filsG) {
-		this.filsG = filsG;
-	}
-
-	public SolutionItem getFilsD() {
-		return filsD;
-	}
-
-	public void setFilsD(SolutionItem filsD) {
-		this.filsD = filsD;
 	}
 
 	public void setTimesCut(int timesCut) {

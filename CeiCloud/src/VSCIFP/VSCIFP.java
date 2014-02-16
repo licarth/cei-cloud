@@ -5,18 +5,19 @@ import common.problem.AbstractProblem;
 public class VSCIFP extends AbstractProblem{
 	
 	public VSCIFP(int maxBinCapacity, int typesOfBinCount, int itemMinSize,
-			int itemMaxSize, int maxNumSplits) {
+//			int itemMaxSize,
+			int maxNumSplits) {
 		super();
 		this.maxBinCapacity = maxBinCapacity;
 		this.typesOfBinCount = typesOfBinCount;
 		this.itemMinSize = itemMinSize;
-		this.itemMaxSize = itemMaxSize;
+//		this.itemMaxSize = itemMaxSize;
 		this.maxNumSplits = maxNumSplits;
 		checkFeasibility();
 	}
 	
 	private void checkFeasibility() {
-		if (maxBinCapacity * (maxNumSplits +1) < itemMaxSize) throw new RuntimeException("Problem is potentially not feasible.");
+//		if (binCapacity * (maxNumSplits +1) < itemMaxSize) throw new RuntimeException("Problem is potentially not feasible.");
 	}
 	
 
@@ -39,10 +40,10 @@ public class VSCIFP extends AbstractProblem{
 	 */
 	public int typesOfBinCount = 10; //m
 	
-	/**
-	 *	Item max size (constraint of problem definition).
-	 */
-	protected int itemMaxSize = 99; //NONE
+//	/**
+//	 *	Item max size (constraint of problem definition).
+//	 */
+//	protected int itemMaxSize = binCapacity; //NONE
 	
 	/**
 	 *	Item min size. (constraint of problem definition).
@@ -83,12 +84,12 @@ public class VSCIFP extends AbstractProblem{
 	}
 
 	public int getItemMaxSize() {
-		return itemMaxSize;
+		return maxBinCapacity * (maxNumSplits +1);
 	}
 
-	public void setItemMaxSize(int itemMaxSize) {
-		this.itemMaxSize = itemMaxSize;
-	}
+//	public void setItemMaxSize(int itemMaxSize) {
+//		this.itemMaxSize = itemMaxSize;
+//	}
 
 	public int getItemMinSize() {
 		return itemMinSize;

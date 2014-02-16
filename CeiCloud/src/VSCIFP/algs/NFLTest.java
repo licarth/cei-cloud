@@ -18,7 +18,7 @@ public class NFLTest {
 	@Test
 	public void test() throws InputDataException, OptimalCostNotKnownException {
 
-		final VSCIFP problem = new VSCIFP(10, 3, 0, 20, 1);
+		final VSCIFP problem = new VSCIFP(10, 3, 1, 1);
 		
 		VSCIFPGenerator genDiv = new VSCIFPGenerator(problem, 1000) {
 

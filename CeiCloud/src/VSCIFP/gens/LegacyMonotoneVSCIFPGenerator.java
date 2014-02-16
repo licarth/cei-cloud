@@ -3,22 +3,22 @@ package VSCIFP.gens;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import VSCIFP.Bin;
 import VSCIFP.BinType;
 import VSCIFP.VSCIFP;
 import VSCIFP.VSCIFPInstance;
 import VSCIFP.VSCIFPSolution;
-import VSCIFP.algs.Item;
 
 import common.Utils;
 import common.VizUtils;
 import common.problem.InputDataException;
 
-public class AlternateLinearVSCIFPGenerator extends VSCIFPGenerator{
+public class LegacyMonotoneVSCIFPGenerator extends VSCIFPGenerator{
 
-	public AlternateLinearVSCIFPGenerator(VSCIFP problem, int maxPackingCost) {
-		super(problem, maxPackingCost);
+	public LegacyMonotoneVSCIFPGenerator(VSCIFP problem) {
+		super(problem);
 	}
 
 	private int instanceCount = 0;
@@ -28,14 +28,27 @@ public class AlternateLinearVSCIFPGenerator extends VSCIFPGenerator{
 		instanceCount++;
 		//USES FIRSTFIT FOR NOW !
 		VSCIFPInstance i = new VSCIFPInstance(getProblem());
+		//Create the optimal Solution.
 		i.setOptimalSolution(new VSCIFPSolution(null, i));
-		
+
 		//For the largest bin, capacity = cost = binCapacity
 		i.binTypes.add(new BinType(getProblem().getMaxBinCapacity(), getProblem().getMaxBinCapacity()));
-		//For other bins, 
+		//For other bins,
 		while (i.binTypes.size() < getProblem().getTypesOfBinCount()) { // TODO Can last a while !
 			int n = nextInt(1, getProblem().getMaxBinCapacity() - 1); // uniform number in [1, binCapacity - 1].
 			i.binTypes.add(new BinType(n, n)); //Linear cost
+		}
+		
+//		On fixe maintenant les coûts de chaque bin. La plus grande coute sa capacité, puis on fixe les autres coûts en descendant.
+//		A descending iterator on binTypes collection
+		Iterator<BinType> descIt = i.binTypes.descendingIterator();
+		BinType prevBin = descIt.next();	// Biggest bin.
+		while (descIt.hasNext()) {
+			BinType currBin = descIt.next();
+//			System.out.println("["+prevBin.unitCost() * currBin.getCapacity()+","+prevBin.getCost()+"[");
+			currBin.setCost((int) Math.floor(nextDouble(prevBin.unitCost() * currBin.getCapacity(), prevBin.getCost())));
+//			System.out.println(currBin);
+			prevBin = currBin;
 		}
 		
 		//On ouvre une bin de chaque type.
@@ -55,13 +68,14 @@ public class AlternateLinearVSCIFPGenerator extends VSCIFPGenerator{
 			while(i.getOptimalSolution().getCost() < getMaxPackingCost()){
 				//Carry on...
 				//On insere des objets dans des boites online. Avec NF. On vise 100 boites utilisées.
-				final Item item = new Item(nextInt(getProblem().getItemMinSize(), getProblem().getItemMaxSize()));
-
+				final int item = nextInt(getProblem().getItemMinSize(), getProblem().getItemMaxSize());
+ 
+				//Let's fill those bins...
 				//Let's fill those bins...
 				while (openBinsIt.hasNext()) { //Always the case (cycling), but ok...
 					Bin bin = (Bin) openBinsIt.next();
 					if (bin.fits(item)) {
-						i.getOptimalSolution().addItemToBinForOptimalSolutionBuilding(bin, item);
+						i.getOptimalSolution().addItemToBin(bin, item);
 						//If full, close it:
 						if (bin.isFull())
 						{
@@ -74,7 +88,10 @@ public class AlternateLinearVSCIFPGenerator extends VSCIFPGenerator{
 				}
 
 				//oops, no bin found for this item, then close & flush bin of bestBinType.
-				BinType bestBinType = getBestBinForItem(i, item);
+				BinType bestBinType = getSmallestBinTypeWhereItemFits(i.binTypes, item);
+				//If there is no bin where item can be put, then chose the biggest one.
+				bestBinType = 
+				if (bestBinType == null) 
 				//Look for open bin of that type to close it.
 				openBinsIt = i.getOptimalSolution().getOpenBins().iterator();	//Reset Iterator to a normal it.
 				closeBin:
@@ -86,7 +103,7 @@ public class AlternateLinearVSCIFPGenerator extends VSCIFPGenerator{
 							if (!bin.isEmpty()) {
 								if (!bin.isFull()){
 									//Fill it with an item.
-									i.getOptimalSolution().addItemToBinForOptimalSolutionBuilding(bin, new Item(spaceLeft));
+									i.getOptimalSolution().addItemToBin(bin, spaceLeft);
 									//Bin is full
 									i.getOptimalSolution().addClosedBin(bin.copyToNewBin()); //Clears current bin. adds a copy of it to the closed bins list.
 								}
@@ -104,12 +121,12 @@ public class AlternateLinearVSCIFPGenerator extends VSCIFPGenerator{
 			if (!bin.isEmpty()) {
 				if (!bin.isFull()){
 					//Fill it with items.
-					while (bin.fits(new Item(getProblem().getItemMaxSize()))){
-						i.getOptimalSolution().addItemToBinForOptimalSolutionBuilding(bin, new Item(nextInt(getProblem().getItemMinSize(), getProblem().getItemMaxSize())));
+					while (bin.fits(getProblem().getItemMaxSize())){
+						i.getOptimalSolution().addItemToBin(bin, nextInt(getProblem().getItemMinSize(), getProblem().getItemMaxSize()));
 					}
 					if (!bin.isFull()){
 						int spaceLeft = bin.getSpaceLeft();
-						i.getOptimalSolution().addItemToBinForOptimalSolutionBuilding(bin, new Item(spaceLeft));
+						i.getOptimalSolution().addItemToBin(bin, spaceLeft);
 					}
 				}
 				i.getOptimalSolution().getBins().add(bin);
@@ -117,34 +134,20 @@ public class AlternateLinearVSCIFPGenerator extends VSCIFPGenerator{
 			}
 		}
 
-		System.out.println(i);
+//		System.out.println(i);
 		i.displayBinTypeRepartition(instanceCount);
-		VizUtils.drawHistogramItemsRepartition(i.getItemSizes(), getProblem().getItemMinSize(), getProblem().getItemMaxSize(), "", "-"+instanceCount);
+		VizUtils.drawHistogramItemsRepartition(i.getOptimalSolution().getItemSizes(), getProblem().getItemMinSize(), getProblem().getItemMaxSize(), "", "-"+instanceCount);
 		return i;
 	}
-	
-	
-	private BinType getSmallestBinTypeWhereItemFits(VSCIFPInstance ins, Item item){
+
+	private BinType getSmallestBinTypeWhereItemFits(Set<BinType> binTypes, Integer item){
 		BinType bestBinType = null;
-		for (BinType binType : ins.binTypes) {
+		for (BinType binType : binTypes) {
 			if (binType.fitsIfEmpty(item)) {
 				if (bestBinType == null) bestBinType = binType;
 				else if (binType.getCapacity() < bestBinType.getCapacity()) bestBinType = binType;
 			}
 		}
-		return bestBinType;
-	}
-	
-	private BinType getBestBinForItem(VSCIFPInstance ins, Item item){
-		BinType bestBinType = getSmallestBinTypeWhereItemFits(ins, item);
-		if (bestBinType != null) return bestBinType;
-		else
-			try {
-				bestBinType = ins.getBinTypeOfCapacity(ins.getProblem().getMaxBinCapacity());
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		return bestBinType;
 	}
 

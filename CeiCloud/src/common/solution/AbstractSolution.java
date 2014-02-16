@@ -34,4 +34,9 @@ public abstract class AbstractSolution<P extends IProblem, I extends IInstance<?
 		else throw new OptimalCostNotKnownException("This instance is not OptimalCost-aware.");
 	}
 	
+	@Override
+	public int compareTo(ISolution<P, I> o) {
+		return this.getCost() - o.getCost();
+	}
+	
 }

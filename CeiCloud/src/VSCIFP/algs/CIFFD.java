@@ -2,17 +2,14 @@ package VSCIFP.algs;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
-
-import com.google.common.collect.Iterators;
 
 import VSCIFP.Bin;
 import VSCIFP.BinType;
-import VSCIFP.ItemCutException;
 import VSCIFP.VSCIFP;
 import VSCIFP.VSCIFPInstance;
 import VSCIFP.VSCIFPSolution;
@@ -22,7 +19,9 @@ import binpacking.BPPSol;
 import binpacking.algs.NF;
 import common.Utils;
 import common.algorithm.Algorithm;
+import common.algorithm.OfflineAlgorithm;
 import common.problem.InputDataException;
+import common.solution.OptimalCostNotKnownException;
 
 /**
  * FF-style, tries biggest bins first. NOT THREAD-SAFE: Create one new instance of CIFFD per solver.
@@ -30,13 +29,13 @@ import common.problem.InputDataException;
  * @author thomas
  *
  */
-public class CIFFD extends Algorithm<VSCIFP, VSCIFPInstance>{
+public class CIFFD extends OfflineAlgorithm<VSCIFP, VSCIFPInstance>{
 
-	private List<VSCIFPSolution> solutions = new LinkedList<>();
-	
-	private List<Set<SolutionItem>> T = new LinkedList<Set<SolutionItem>>();
-	private List<Set<SolutionItem>> Tp = new LinkedList<Set<SolutionItem>>();
-	private List<Set<SolutionItem>> Tm = new LinkedList<Set<SolutionItem>>();
+	private List<VSCIFPSolution> solutions;
+
+	private List<Set<SolutionItem>> T;
+	private List<Set<SolutionItem>> Tp;
+	private List<Set<SolutionItem>> Tm;
 
 	private VSCIFPSolution sol;
 
@@ -44,8 +43,9 @@ public class CIFFD extends Algorithm<VSCIFP, VSCIFPInstance>{
 		T = new LinkedList<Set<SolutionItem>>();
 		Tp = new LinkedList<Set<SolutionItem>>();
 		Tm = new LinkedList<Set<SolutionItem>>();
+		solutions = new LinkedList<>();
 	}
-	
+
 	@Override
 	public VSCIFPSolution solve(VSCIFPInstance ins)
 			throws InputDataException {
@@ -53,7 +53,8 @@ public class CIFFD extends Algorithm<VSCIFP, VSCIFPInstance>{
 		T = new LinkedList<Set<SolutionItem>>();
 		Tp = new LinkedList<Set<SolutionItem>>();
 		Tm = new LinkedList<Set<SolutionItem>>();
-//		System.out.println(ins.getItems());
+		solutions = new LinkedList<>();
+		//		System.out.println(ins.getItems());
 
 		//T, Tp, Tm initialisation
 		for (int i =0; i < ins.getBinTypes().size(); i++) {
@@ -67,7 +68,7 @@ public class CIFFD extends Algorithm<VSCIFP, VSCIFPInstance>{
 		List<Bin> bins = new ArrayList<Bin>();
 		// Sort desc. (OFF-LINE ALG)
 		Utils.sortDesc(sol.getItems());
-//		List<SolutionItem> sortedItems = Utils.cloneItemList(ins.getItems());
+		//		List<SolutionItem> sortedItems = Utils.cloneItemList(ins.getItems());
 
 		//		int toPut = Utils.sumItems(sortedItems); //Counts how much we still have to put
 
@@ -82,36 +83,45 @@ public class CIFFD extends Algorithm<VSCIFP, VSCIFPInstance>{
 
 			//Pack items in T1p, put the remainders in T1m
 			packBig(ins, 0);
-//			System.out.println(Tm.get(0));
+			//			System.out.println(Tm.get(0));
 			//Pack items from T1 and T1m with BPP
 			packSmallToBPP(ins,0);
-//			System.out.println(sol);
-//			System.out.println(sol.getBins());
+			//			System.out.println(sol);
+			//			System.out.println(sol.getBins());
 			solutions.add(sol.clone());
-			System.out.println("j =0, " + sol);
+//			System.out.println("j =0, " + sol);
 			for (int j = 1; j < ins.getBinTypes().size(); j++) {
 				//Repack less filled bin.
 				unpackAndDivide(ins,j); //includes call to divide()
-				packBig(ins, j);
+				try{
+					packBig(ins, j);					
+				} catch (ItemCutException e1) {
+//					System.out.println("Packing at j="+j+" was impossible, because an item has reached the maximum number of cuts allowed.");
+//					System.out.println("Algorithm is going to return best known solution.");
+					break;
+				}
 				packSmallToBPP(ins, j);
-//				System.out.println(sol);
-//				System.out.println(sol.getBins());
+				//				System.out.println(sol);
+				//				System.out.println(sol.getBins());
 				solutions.add(sol.clone());
-				System.out.println("j ="+j +", "+ sol);
+//				System.out.println("j ="+j +", "+ sol);
 			}
 
-		} catch (ItemCutException e1) {
-			// TODO Auto-generated catch block
-			throw new RuntimeException(e1);
+//		} catch (ItemCutException e1) {
+//			// TODO Auto-generated catch block
+//			throw new RuntimeException(e1);
+		} catch (RemainderTooBigException e2){
+//			System.out.println("-- Remainder too big.");
+//			System.out.println("-- "+e2.getMessage());
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
-			System.out.println("Stopped because algorithm failed.");
-//			throw new RuntimeException(e1);
+//			System.out.println("----Stopped because algorithm failed.");
+			throw new RuntimeException(e1);
 		}
-		System.out.println(solutions);
+//		System.out.println(solutions);
 
 		//TODO return best solution.
-		
+		sol = Collections.min(solutions);
 		
 		//Repack what can be repacked.
 		int i = 0;
@@ -120,11 +130,19 @@ public class CIFFD extends Algorithm<VSCIFP, VSCIFPInstance>{
 				if (bin.getFillCount() <= newType.capacity && newType.capacity < bin.getType().capacity){
 					i = i+ (bin.getType().cost - newType.cost);
 					sol.setTotalCost(sol.getCost() - (bin.getType().cost - newType.cost));
+					try {
+						if (sol.getErrorRatio() < 1) {
+							System.out.println("problem");
+						}
+					} catch (OptimalCostNotKnownException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					bin.setType(newType);
 				}
 			}
 		}
-//		System.out.println("meilleur de "+i);
+		//		System.out.println("meilleur de "+i);
 		return sol;
 	}
 
@@ -143,7 +161,7 @@ public class CIFFD extends Algorithm<VSCIFP, VSCIFPInstance>{
 		//		System.out.println(T.get(j));
 		ArrayList<SolutionItem> union = new ArrayList<SolutionItem>();
 		union.addAll(Utils.union(T.get(j),Tm.get(j)));
-//				System.out.println(union);
+		//				System.out.println(union);
 		BPPSol s = (BPPSol) nf.solve(new BPPInstance(bpp, union));
 		//		System.out.println(s.getItemsInBins());
 
@@ -157,17 +175,18 @@ public class CIFFD extends Algorithm<VSCIFP, VSCIFPInstance>{
 		}
 	}
 
-	private void packBig(VSCIFPInstance ins, int j) throws ItemCutException  {
+	private void packBig(VSCIFPInstance ins, int j) throws ItemCutException, RemainderTooBigException  {
 		for (SolutionItem i : Tp.get(j)) {
 			List<SolutionItem> cutChildren = null;
-				BinType bt = ins.getBinTypeByIndex(j);
-				cutChildren = i.cut(ins.getProblem().getMaxNumSplits(), bt.getCapacity());
-				Bin newBin = new Bin(bt);
-				sol.addItemToBin(newBin, cutChildren.get(0));
-				//Bin is full
-				sol.addClosedBin(newBin);
-				//Put the remainder into T1m
-				Tm.get(j).add(cutChildren.get(1));
+			BinType bt = ins.getBinTypeByIndex(j);
+			cutChildren = i.cut(ins.getProblem().getMaxNumSplits(), bt.getCapacity());
+			Bin newBin = new Bin(bt);
+			sol.addItemToBin(newBin, cutChildren.get(0));
+			//Bin is full
+			sol.addClosedBin(newBin);
+			//Put the remainder into T1m. Ok only if remainder is smaller than bin bj ! Else throw exception.
+			if (cutChildren.get(1).getSize() > bt.capacity) throw new RemainderTooBigException("Bin capacity : "+bt.capacity+", remainder size : "+cutChildren.get(1)+".");
+			Tm.get(j).add(cutChildren.get(1));
 		}		
 	}
 

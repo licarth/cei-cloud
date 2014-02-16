@@ -2,16 +2,18 @@ package VSCIFP;
 
 import java.util.List;
 
+import VSCIFP.algs.CFFf;
 import VSCIFP.algs.CIFFD;
 import VSCIFP.algs.NFL;
 import VSCIFP.algs.NFLWithBinTypeOptimization;
 import VSCIFP.gens.LinearVSCIFPGenerator;
+
 import common.problem.InputDataException;
 import common.solution.OptimalCostNotKnownException;
 
 public class Main {
 	public static void main(String[] args) throws InputDataException, OptimalCostNotKnownException {
-		VSCIFP p = new VSCIFP(100, 3, 10, 20, 1);
+		VSCIFP p = new VSCIFP(100, 3, 1, 1);
 //		MonotoneVSCIFPGenerator gen = new MonotoneVSCIFPGenerator(p);
 		LinearVSCIFPGenerator gen = new LinearVSCIFPGenerator(p, 1000);
 		List<VSCIFPInstance> instances = gen.generateInstances(10);
@@ -33,6 +35,11 @@ public class Main {
 //			System.out.println(ins.getOptimalSolution().getCost());
 			VSCIFPSolution nflOptSol = nflOpt.solve(ins);
 			System.out.println("NFL OPT :\t"+nflOptSol.getCost()+" --> " +nflOptSol.getErrorRatio());
+
+			CFFf cfff = new CFFf(0.5);
+//			System.out.println(ins.getOptimalSolution().getCost());
+			VSCIFPSolution cfffSol = cfff.solve(ins);
+			System.out.println("CFFf :\t\t"+cfffSol.getCost()+" --> " +cfffSol.getErrorRatio());
 			System.out.println();
 			
 		}

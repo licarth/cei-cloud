@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import VSCIFP.ItemCutException;
-
 public class SolutionItemTest {
 
 	@Test
