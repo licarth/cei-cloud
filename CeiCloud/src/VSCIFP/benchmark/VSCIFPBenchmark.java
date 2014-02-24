@@ -3,7 +3,6 @@ package VSCIFP.benchmark;
 import VSCIFP.VSCIFP;
 import VSCIFP.VSCIFPInstance;
 import VSCIFP.gens.VSCIFPGenerator;
-
 import common.algorithm.Algorithm;
 import common.benchmark.BenchmarkStats;
 import common.benchmark.OptimalCostBenchmark;
@@ -27,7 +26,7 @@ public class VSCIFPBenchmark extends OptimalCostBenchmark<VSCIFP, VSCIFPInstance
 	}
 	
 	@Override
-	public BenchmarkStats<VSCIFP, VSCIFPInstance> run() {
+	public BenchmarkStats<VSCIFP, VSCIFPInstance> run() throws Exception {
 		
 		//Create instances
 		

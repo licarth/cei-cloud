@@ -11,8 +11,9 @@ public interface IBenchmark<P extends IProblem, A extends IAlgorithm<P, ? extend
 	/**
 	 * Runs the benchmark.
 	 * @return 
+	 * @throws Exception 
 	 */
-	BenchmarkStats<P, I> run() throws BenchmarkRunException;
+	BenchmarkStats<P, I> run() throws BenchmarkRunException, Exception;
 	
 	P getProblem();
 	A getAlgorithm();

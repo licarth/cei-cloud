@@ -30,7 +30,7 @@ implements IBenchmark<P,A,I,G>{
 	private A algorithm;
 	private G generator;
 	
-	public BenchmarkStats<P, I> run() {
+	public BenchmarkStats<P, I> run() throws Exception {
 		//Create instances
 		BenchmarkStats<P, I> bs = new BenchmarkStats<P,I>(this);
 		for (int j = 0; j < getRunCount(); j++) {

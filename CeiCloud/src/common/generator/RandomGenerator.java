@@ -24,9 +24,10 @@ public abstract class RandomGenerator<P extends IProblem, I extends IInstance<? 
 	/**
 	 * Generates one input instance of the problem.
 	 * @return
+	 * @throws Exception 
 	 * @throws BenchmarkRunException 
 	 */
-	abstract public I generateInstance() throws InputDataException;
+	abstract public I generateInstance() throws InputDataException, Exception;
 	
 	/**
 	 * Generates n instances of the problem, with one single seed.

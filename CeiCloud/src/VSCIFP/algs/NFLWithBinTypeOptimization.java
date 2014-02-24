@@ -12,10 +12,10 @@ import binpacking.BPP;
 import binpacking.BPPInstance;
 import binpacking.BPPSol;
 import binpacking.algs.NFD;
-
 import common.Utils;
 import common.algorithm.OfflineAlgorithm;
 import common.problem.InputDataException;
+import common.solution.OptimalCostNotKnownException;
 
 /**
  * FF-style, tries biggest bins first. NOT THREAD-SAFE: Create one new instance of CIFFD per solver.
@@ -80,6 +80,38 @@ public class NFLWithBinTypeOptimization extends OfflineAlgorithm<VSCIFP, VSCIFPI
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			throw new RuntimeException(e1);
+		}
+		try {
+			if (sol.getErrorRatio() < 1.0){
+				System.out.println(sol.getErrorRatio());
+				System.out.println(sol.getCost());
+				System.out.println(sol.getBins());
+				int total = 0;
+				int size = 0;
+				for (Bin bin : sol.getBins()) {
+					total += bin.getCost();
+					size += bin.getFillCount();
+				}
+				System.out.println("Total cost : " + total);
+				System.out.println("Total size : " + size);
+
+				
+				VSCIFPSolution optSol = ins.getOptimalSolution();
+				System.out.println(optSol.getCost());
+				System.out.println(optSol.getBins());
+				total = 0;
+				size = 0;
+				for (Bin bin : optSol.getBins()) {
+					total += bin.getCost();
+					size += bin.getFillCount();
+				}
+				System.out.println("Total opt cost : " + total);
+				System.out.println("Total opt size : " + size);
+				
+			}
+		} catch (OptimalCostNotKnownException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return sol;
 	}

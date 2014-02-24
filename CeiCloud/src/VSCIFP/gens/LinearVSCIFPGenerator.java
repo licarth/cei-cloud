@@ -1,6 +1,7 @@
 package VSCIFP.gens;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,7 +12,6 @@ import VSCIFP.VSCIFPInstance;
 import VSCIFP.VSCIFPSolution;
 import VSCIFP.algs.Item;
 import VSCIFP.algs.SolutionItem;
-
 import common.Utils;
 import common.problem.InputDataException;
 
@@ -45,6 +45,10 @@ public class LinearVSCIFPGenerator extends VSCIFPGenerator{
 		pasteItemsTogether();
 		
 		copyItemsList();
+		
+		Collections.shuffle(ins.getItems());
+//		ins.getItems()
+		
 //		System.out.println("Optimal solution item leaves : "+ins.getOptimalSolution().getItemLeaves());
 //		System.out.println("Instance getItems() after paste : "+ins.getItems());
 
@@ -97,11 +101,11 @@ public class LinearVSCIFPGenerator extends VSCIFPGenerator{
 //						System.out.println(item1.getTimesCut() +" et " +item2.getTimesCut());
 						
 						parent = new SolutionItem(item1.getSize()+item2.getSize());
+						parent.setTimesCut(item2.getTimesCut() + item1.getTimesCut() + 1);
 						parent.setFilsG(item1);
 						parent.setFilsD(item2);
 						item1.setParent(parent);
 						item2.setParent(parent);
-						parent.setTimesCut(item2.getTimesCut() + item1.getTimesCut() + 1);
 						
 						ins.getOptimalSolution().getItems().add(parent);
 						numberOfItemsPasted++;

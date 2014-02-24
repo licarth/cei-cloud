@@ -52,7 +52,9 @@ public class SolutionItem extends Item{
 	 */
 	public List<SolutionItem> cut(final int maxNumOfCuts, final int where) throws ItemCutException {
 		if (where == 0) throw new ItemCutException("Cannot cut at zero !");
-		if (where >= getSize()) throw new ItemCutException("Cannot cut over item size nor exactly at item size !");
+		if (where >= getSize()) {
+			throw new ItemCutException("Cannot cut over item size nor exactly at item size !");
+		}
 		if (this.getTimesCut() + 1 > maxNumOfCuts) 
 			throw new ItemCutException(String.format("Item can't be cut more than %s times !", maxNumOfCuts));
 		ArrayList<SolutionItem> children = new ArrayList<>();
@@ -124,6 +126,11 @@ public class SolutionItem extends Item{
 
 	public void setTimesCut(int timesCut) {
 		this.timesCut = timesCut;
+	}
+	
+	public boolean canBeCut(int maxNumOfCuts) {
+		if (maxNumOfCuts - getTimesCut() <=0) return false;
+		else return true;
 	}
 	
 }

@@ -24,7 +24,7 @@ public class OptimalUniformBPPGenerator extends NumItemsFixedBPPGenerator {
 
 	private ArrayList<Bin> bins = new ArrayList<Bin>();
 	
-	Random r = resetRandom();
+	Random r = reset();
 
 	@Override
 	public OptimalKnownBPPInstance generateInstance() {

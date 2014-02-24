@@ -132,7 +132,7 @@ public class CIFFD extends OfflineAlgorithm<VSCIFP, VSCIFPInstance>{
 					sol.setTotalCost(sol.getCost() - (bin.getType().cost - newType.cost));
 					try {
 						if (sol.getErrorRatio() < 1) {
-							System.out.println("problem");
+//							System.out.println("problem");
 						}
 					} catch (OptimalCostNotKnownException e1) {
 						// TODO Auto-generated catch block

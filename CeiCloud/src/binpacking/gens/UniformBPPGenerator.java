@@ -15,7 +15,7 @@ public class UniformBPPGenerator extends NumItemsFixedBPPGenerator {
 		super(problem, numberOfItems);
 	}
 
-	Random r = resetRandom();
+	Random r = reset();
 	
 	@Override
 	public BPPInstance generateInstance() {

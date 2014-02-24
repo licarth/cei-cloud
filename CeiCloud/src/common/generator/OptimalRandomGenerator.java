@@ -1,5 +1,6 @@
 package common.generator;
 
+import VSCIFP.algs.ItemCutException;
 import common.problem.IInstance;
 import common.problem.IOptimalCostAwareInstance;
 import common.problem.IProblem;
@@ -21,6 +22,6 @@ public abstract class OptimalRandomGenerator<P extends IProblem, I extends IInst
 	}
 
 	@Override
-	public abstract I generateInstance() throws InputDataException;
+	public abstract I generateInstance() throws Exception;
 	
 }

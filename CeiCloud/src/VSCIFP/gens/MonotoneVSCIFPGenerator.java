@@ -11,12 +11,10 @@ import VSCIFP.VSCIFPInstance;
 import VSCIFP.VSCIFPSolution;
 import VSCIFP.algs.Item;
 import VSCIFP.algs.SolutionItem;
-import common.Utils;
-import common.problem.InputDataException;
 
 public class MonotoneVSCIFPGenerator extends VSCIFPGenerator{
 
-//	private final static Logger LOGGER = Logger.getLogger(LinearVSCIFPGenerator.class);
+	//	private final static Logger LOGGER = Logger.getLogger(LinearVSCIFPGenerator.class);
 	public MonotoneVSCIFPGenerator(VSCIFP problem, int maxPackingCost) {
 		super(problem, maxPackingCost);
 	}
@@ -25,7 +23,7 @@ public class MonotoneVSCIFPGenerator extends VSCIFPGenerator{
 	private VSCIFPInstance ins;
 
 	@Override
-	public VSCIFPInstance generateInstance() throws InputDataException {
+	public VSCIFPInstance generateInstance() throws Exception {
 		instanceCount++;
 		//USES FIRSTFIT FOR NOW !
 
@@ -34,20 +32,20 @@ public class MonotoneVSCIFPGenerator extends VSCIFPGenerator{
 
 		initializeBinTypes();
 
-		initializeBins();
+//		initializeBins();
 
-//		System.out.println(ins);
+		//		System.out.println(ins);
 
 		fillBins();
 		closeNonEmptyBins();
 
 		pasteItemsTogether();
-		
-		copyItemsList();
-//		System.out.println("Optimal solution item leaves : "+ins.getOptimalSolution().getItemLeaves());
-//		System.out.println("Instance getItems() after paste : "+ins.getItems());
 
-//				System.out.println(ins);
+		copyItemsList();
+		//		System.out.println("Optimal solution item leaves : "+ins.getOptimalSolution().getItemLeaves());
+		//		System.out.println("Instance getItems() after paste : "+ins.getItems());
+
+		//				System.out.println(ins);
 		//		ins.displayBinTypeRepartition(instanceCount);
 		//		VizUtils.drawHistogramItemsRepartition(ins.getItemSizes(), getProblem().getItemMinSize(), getProblem().getItemMaxSize(), "", "-"+instanceCount);
 		return ins;
@@ -55,17 +53,17 @@ public class MonotoneVSCIFPGenerator extends VSCIFPGenerator{
 
 
 	private void copyItemsList() {
-//		System.out.println(ins.getItems());
+		//		System.out.println(ins.getItems());
 		for (SolutionItem item : ins.getOptimalSolution().getItems()) {
 			Item rootItem = new Item(item.getSize());
 			item.setParent(rootItem);
 			ins.getItems().add(rootItem);
-//			System.out.println(ins.getItems());
+			//			System.out.println(ins.getItems());
 		}
-		
-//		for (SolutionItem item : ins.getOptimalSolution().getItems()) {
-//			if (item.getParent() == null) System.out.println("Parent null");
-//		}
+
+		//		for (SolutionItem item : ins.getOptimalSolution().getItems()) {
+		//			if (item.getParent() == null) System.out.println("Parent null");
+		//		}
 	}
 
 
@@ -89,36 +87,52 @@ public class MonotoneVSCIFPGenerator extends VSCIFPGenerator{
 				item1 = ins.getOptimalSolution().getItems().remove(i1);
 				SolutionItem parent = null;
 				SolutionItem item2 = null;
+
+//				if (item1.getSize() > (item1.getTimesCut() + 1) * 100){
+//					System.out.println(item1.getTimesCut() + " times, size = "+item1.getSize());
+//				}
+				
 				for (SolutionItem i : ins.getOptimalSolution().getItems()) {
 					item2 = i;
+
 					if (item2.getTimesCut() + item1.getTimesCut() < ins.getProblem().getMaxNumSplits()) {
+
+						if (item2.getSize() > (item2.getTimesCut() + 1) * 100){
+							System.out.println("item2 "+item2.getTimesCut() + " times, size = "+item2.getSize());
+						}
 						
-//						System.out.println(item1.getTimesCut() +" et " +item2.getTimesCut());
-						
+						//						System.out.println(item1.getTimesCut() +" et " +item2.getTimesCut());
+
 						parent = new SolutionItem(item1.getSize()+item2.getSize());
+						//First update times cut counter !
+						parent.setTimesCut(item2.getTimesCut() + item1.getTimesCut() + 1);
 						parent.setFilsG(item1);
 						parent.setFilsD(item2);
 						item1.setParent(parent);
 						item2.setParent(parent);
-						parent.setTimesCut(item2.getTimesCut() + item1.getTimesCut() + 1);
+
+//						if (parent.getSize() > (parent.getTimesCut() + 1) * 100){
+//							System.out.println(parent.getTimesCut() + " times, size = "+parent.getSize());
+//						}
 						
 						ins.getOptimalSolution().getItems().add(parent);
 						numberOfItemsPasted++;
+						
 						break;
 					}
 				}
 				if (parent == null) {
 					ins.getOptimalSolution().getItems().add(item1);
-//					ins.getItems().add(item2);
+					//					ins.getItems().add(item2);
 				} else {
 					ins.getOptimalSolution().getItems().remove(item2);
 				}
 			} else {
 				//It item1 not chosen...
-//				ins.getItems().add(item1);
+				//				ins.getItems().add(item1);
 			}
 		}
-//		System.out.println("Number of items pasted : "+numberOfItemsPasted);
+		//		System.out.println("Number of items pasted : "+numberOfItemsPasted);
 	}
 
 
@@ -148,60 +162,53 @@ public class MonotoneVSCIFPGenerator extends VSCIFPGenerator{
 	/**
 	 * Core method of algorithm designed to fill the bins.
 	 * 
-	 * @throws InputDataException
+	 * Fills big bins cutting items to make them fit. Then adapt last bin to best bin size among available bin sizes.
+	 * @throws Exception 
 	 */
-	private void fillBins() throws InputDataException {
-		//Cycling bounded Iterator used for openBins
-		Iterator<Bin> openBinsIt = Utils.oneCycleIt(ins.getOptimalSolution().getOpenBins(), 0);
+	private void fillBins() throws Exception {
+
+		Bin currentOpenBin = new Bin(ins.getBinTypeOfMaxCapacity());
 
 		//On remplit les sacs avec des objets jusqu'à ce que le prix du packing vale getMaxPackingCost().
 		fill:
 			while(ins.getOptimalSolution().getCost() < getMaxPackingCost()){
-				//Carry on...
 				//On insere des objets dans des boites online. Avec NF. On vise 100 boites utilisées.
 				final SolutionItem item = new SolutionItem(nextInt(getProblem().getItemMinSize(), getProblem().getMaxBinCapacity()));
 
-				//Let's fill those bins...
-				while (openBinsIt.hasNext()) { //Always the case (cycling), but ok...
-					Bin bin = (Bin) openBinsIt.next();
-					if (bin.fits(item)) {
-						ins.getOptimalSolution().addItemToBinForOptimalSolutionBuilding(bin, item);
-						//If full, close it:
-						if (bin.isFull()) {
-							ins.getOptimalSolution().addClosedBin(bin.copyToNewBin().close()); //Clears current bin. add a copy of it to the closed bins list.
-						}
-						//Reinitialize iterator to same position+1. Attention! indexOf is ok because openbins is small !
-						openBinsIt = Utils.oneCycleIt(ins.getOptimalSolution().getOpenBins(), ins.getOptimalSolution().getOpenBins().indexOf(bin)+1);
-						continue fill;
-					}
+				//First time an item does not fit into last bin, we stop.
+				if (ins.getOptimalSolution().getCost() >= getMaxPackingCost() && currentOpenBin.getSpaceLeft() < item.getSize()){
+					break fill;
 				}
 
-				//oops, no bin found for this item, then close & flush bin of bestBinType.
-				BinType bestBinType = getBestBinForItem(ins, item);
-				//Look for open bin of that type to close it.
-				openBinsIt = ins.getOptimalSolution().getOpenBins().iterator();	//Reset Iterator to a normal it.
-				closeBin:
-					while (openBinsIt.hasNext()){
-						Bin bin = openBinsIt.next();
-						if (bin.getType().equals(bestBinType)){
-							//Fill it and close it
-							int spaceLeft = bin.getSpaceLeft();
-							if (!bin.isEmpty()) {
-								if (!bin.isFull()){
-									//Fill it with an item.
-									ins.getOptimalSolution().addItemToBinForOptimalSolutionBuilding(bin, new SolutionItem(spaceLeft));
-									//Bin is full
-									ins.getOptimalSolution().addClosedBin(bin.copyToNewBin()); //Clears current bin. adds a copy of it to the closed bins list.
-								}
-							}
-							//Reinitialize iterator to same position+1. Attention! indexOf is ok because openbins is small !
-							openBinsIt = Utils.oneCycleIt(ins.getOptimalSolution().getOpenBins(), ins.getOptimalSolution().getOpenBins().indexOf(bin)+1);
-							continue fill;	//We added the new needed bin and put the item in it.
-						}
+				if (currentOpenBin.getSpaceLeft() >= item.getSize()){
+					//	Item fits.
+					ins.getOptimalSolution().addItemToBinForOptimalSolutionBuilding(currentOpenBin, item);
+					if (currentOpenBin.isFull()){
+						ins.getOptimalSolution().addClosedBin(currentOpenBin);
+						currentOpenBin = new Bin(ins.getBinTypeOfMaxCapacity());
 					}
-				//Throw exception
-				throw new InputDataException("Code should not be reached");
+
+				} else if ((item.getSize() - currentOpenBin.getSpaceLeft()) < (ins.getProblem().getMaxNumSplits())*currentOpenBin.getType().getCapacity()) {
+
+					//	Then fill current bin, close it, and open new bins for remaining pieces.
+					List<SolutionItem> children = item.cut(ins.getProblem().getMaxNumSplits(), currentOpenBin.getSpaceLeft());
+					ins.getOptimalSolution().addItemToBinForOptimalSolutionBuilding(currentOpenBin, children.get(0));
+
+					if (currentOpenBin.isFull()){
+						ins.getOptimalSolution().addClosedBin(currentOpenBin);
+						currentOpenBin = new Bin(ins.getBinTypeOfMaxCapacity());
+					}
+
+
+				} else {
+					//	Item has to be put in a brand new bin. Close this one, open a new one.
+					throw new Exception("Code should never be reached.");
+				}
 			}
+
+		//Last bin has to be closed.
+		ins.getOptimalSolution().addItemToBinForOptimalSolutionBuilding(currentOpenBin, new SolutionItem(currentOpenBin.getSpaceLeft()));
+		ins.getOptimalSolution().addClosedBin(currentOpenBin);
 	}
 
 
@@ -228,16 +235,16 @@ public class MonotoneVSCIFPGenerator extends VSCIFPGenerator{
 			int n = nextInt(1, getProblem().getMaxBinCapacity() - 1); // uniform number in [1, binCapacity - 1].
 			ins.binTypes.add(new BinType(n, n)); //Linear cost
 		}
-		
-//		On fixe maintenant les coûts de chaque bin. La plus grande coute sa capacité, puis on fixe les autres coûts en descendant.
-//		A descending iterator on binTypes collection
+
+		//		On fixe maintenant les coûts de chaque bin. La plus grande coute sa capacité, puis on fixe les autres coûts en descendant.
+		//		A descending iterator on binTypes collection
 		Iterator<BinType> descIt = ins.binTypes.descendingIterator();
 		BinType prevBin = descIt.next();	// Biggest bin.
 		while (descIt.hasNext()) {
 			BinType currBin = descIt.next();
-//			System.out.println("["+prevBin.unitCost() * currBin.getCapacity()+","+prevBin.getCost()+"[");
+			//			System.out.println("["+prevBin.unitCost() * currBin.getCapacity()+","+prevBin.getCost()+"[");
 			currBin.setCost((int) Math.floor(nextDouble(prevBin.unitCost() * currBin.getCapacity(), prevBin.getCost())));
-//			System.out.println(currBin);
+			//			System.out.println(currBin);
 			prevBin = currBin;
 		}
 	}

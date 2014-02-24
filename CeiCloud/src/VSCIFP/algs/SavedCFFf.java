@@ -1,6 +1,5 @@
 package VSCIFP.algs;
 
-import java.sql.NClob;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -21,11 +20,11 @@ import common.problem.InputDataException;
  * @author thomas
  *
  */
-public class CFFf extends Algorithm<VSCIFP, VSCIFPInstance>{
+public class SavedCFFf extends Algorithm<VSCIFP, VSCIFPInstance>{
 
 	private double f;
 
-	public CFFf(double f) {
+	public SavedCFFf(double f) {
 		if (f<0 || f>1) throw new RuntimeException("Fill factor has to be between 0 and 1");
 		this.f = f;
 	}
@@ -62,40 +61,24 @@ public class CFFf extends Algorithm<VSCIFP, VSCIFPInstance>{
 							currentNFCBin = openBin(ins.getBinTypeOfMaxCapacity());
 						}
 
-						SolutionItem nfcItem = item;
-						nfc:
-							while(true) {
-								//NFC START
-								if (currentNFCBin.fits(item)){
-									currentNFCBin.add(item);
+						//NFC START
+						if (currentNFCBin.fits(item)){
+							currentNFCBin.add(item);
 
-								} else {
-									if (!nfcItem.canBeCut(ins.getProblem().getMaxNumSplits())){
-										//ex : zero cuts allowed and currentNFCBin is not empty.
-										//Open a new bin for nfc without closing the former currentNFCBin. 
-										currentNFCBin = openBin(ins.getBinTypeOfMaxCapacity());
-										currentNFCBin.add(nfcItem);
-									} else {
-										List<SolutionItem> children = nfcItem.cut(ins.getProblem().getMaxNumSplits(), currentNFCBin.getSpaceLeft());
-										//Create new bin for nfc.
-										currentNFCBin.add(children.get(0));
-										closeAndRemoveBin(currentNFCBin);
-										currentNFCBin = openBin(ins.getBinTypeOfMaxCapacity());
-										if (children.get(1).getSize() <= currentNFCBin.getSpaceLeft()) {
-											currentNFCBin.add(children.get(1));
-										} else {
-											nfcItem = children.get(1);
-											continue nfc;
-										}
-									}
-								}
-								if (currentNFCBin.isFull()){
-									//Close it and open a new one of same type.
-									closeAndRemoveBin(currentNFCBin);
-									currentNFCBin = null;	//We don't explicitely open a new bin of that type.
-								}
-								continue iterateItems;
-							}
+						} else {
+							List<SolutionItem> children = item.cut(ins.getProblem().getMaxNumSplits(), currentNFCBin.getSpaceLeft());
+							//Create new bin for nfc.
+							currentNFCBin.add(children.get(0));
+							closeAndRemoveBin(currentNFCBin);
+							currentNFCBin = openBin(ins.getBinTypeOfMaxCapacity());
+							currentNFCBin.add(children.get(1));
+						}
+						if (currentNFCBin.isFull()){
+							//Close it and open a new one of same type.
+							closeAndRemoveBin(currentNFCBin);
+							currentNFCBin = null;	//We don't explicitely open a new bin of that type.
+						}
+						continue iterateItems;
 					} else {
 						//item from A+
 						List<SolutionItem> children = item.cut(ins.getProblem().getMaxNumSplits(), ins.getBinTypeOfMaxCapacity().capacity);
@@ -149,7 +132,7 @@ public class CFFf extends Algorithm<VSCIFP, VSCIFPInstance>{
 			// TODO Auto-generated catch block
 			throw new RuntimeException(e);
 		}
-
+		
 		//Close open bins.
 		for (Bin bin : openBins) {
 			if (!bin.isEmpty()){
@@ -157,7 +140,7 @@ public class CFFf extends Algorithm<VSCIFP, VSCIFPInstance>{
 			}
 		}
 		openBins.clear();
-
+		
 		//Populate solution:
 		sol.setItems(items);
 		sol.setBins(new HashSet<>(closedBins));
@@ -166,7 +149,7 @@ public class CFFf extends Algorithm<VSCIFP, VSCIFPInstance>{
 			totalCost += bin.getCost();
 		}
 		sol.setTotalCost(totalCost);
-
+		
 		return sol;
 	}
 

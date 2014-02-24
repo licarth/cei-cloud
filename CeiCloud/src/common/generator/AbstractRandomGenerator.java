@@ -40,7 +40,7 @@ public abstract class AbstractRandomGenerator<P extends IProblem, I extends IIns
 		return random;
 	}
 	
-	public Random resetRandom() {
+	public Random reset() {
 		random.setSeed(SEED);
 		return random;
 	}

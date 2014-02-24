@@ -1,7 +1,5 @@
 package VSCIFP.algs.test;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.TreeSet;
 
 import org.junit.Test;
@@ -12,10 +10,11 @@ import VSCIFP.VSCIFPInstance;
 import VSCIFP.algs.CIFFD;
 import VSCIFP.algs.Item;
 import VSCIFP.gens.VSCIFPGenerator;
+
 import common.problem.InputDataException;
 
 public class CIFFDTest {
-	final VSCIFP problem = new VSCIFP(20, 3, 1, 20, 1);
+	final VSCIFP problem = new VSCIFP(20, 3, 1, 1);
 	final CIFFD ciffd = new CIFFD();
 	
 	/**

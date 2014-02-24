@@ -18,7 +18,7 @@ public class NFLTest {
 	@Test
 	public void test() throws InputDataException, OptimalCostNotKnownException {
 
-		final VSCIFP problem = new VSCIFP(10, 3, 1, 1);
+		final VSCIFP problem = new VSCIFP(10, 2, 1, 1);
 		
 		VSCIFPGenerator genDiv = new VSCIFPGenerator(problem, 1000) {
 
@@ -30,34 +30,38 @@ public class NFLTest {
 //					add(new BinType(20, 20));
 					add(new BinType(8, 8));
 					//					add(new BinType(10, 10));
-					add(new BinType(5, 5));
+					add(new BinType(4, 4));
 				}};
 				instance.getItems().add(new Item(16));
-				instance.getItems().add(new Item(14));
-				instance.getItems().add(new Item(10));
-				instance.getItems().add(new Item(14));
-				instance.getItems().add(new Item(14));
-				instance.getItems().add(new Item(5));
-				instance.getItems().add(new Item(6));
-				instance.getItems().add(new Item(7));
-				instance.getItems().add(new Item(8));
+//				instance.getItems().add(new Item(14));
+//				instance.getItems().add(new Item(10));
+//				instance.getItems().add(new Item(14));
+//				instance.getItems().add(new Item(14));
+//				instance.getItems().add(new Item(5));
+//				instance.getItems().add(new Item(6));
+//				instance.getItems().add(new Item(7));
+//				instance.getItems().add(new Item(8));
 				instance.getItems().add(new Item(4));
-				instance.getItems().add(new Item(12));
-				instance.getItems().add(new Item(10));
-				instance.getItems().add(new Item(12));
-				instance.getItems().add(new Item(12));
-				instance.getItems().add(new Item(12));
-				instance.getItems().add(new Item(12));
-				instance.getItems().add(new Item(10));
-				instance.getItems().add(new Item(10));
+				instance.getItems().add(new Item(2));
+				instance.getItems().add(new Item(2));
+//				instance.getItems().add(new Item(12));
+//				instance.getItems().add(new Item(10));
+//				instance.getItems().add(new Item(12));
+//				instance.getItems().add(new Item(12));
+//				instance.getItems().add(new Item(12));
+//				instance.getItems().add(new Item(12));
+//				instance.getItems().add(new Item(10));
+//				instance.getItems().add(new Item(10));
 				return instance;
 			}
 		};
 
 		NFL nfl = new NFL();
-		System.out.println(nfl.solve(genDiv.generateInstance()));
-		NFLWithBinTypeOptimization nflOpt = new NFLWithBinTypeOptimization();
-		System.out.println(nflOpt.solve(genDiv.generateInstance()));
+		CIFFD ciffd = new CIFFD();
+		System.out.println(ciffd.solve(genDiv.generateInstance()));
+//		ciffd.solve(ins)
+//		NFLWithBinTypeOptimization nflOpt = new NFLWithBinTypeOptimization();
+//		System.out.println(nflOpt.solve(genDiv.generateInstance()));
 		
 		
 

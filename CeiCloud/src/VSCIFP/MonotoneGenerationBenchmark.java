@@ -10,7 +10,7 @@ import VSCIFP.gens.MonotoneVSCIFPGenerator;
 
 public class MonotoneGenerationBenchmark {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 
 		VSCIFP p = new VSCIFP(100, 20, 1, 1);

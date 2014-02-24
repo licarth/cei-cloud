@@ -1,8 +1,8 @@
 package VSCIFP;
 
-import common.benchmark.BenchmarkStats;
 import VSCIFP.algs.CFFf;
 import VSCIFP.algs.CIFFD;
+import VSCIFP.algs.CNFL2;
 import VSCIFP.algs.NFL;
 import VSCIFP.algs.NFLWithBinTypeOptimization;
 import VSCIFP.benchmark.VSCIFPBenchmark;
@@ -10,34 +10,45 @@ import VSCIFP.gens.LinearVSCIFPGenerator;
 
 public class LinearGenerationBenchmark {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 
 		VSCIFP p = new VSCIFP(100, 3, 1, 1);
-		LinearVSCIFPGenerator linGen = new LinearVSCIFPGenerator(p, 1000);
+		LinearVSCIFPGenerator gen = new LinearVSCIFPGenerator(p, 1000);
+//		MonotoneVSCIFPGenerator gen = new MonotoneVSCIFPGenerator(p, 1000);
 		
-		int nRuns = 100;
+		int nRuns = 1000;
 		
 		CIFFD ciffd = new CIFFD();
 		NFL nfl = new NFL();
+		CNFL2 cnfl2 = new CNFL2();
 		NFLWithBinTypeOptimization nflOpt = new NFLWithBinTypeOptimization();
 		CFFf cfff = new CFFf(0.5);
+//		SavedCFFf cfffSaved = new SavedCFFf(0.5);
 		
-		VSCIFPBenchmark benchmarkCIFFD = new VSCIFPBenchmark(p, ciffd, linGen, nRuns);
-		BenchmarkStats<VSCIFP, VSCIFPInstance> stats = benchmarkCIFFD.run();
-		System.out.println(stats);
+		gen.reset();
+		System.out.println(new VSCIFPBenchmark(p, ciffd, gen, nRuns).run());
+//		
+////		gen.reset();
+////		System.out.println(new VSCIFPBenchmark(p, ciffd, gen, nRuns).run());
+//
+		gen.reset();
+		System.out.println(new VSCIFPBenchmark(p, nfl, gen, nRuns).run());
+
+		gen.reset();
+		System.out.println(new VSCIFPBenchmark(p, cnfl2, gen, nRuns).run());
+//		
+		gen.reset();
+		System.out.println(new VSCIFPBenchmark(p, nflOpt, gen, nRuns).run());
+//		
+//		gen.reset();
+//		System.out.println(new VSCIFPBenchmark(p, cfff, gen, nRuns).run());
+
+		gen.reset();
+		System.out.println(new VSCIFPBenchmark(p, cfff, gen, nRuns).run());
 		
-		VSCIFPBenchmark benchmarkNFL = new VSCIFPBenchmark(p, nfl, linGen, nRuns);
-		BenchmarkStats<VSCIFP, VSCIFPInstance> stats2 = benchmarkNFL.run();
-		System.out.println(stats2);
-		
-		VSCIFPBenchmark benchmarkNFLOPT = new VSCIFPBenchmark(p, nflOpt, linGen, nRuns);
-		BenchmarkStats<VSCIFP, VSCIFPInstance> stats3 = benchmarkNFLOPT.run();
-		System.out.println(stats3);
-		
-		VSCIFPBenchmark benchmarkCFFf = new VSCIFPBenchmark(p, cfff, linGen, nRuns);
-		BenchmarkStats<VSCIFP, VSCIFPInstance> stats4 = benchmarkCFFf.run();
-		System.out.println(stats4);
+//		gen.reset();
+//		System.out.println(new VSCIFPBenchmark(p, cfffSaved, gen, nRuns).run());
 		
 	}
 
