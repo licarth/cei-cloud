@@ -89,40 +89,40 @@ public class CIFFD extends OfflineAlgorithm<VSCIFP, VSCIFPInstance>{
 			//			System.out.println(sol);
 			//			System.out.println(sol.getBins());
 			solutions.add(sol.clone());
-//			System.out.println("j =0, " + sol);
+			//			System.out.println("j =0, " + sol);
 			for (int j = 1; j < ins.getBinTypes().size(); j++) {
 				//Repack less filled bin.
 				unpackAndDivide(ins,j); //includes call to divide()
 				try{
 					packBig(ins, j);					
 				} catch (ItemCutException e1) {
-//					System.out.println("Packing at j="+j+" was impossible, because an item has reached the maximum number of cuts allowed.");
-//					System.out.println("Algorithm is going to return best known solution.");
+					//					System.out.println("Packing at j="+j+" was impossible, because an item has reached the maximum number of cuts allowed.");
+					//					System.out.println("Algorithm is going to return best known solution.");
 					break;
 				}
 				packSmallToBPP(ins, j);
 				//				System.out.println(sol);
 				//				System.out.println(sol.getBins());
 				solutions.add(sol.clone());
-//				System.out.println("j ="+j +", "+ sol);
+				//				System.out.println("j ="+j +", "+ sol);
 			}
 
-//		} catch (ItemCutException e1) {
-//			// TODO Auto-generated catch block
-//			throw new RuntimeException(e1);
+			//		} catch (ItemCutException e1) {
+			//			// TODO Auto-generated catch block
+			//			throw new RuntimeException(e1);
 		} catch (RemainderTooBigException e2){
-//			System.out.println("-- Remainder too big.");
-//			System.out.println("-- "+e2.getMessage());
+			//			System.out.println("-- Remainder too big.");
+			//			System.out.println("-- "+e2.getMessage());
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
-//			System.out.println("----Stopped because algorithm failed.");
+			//			System.out.println("----Stopped because algorithm failed.");
 			throw new RuntimeException(e1);
 		}
-//		System.out.println(solutions);
+		//		System.out.println(solutions);
 
 		//TODO return best solution.
 		sol = Collections.min(solutions);
-		
+
 		//Repack what can be repacked.
 		int i = 0;
 		for (Bin bin : sol.getBins()) {
@@ -132,7 +132,7 @@ public class CIFFD extends OfflineAlgorithm<VSCIFP, VSCIFPInstance>{
 					sol.setTotalCost(sol.getCost() - (bin.getType().cost - newType.cost));
 					try {
 						if (sol.getErrorRatio() < 1) {
-//							System.out.println("problem");
+							//							System.out.println("problem");
 						}
 					} catch (OptimalCostNotKnownException e1) {
 						// TODO Auto-generated catch block
@@ -142,6 +142,11 @@ public class CIFFD extends OfflineAlgorithm<VSCIFP, VSCIFPInstance>{
 				}
 			}
 		}
+
+		for (Bin bin : sol.getBins()) {
+			if(bin.getSpaceLeft() < 0) throw new RuntimeException("Space left < 0 !");
+		}
+
 		//		System.out.println("meilleur de "+i);
 		return sol;
 	}
@@ -175,18 +180,26 @@ public class CIFFD extends OfflineAlgorithm<VSCIFP, VSCIFPInstance>{
 		}
 	}
 
+
+
 	private void packBig(VSCIFPInstance ins, int j) throws ItemCutException, RemainderTooBigException  {
 		for (SolutionItem i : Tp.get(j)) {
 			List<SolutionItem> cutChildren = null;
 			BinType bt = ins.getBinTypeByIndex(j);
-			cutChildren = i.cut(ins.getProblem().getMaxNumSplits(), bt.getCapacity());
-			Bin newBin = new Bin(bt);
-			sol.addItemToBin(newBin, cutChildren.get(0));
-			//Bin is full
-			sol.addClosedBin(newBin);
+			SolutionItem remainder;
+			do {
+				cutChildren = i.cut(ins.getProblem().getMaxNumSplits(), bt.getCapacity());
+				Bin newBin = new Bin(bt);
+				sol.addItemToBin(newBin, cutChildren.get(0));
+				//Bin is full
+				sol.addClosedBin(newBin);
+				remainder = cutChildren.get(1);
+
+			} while (remainder.getSize() > bt.capacity);
+
 			//Put the remainder into T1m. Ok only if remainder is smaller than bin bj ! Else throw exception.
-			if (cutChildren.get(1).getSize() > bt.capacity) throw new RemainderTooBigException("Bin capacity : "+bt.capacity+", remainder size : "+cutChildren.get(1)+".");
-			Tm.get(j).add(cutChildren.get(1));
+			if (remainder.getSize() > bt.capacity) throw new RemainderTooBigException("Bin capacity : "+bt.capacity+", remainder size : "+cutChildren.get(1)+".");
+			Tm.get(j).add(remainder);
 		}		
 	}
 
