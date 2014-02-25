@@ -98,13 +98,20 @@ public class CFFf extends Algorithm<VSCIFP, VSCIFPInstance>{
 							}
 					} else {
 						//item from A+
-						List<SolutionItem> children = item.cut(ins.getProblem().getMaxNumSplits(), ins.getBinTypeOfMaxCapacity().capacity);
-						//Create new bin of capacity bmax and close it.
-						Bin newBMaxBin = new Bin(ins.getBinTypeOfMaxCapacity());
-						newBMaxBin.add(children.get(0));
-						closedBins.add(newBMaxBin);
-						//Keep remainder.
-						remainder = children.get(1);
+						List<SolutionItem> children;
+						remainder = item;
+						
+						do {
+							children = remainder.cut(ins.getProblem().getMaxNumSplits(), ins.getBinTypeOfMaxCapacity().capacity);
+							//Create new bin of capacity bmax and close it.
+							Bin newBin = new Bin(ins.getBinTypeOfMaxCapacity());
+							newBin.add(children.get(0));
+							//Bin is full
+							closedBins.add(newBin);
+							sol.addItemToBin(newBin, children.get(0));
+							//Keep remainder.
+							remainder = children.get(1);
+						} while (remainder.getSize() > ins.getBinTypeOfMaxCapacity().capacity);
 					}
 
 					//Here remainder has to be not null
