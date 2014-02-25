@@ -6,16 +6,16 @@ import VSCIFP.algs.CNFL2;
 import VSCIFP.algs.NFL;
 import VSCIFP.algs.NFLWithBinTypeOptimization;
 import VSCIFP.benchmark.VSCIFPBenchmark;
-import VSCIFP.gens.LinearVSCIFPGenerator;
+import VSCIFP.gens.MonotoneVSCIFPGenerator;
 
 public class LinearGenerationBenchmark {
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 
-		VSCIFP p = new VSCIFP(100, 3, 1, 1);
-		LinearVSCIFPGenerator gen = new LinearVSCIFPGenerator(p, 1000);
-//		MonotoneVSCIFPGenerator gen = new MonotoneVSCIFPGenerator(p, 1000);
+		VSCIFP p = new VSCIFP(100, 10, 1, 1);
+//		LinearVSCIFPGenerator gen = new LinearVSCIFPGenerator(p, 1000);
+		MonotoneVSCIFPGenerator gen = new MonotoneVSCIFPGenerator(p, 1000);
 		
 		int nRuns = 1000;
 		
