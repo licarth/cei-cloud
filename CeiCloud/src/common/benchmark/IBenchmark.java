@@ -3,7 +3,6 @@ package common.benchmark;
 import common.algorithm.IAlgorithm;
 import common.generator.IGenerator;
 import common.problem.IInstance;
-import common.problem.IOptimalCostAwareInstance;
 import common.problem.IProblem;
 
 public interface IBenchmark<P extends IProblem, A extends IAlgorithm<P, ? extends IInstance<? extends P>>,

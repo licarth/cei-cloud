@@ -7,36 +7,22 @@ import common.problem.IProblem;
 
 public class BenchmarkStats<P extends IProblem, I extends IInstance<? extends P>> {
 	
+	public DescriptiveStatistics stats = new DescriptiveStatistics();
+	
 	public BenchmarkStats(IBenchmark bench) {
 		this.bench = bench;
 	}
 	
 	IBenchmark bench;
 	
-	DescriptiveStatistics ratios = new DescriptiveStatistics();
-
-	public void addRatio(double ratio){
-		ratios.addValue(ratio);
+	public double getEpsilon() {
+		return 1.96*stats.getStandardDeviation()/Math.sqrt(stats.getN());
 	}
 	
-	public String toString() {
-		
-		StringBuffer sb = new StringBuffer();
-
-		
-		
-		sb.append("{");
-		sb.append("problem: "+ bench.getProblem().getClass().getSimpleName());
-		sb.append(", ");
-		sb.append("algorithm: "+ bench.getAlgorithm().getClass().getSimpleName());
-		sb.append(", ");
-		sb.append("mean: "+ratios.getMean());
-		sb.append(", ");
-		sb.append("best: "+ratios.getMin());
-		sb.append(", ");
-		sb.append("worse: "+ratios.getMax());
-		sb.append("}");
-		
-		return sb.toString();
-	};
+	public double get2Epsilon() {
+		return 2*1.96*stats.getStandardDeviation()/Math.sqrt(stats.getN());
+	}
+	
+	
+	
 }

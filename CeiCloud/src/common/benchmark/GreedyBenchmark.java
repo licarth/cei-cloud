@@ -21,7 +21,7 @@ public abstract class GreedyBenchmark<P extends IProblem, I extends IInstance<P>
 	private G generator;
 	
 	@Override
-	public BenchmarkStats<P, I> run() throws BenchmarkRunException {
+	public OptimalBenchmarkStats<P, I> run() throws BenchmarkRunException {
 		try {
 			I i = getGenerator().generateInstance();
 			ISolution<P, ? super I> sol = getAlgorithm().solve(i);

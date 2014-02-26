@@ -9,7 +9,7 @@ import binpacking.algs.NFD;
 import binpacking.benchmark.BPPOptimalBenchmark;
 import binpacking.gens.MartelloTothBPPLibraryGenerator;
 import common.benchmark.BenchmarkRunException;
-import common.benchmark.BenchmarkStats;
+import common.benchmark.OptimalBenchmarkStats;
 import common.problem.InputDataException;
 
 public class Main {

@@ -1,14 +1,7 @@
 package VSCIFP.algs;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-
-import com.google.common.collect.Iterators;
 
 import VSCIFP.Bin;
 import VSCIFP.BinType;
@@ -18,10 +11,8 @@ import VSCIFP.VSCIFPSolution;
 import binpacking.BPP;
 import binpacking.BPPInstance;
 import binpacking.BPPSol;
-import binpacking.algs.NF;
 import binpacking.algs.NFD;
-import common.Utils;
-import common.algorithm.Algorithm;
+
 import common.algorithm.OfflineAlgorithm;
 import common.problem.InputDataException;
 
@@ -31,11 +22,11 @@ import common.problem.InputDataException;
  * @author thomas
  *
  */
-public class CNFL2 extends OfflineAlgorithm<VSCIFP, VSCIFPInstance>{
+public class CNDFL extends OfflineAlgorithm<VSCIFP, VSCIFPInstance>{
 
 	private VSCIFPSolution sol;
 
-	public CNFL2() {
+	public CNDFL() {
 	}
 
 	@Override
@@ -49,7 +40,7 @@ public class CNFL2 extends OfflineAlgorithm<VSCIFP, VSCIFPInstance>{
 
 		List<Bin> bins = new ArrayList<Bin>();
 		// Sort desc. (OFF-LINE ALG)
-		//		Utils.sortDesc(sol.getItems());
+//				Utils.sortDesc(sol.getItems());
 
 
 		for (SolutionItem item : sol.getItems()) {
@@ -63,7 +54,7 @@ public class CNFL2 extends OfflineAlgorithm<VSCIFP, VSCIFPInstance>{
 		}
 
 		BPP bpp = new BPP(maxBinCapacity);
-		NF nfd = new NF();
+		NFD nfd = new NFD();
 		BPPInstance bppInstance = new BPPInstance(bpp, sol.getItemLeaves());
 
 		BPPSol s = (BPPSol) nfd.solve(bppInstance);
@@ -76,6 +67,20 @@ public class CNFL2 extends OfflineAlgorithm<VSCIFP, VSCIFPInstance>{
 			}
 			sol.addClosedBin(b);
 		}
+		
+		//REMOVE
+
+//		//Repack what can be repacked.
+//		int i = 0;
+//		for (Bin bin : sol.getBins()) {
+//			for (BinType newType : ins.binTypes) {
+//				if (bin.getFillCount() <= newType.capacity && newType.capacity < bin.getType().capacity){
+//					i = i+ (bin.getType().cost - newType.cost);
+//					sol.setTotalCost(sol.getCost() - (bin.getType().cost - newType.cost));
+//					bin.setType(newType);
+//				}
+//			}
+//		}
 
 		return sol;
 	}

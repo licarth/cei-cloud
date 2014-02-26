@@ -2,6 +2,7 @@ package common.benchmark;
 
 import common.algorithm.IAlgorithm;
 import common.generator.OptimalRandomGenerator;
+import common.generator.RandomGenerator;
 import common.problem.IInstance;
 import common.problem.IOptimalCostAwareInstance;
 import common.problem.IProblem;
@@ -20,25 +21,31 @@ import common.solution.OptimalCostNotKnownException;
  * @param <A>
  * @param <G>
  */
-public abstract class OptimalCostBenchmark<P extends IProblem, 
-I extends IInstance<P> & IOptimalCostAwareInstance, A extends IAlgorithm<P, ? super I>, G extends OptimalRandomGenerator<P,I>>
+public abstract class RelativeCostBenchmark<P extends IProblem, 
+I extends IInstance<P>, A extends IAlgorithm<P, ? super I>, G extends RandomGenerator<P,I>>
 implements IBenchmark<P,A,I,G>{
 	
 	private int runCount;
+	
+	private RelativeBenchmarkStats<P, I> reference;
 	
 	private P problem;
 	private A algorithm;
 	private G generator;
 	
-	public OptimalBenchmarkStats<P, I> run() throws Exception {
+	public RelativeCostBenchmark(RelativeBenchmarkStats<P, I> reference) {
+		this.reference = reference;
+	}
+	
+	public RelativeBenchmarkStats<P, I> run() throws Exception {
 		//Create instances
-		OptimalBenchmarkStats<P, I> bs = new OptimalBenchmarkStats<P,I>(this);
+		RelativeBenchmarkStats<P, I> bs = new RelativeBenchmarkStats<P,I>(this);
 		for (int j = 0; j < getRunCount(); j++) {
 			try {
 				I i = (I) getGenerator().generateInstance();
 				ISolution<P, ? super I> sol = getAlgorithm().solve(i);
 //				VizUtils.barChart(i., min, max);
-				bs.addRatio(sol.getErrorRatio());
+				bs.addCost(sol.getCost());
 			} catch (InputDataException | OptimalCostNotKnownException e) {
 				e.printStackTrace();
 			}
@@ -46,7 +53,7 @@ implements IBenchmark<P,A,I,G>{
 		return bs;
 	}
 
-	public OptimalCostBenchmark(P problem, A algorithm, G generator, int runCount) {
+	public RelativeCostBenchmark(P problem, A algorithm, G generator, int runCount) {
 		super();
 		this.problem = problem;
 		this.algorithm = algorithm;

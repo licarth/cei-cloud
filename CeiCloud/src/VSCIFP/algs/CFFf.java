@@ -1,7 +1,8 @@
 package VSCIFP.algs;
 
-import java.sql.NClob;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,6 +12,7 @@ import VSCIFP.BinType;
 import VSCIFP.VSCIFP;
 import VSCIFP.VSCIFPInstance;
 import VSCIFP.VSCIFPSolution;
+import common.Utils;
 import common.algorithm.Algorithm;
 import common.problem.InputDataException;
 
@@ -105,7 +107,6 @@ public class CFFf extends Algorithm<VSCIFP, VSCIFPInstance>{
 							children = remainder.cut(ins.getProblem().getMaxNumSplits(), ins.getBinTypeOfMaxCapacity().capacity);
 							//Create new bin of capacity bmax and close it.
 							Bin newBin = new Bin(ins.getBinTypeOfMaxCapacity());
-							newBin.add(children.get(0));
 							//Bin is full
 							closedBins.add(newBin);
 							sol.addItemToBin(newBin, children.get(0));

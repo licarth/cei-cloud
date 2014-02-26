@@ -5,7 +5,7 @@ import binpacking.BPPInstance;
 import binpacking.OptimalKnownBPPInstance;
 
 import common.algorithm.OfflineAlgorithm;
-import common.benchmark.BenchmarkStats;
+import common.benchmark.OptimalBenchmarkStats;
 import common.benchmark.OptimalCostBenchmark;
 import common.generator.OptimalRandomGenerator;
 import common.problem.InputDataException;
@@ -28,10 +28,10 @@ public class BPPOptimalBenchmark extends OptimalCostBenchmark<BPP, OptimalKnownB
 	}
 
 	@Override
-	public BenchmarkStats<BPP, OptimalKnownBPPInstance> run() {
+	public OptimalBenchmarkStats<BPP, OptimalKnownBPPInstance> run() {
 		//Create instances
 		
-		BenchmarkStats<BPP, OptimalKnownBPPInstance> bs = new BenchmarkStats<>(this);
+		OptimalBenchmarkStats<BPP, OptimalKnownBPPInstance> bs = new OptimalBenchmarkStats<>(this);
 		for (int j = 0; j < getRunCount(); j++) {
 			try {
 				OptimalKnownBPPInstance i = getGenerator().generateInstance();

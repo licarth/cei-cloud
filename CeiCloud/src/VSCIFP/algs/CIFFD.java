@@ -186,9 +186,9 @@ public class CIFFD extends OfflineAlgorithm<VSCIFP, VSCIFPInstance>{
 		for (SolutionItem i : Tp.get(j)) {
 			List<SolutionItem> cutChildren = null;
 			BinType bt = ins.getBinTypeByIndex(j);
-			SolutionItem remainder;
+			SolutionItem remainder = i;
 			do {
-				cutChildren = i.cut(ins.getProblem().getMaxNumSplits(), bt.getCapacity());
+				cutChildren = remainder.cut(ins.getProblem().getMaxNumSplits(), bt.getCapacity());
 				Bin newBin = new Bin(bt);
 				sol.addItemToBin(newBin, cutChildren.get(0));
 				//Bin is full

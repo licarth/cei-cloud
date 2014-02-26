@@ -1,10 +1,10 @@
 package VSCIFP;
 
-import common.benchmark.BenchmarkStats;
+import common.benchmark.OptimalBenchmarkStats;
 import VSCIFP.algs.CIFFD;
 import VSCIFP.algs.NFL;
 import VSCIFP.algs.NFLWithBinTypeOptimization;
-import VSCIFP.benchmark.VSCIFPBenchmark;
+import VSCIFP.benchmark.OptimalVSCIFPBenchmark;
 import VSCIFP.gens.LinearVSCIFPGenerator;
 import VSCIFP.gens.MonotoneVSCIFPGenerator;
 
@@ -22,12 +22,12 @@ public class MonotoneGenerationBenchmark {
 		NFL nfl = new NFL();
 		NFLWithBinTypeOptimization nflOpt = new NFLWithBinTypeOptimization();
 		
-		VSCIFPBenchmark benchmarkCIFFD = new VSCIFPBenchmark(p, ciffd, monoGen, nRuns);
-		BenchmarkStats<VSCIFP, VSCIFPInstance> stats = benchmarkCIFFD.run();
-		VSCIFPBenchmark benchmarkNFL = new VSCIFPBenchmark(p, nfl, monoGen, nRuns);
-		BenchmarkStats<VSCIFP, VSCIFPInstance> stats2 = benchmarkNFL.run();
-		VSCIFPBenchmark benchmarkNFLOPT = new VSCIFPBenchmark(p, nflOpt, monoGen, nRuns);
-		BenchmarkStats<VSCIFP, VSCIFPInstance> stats3 = benchmarkNFLOPT.run();
+		OptimalVSCIFPBenchmark benchmarkCIFFD = new OptimalVSCIFPBenchmark(p, ciffd, monoGen, nRuns);
+		OptimalBenchmarkStats<VSCIFP, VSCIFPInstance> stats = benchmarkCIFFD.run();
+		OptimalVSCIFPBenchmark benchmarkNFL = new OptimalVSCIFPBenchmark(p, nfl, monoGen, nRuns);
+		OptimalBenchmarkStats<VSCIFP, VSCIFPInstance> stats2 = benchmarkNFL.run();
+		OptimalVSCIFPBenchmark benchmarkNFLOPT = new OptimalVSCIFPBenchmark(p, nflOpt, monoGen, nRuns);
+		OptimalBenchmarkStats<VSCIFP, VSCIFPInstance> stats3 = benchmarkNFLOPT.run();
 		
 		System.out.println(stats);
 		System.out.println(stats2);

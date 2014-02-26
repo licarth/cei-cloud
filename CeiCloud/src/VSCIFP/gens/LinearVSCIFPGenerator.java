@@ -42,7 +42,7 @@ public class LinearVSCIFPGenerator extends VSCIFPGenerator{
 		fillBins();
 		closeNonEmptyBins();
 
-		pasteItemsTogether();
+//		pasteItemsTogether();
 		
 		copyItemsList();
 		

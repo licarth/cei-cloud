@@ -13,10 +13,10 @@ import VSCIFP.VSCIFPSolution;
 import VSCIFP.algs.Item;
 import VSCIFP.algs.SolutionItem;
 
-public class MonotoneVSCIFPGenerator extends VSCIFPGenerator{
+public class MonotoneWithoutCutsVSCIFPGenerator extends VSCIFPGenerator{
 
 	//	private final static Logger LOGGER = Logger.getLogger(LinearVSCIFPGenerator.class);
-	public MonotoneVSCIFPGenerator(VSCIFP problem, int maxPackingCost) {
+	public MonotoneWithoutCutsVSCIFPGenerator(VSCIFP problem, int maxPackingCost) {
 		super(problem, maxPackingCost);
 	}
 
@@ -43,8 +43,8 @@ public class MonotoneVSCIFPGenerator extends VSCIFPGenerator{
 		pasteItemsTogether();
 
 		copyItemsList();
+		
 		Collections.shuffle(ins.getItems());
-
 		//		System.out.println("Optimal solution item leaves : "+ins.getOptimalSolution().getItemLeaves());
 		//		System.out.println("Instance getItems() after paste : "+ins.getItems());
 
@@ -191,21 +191,29 @@ public class MonotoneVSCIFPGenerator extends VSCIFPGenerator{
 						currentOpenBin = new Bin(ins.getBinTypeOfMaxCapacity());
 					}
 
-				} else if ((item.getSize() - currentOpenBin.getSpaceLeft()) < (ins.getProblem().getMaxNumSplits())*currentOpenBin.getType().getCapacity()) {
+				} else {
+//					if ((item.getSize() - currentOpenBin.getSpaceLeft()) < (ins.getProblem().getMaxNumSplits())*currentOpenBin.getType().getCapacity()) {
 
 					//	Then fill current bin, close it, and open new bins for remaining pieces.
-					List<SolutionItem> children = item.cut(ins.getProblem().getMaxNumSplits(), currentOpenBin.getSpaceLeft());
-					ins.getOptimalSolution().addItemToBinForOptimalSolutionBuilding(currentOpenBin, children.get(0));
+//					List<SolutionItem> children = item.cut(ins.getProblem().getMaxNumSplits(), currentOpenBin.getSpaceLeft());
+					ins.getOptimalSolution().addItemToBinForOptimalSolutionBuilding(currentOpenBin, new SolutionItem(currentOpenBin.getSpaceLeft()));
 
-					if (currentOpenBin.isFull()){
+//					if (currentOpenBin.isFull()){
 						ins.getOptimalSolution().addClosedBin(currentOpenBin);
 						currentOpenBin = new Bin(ins.getBinTypeOfMaxCapacity());
-					}
+//					}
+						
+						ins.getOptimalSolution().addItemToBinForOptimalSolutionBuilding(currentOpenBin, item);
+						if (currentOpenBin.isFull()){
+							ins.getOptimalSolution().addClosedBin(currentOpenBin);
+							currentOpenBin = new Bin(ins.getBinTypeOfMaxCapacity());
+						}
+					
+						
 
-
-				} else {
+//				} else {
 					//	Item has to be put in a brand new bin. Close this one, open a new one.
-					throw new Exception("Code should never be reached.");
+//					throw new Exception("Code should never be reached.");
 				}
 			}
 
