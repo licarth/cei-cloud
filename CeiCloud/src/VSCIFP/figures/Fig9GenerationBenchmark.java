@@ -1,24 +1,26 @@
-package VSCIFP;
+package VSCIFP.figures;
 
 import java.io.FileWriter;
 
+import VSCIFP.VSCIFP;
+import VSCIFP.VSCIFPInstance;
+import VSCIFP.algs.CDNFL;
+import VSCIFP.algs.CDNFLAlmostEqual;
 import VSCIFP.algs.CFFf;
 import VSCIFP.algs.CIFFD;
-import VSCIFP.algs.CDNFLAlmostEqual;
-import VSCIFP.algs.CNFLAlmostEqual;
-import VSCIFP.algs.CDNFL;
 import VSCIFP.algs.CNFL;
+import VSCIFP.algs.CNFLAlmostEqual;
 import VSCIFP.algs.NFLWithBinTypeOptimization;
 import VSCIFP.benchmark.RelativeVSCIFPBenchmark;
-import VSCIFP.gens.LinearVSCIFPGenerator;
-import VSCIFP.gens.LinearUnknownCostVSCIFPGenerator;
+import VSCIFP.gens.MonotoneUnknownCostVSCIFPGenerator;
+
 import common.algorithm.Algorithm;
 import common.benchmark.RelativeBenchmarkStats;
 
-public class Fig8GenerationBenchmark {
+public class Fig9GenerationBenchmark {
 
 	public static void main(String[] args) throws Exception {
-		FileWriter fw = new FileWriter("gnuplot/data/fig8.dat");
+		FileWriter fw = new FileWriter("gnuplot/data/fig9.dat");
 		
 		fw.append("a \"3 bins\" c \"10 bins\" e\n");
 		
@@ -26,22 +28,22 @@ public class Fig8GenerationBenchmark {
 			System.out.println();
 			System.out.println(D);
 			VSCIFP p3bins = new VSCIFP(100, 3, 1, D);
-			LinearUnknownCostVSCIFPGenerator gen3bins = new LinearUnknownCostVSCIFPGenerator(p3bins, 10000);
+			MonotoneUnknownCostVSCIFPGenerator gen3bins = new MonotoneUnknownCostVSCIFPGenerator(p3bins, 10000);
 			VSCIFP p10bins = new VSCIFP(100, 10, 1, D);
-			LinearUnknownCostVSCIFPGenerator gen10bins = new LinearUnknownCostVSCIFPGenerator(p10bins, 10000);
+			MonotoneUnknownCostVSCIFPGenerator gen10bins = new MonotoneUnknownCostVSCIFPGenerator(p10bins, 10000);
 			
 			int nRuns = 1000;
 
 			final CIFFD ciffd = new CIFFD();
-			final CNFL nfl = new CNFL();
-			final CDNFLAlmostEqual cndfl = new CDNFLAlmostEqual();
-			final CDNFL ndfl = new CDNFL();
-			final CNFLAlmostEqual cnfl = new CNFLAlmostEqual();
+			final CNFL cnfl = new CNFL();
+			final CDNFLAlmostEqual cdnflAlmostEqual = new CDNFLAlmostEqual();
+			final CDNFL cdnfl = new CDNFL();
+			final CNFLAlmostEqual cnflAlmostEqual = new CNFLAlmostEqual();
 			final NFLWithBinTypeOptimization nflOpt = new NFLWithBinTypeOptimization();
 			final CFFf cfff = new CFFf(0.5);
 			//		SavedCFFf cfffSaved = new SavedCFFf(0.5);
 			
-			Algorithm<VSCIFP, VSCIFPInstance>[] algs = new Algorithm[] {ciffd, ndfl, cfff, nfl};
+			Algorithm<VSCIFP, VSCIFPInstance>[] algs = new Algorithm[] {ciffd, cdnfl, cfff, cnfl};
 			
 			for (int i = 0; i < algs.length; i++) {
 				gen3bins.reset();

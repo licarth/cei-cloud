@@ -56,7 +56,7 @@ public class NFLTest {
 			}
 		};
 
-		NFL nfl = new NFL();
+		CNFL nfl = new CNFL();
 		CIFFD ciffd = new CIFFD();
 		System.out.println(ciffd.solve(genDiv.generateInstance()));
 //		ciffd.solve(ins)

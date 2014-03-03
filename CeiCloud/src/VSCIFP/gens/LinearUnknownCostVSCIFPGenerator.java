@@ -15,10 +15,10 @@ import VSCIFP.algs.SolutionItem;
 import common.Utils;
 import common.problem.InputDataException;
 
-public class UnknownCostVSCIFPGenerator extends VSCIFPGenerator{
+public class LinearUnknownCostVSCIFPGenerator extends VSCIFPGenerator{
 
 //	private final static Logger LOGGER = Logger.getLogger(LinearVSCIFPGenerator.class);
-	public UnknownCostVSCIFPGenerator(VSCIFP problem, int maxPackingCost) {
+	public LinearUnknownCostVSCIFPGenerator(VSCIFP problem, int maxPackingCost) {
 		super(problem, maxPackingCost);
 	}
 
@@ -33,8 +33,8 @@ public class UnknownCostVSCIFPGenerator extends VSCIFPGenerator{
 		ins = new VSCIFPInstance(getProblem());
 		ins.setOptimalSolution(new VSCIFPSolution(null, ins));
 
-//		initializeLinearBinTypes();
-		initializeMonotoneBinTypes();
+		initializeLinearBinTypes();
+//		initializeMonotoneBinTypes();
 
 //		initializeBins();
 

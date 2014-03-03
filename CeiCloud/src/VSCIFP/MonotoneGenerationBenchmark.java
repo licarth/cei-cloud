@@ -2,7 +2,7 @@ package VSCIFP;
 
 import common.benchmark.OptimalBenchmarkStats;
 import VSCIFP.algs.CIFFD;
-import VSCIFP.algs.NFL;
+import VSCIFP.algs.CNFL;
 import VSCIFP.algs.NFLWithBinTypeOptimization;
 import VSCIFP.benchmark.OptimalVSCIFPBenchmark;
 import VSCIFP.gens.LinearVSCIFPGenerator;
@@ -19,7 +19,7 @@ public class MonotoneGenerationBenchmark {
 		int nRuns = 1000;
 		
 		CIFFD ciffd = new CIFFD();
-		NFL nfl = new NFL();
+		CNFL nfl = new CNFL();
 		NFLWithBinTypeOptimization nflOpt = new NFLWithBinTypeOptimization();
 		
 		OptimalVSCIFPBenchmark benchmarkCIFFD = new OptimalVSCIFPBenchmark(p, ciffd, monoGen, nRuns);

@@ -1,17 +1,19 @@
-package VSCIFP;
+package VSCIFP.figures;
 
 import java.io.FileWriter;
 
+import VSCIFP.VSCIFP;
+import VSCIFP.VSCIFPInstance;
+import VSCIFP.algs.CDNFL;
+import VSCIFP.algs.CDNFLAlmostEqual;
 import VSCIFP.algs.CFFf;
 import VSCIFP.algs.CIFFD;
-import VSCIFP.algs.CDNFLAlmostEqual;
-import VSCIFP.algs.CNFLAlmostEqual;
-import VSCIFP.algs.CDNFL;
 import VSCIFP.algs.CNFL;
+import VSCIFP.algs.CNFLAlmostEqual;
 import VSCIFP.algs.NFLWithBinTypeOptimization;
 import VSCIFP.benchmark.RelativeVSCIFPBenchmark;
-import VSCIFP.gens.LinearVSCIFPGenerator;
 import VSCIFP.gens.LinearUnknownCostVSCIFPGenerator;
+
 import common.algorithm.Algorithm;
 import common.benchmark.RelativeBenchmarkStats;
 
@@ -33,15 +35,15 @@ public class Fig8GenerationBenchmark {
 			int nRuns = 1000;
 
 			final CIFFD ciffd = new CIFFD();
-			final CNFL nfl = new CNFL();
-			final CDNFLAlmostEqual cndfl = new CDNFLAlmostEqual();
-			final CDNFL ndfl = new CDNFL();
-			final CNFLAlmostEqual cnfl = new CNFLAlmostEqual();
+			final CNFL cnfl = new CNFL();
+			final CDNFLAlmostEqual cdnflAlmostEqual = new CDNFLAlmostEqual();
+			final CDNFL cdnfl = new CDNFL();
+			final CNFLAlmostEqual cnflAlmostEqual = new CNFLAlmostEqual();
 			final NFLWithBinTypeOptimization nflOpt = new NFLWithBinTypeOptimization();
 			final CFFf cfff = new CFFf(0.5);
 			//		SavedCFFf cfffSaved = new SavedCFFf(0.5);
 			
-			Algorithm<VSCIFP, VSCIFPInstance>[] algs = new Algorithm[] {ciffd, ndfl, cfff, nfl};
+			Algorithm<VSCIFP, VSCIFPInstance>[] algs = new Algorithm[] {ciffd, cdnfl, cfff, cnfl};
 			
 			for (int i = 0; i < algs.length; i++) {
 				gen3bins.reset();

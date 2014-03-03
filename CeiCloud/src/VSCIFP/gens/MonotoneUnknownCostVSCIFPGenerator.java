@@ -12,14 +12,13 @@ import VSCIFP.VSCIFPInstance;
 import VSCIFP.VSCIFPSolution;
 import VSCIFP.algs.Item;
 import VSCIFP.algs.SolutionItem;
-
 import common.Utils;
 import common.problem.InputDataException;
 
-public class LinearVSCIFPGenerator extends VSCIFPGenerator{
+public class MonotoneUnknownCostVSCIFPGenerator extends VSCIFPGenerator{
 
 //	private final static Logger LOGGER = Logger.getLogger(LinearVSCIFPGenerator.class);
-	public LinearVSCIFPGenerator(VSCIFP problem, int maxPackingCost) {
+	public MonotoneUnknownCostVSCIFPGenerator(VSCIFP problem, int maxPackingCost) {
 		super(problem, maxPackingCost);
 	}
 
@@ -34,19 +33,19 @@ public class LinearVSCIFPGenerator extends VSCIFPGenerator{
 		ins = new VSCIFPInstance(getProblem());
 		ins.setOptimalSolution(new VSCIFPSolution(null, ins));
 
-		initializeBinTypes();
+//		initializeLinearBinTypes();
+		initializeMonotoneBinTypes();
 
-		initializeBins();
+//		initializeBins();
 
 //		System.out.println(ins);
 
-		fillBins();
-		closeNonEmptyBins();
-
+//		fillBins();
+//		closeNonEmptyBins();
+		
+		createItems();
 		pasteItemsTogether();
-		
 		copyItemsList();
-		
 		Collections.shuffle(ins.getItems());
 //		ins.getItems()
 		
@@ -57,6 +56,17 @@ public class LinearVSCIFPGenerator extends VSCIFPGenerator{
 		//		ins.displayBinTypeRepartition(instanceCount);
 		//		VizUtils.drawHistogramItemsRepartition(ins.getItemSizes(), getProblem().getItemMinSize(), getProblem().getItemMaxSize(), "", "-"+instanceCount);
 		return ins;
+	}
+
+
+	private void createItems() {
+		int cost = 0;
+		while(cost < getMaxPackingCost()){
+			//Carry on...
+			final SolutionItem item = new SolutionItem(nextInt(getProblem().getItemMinSize(), getProblem().getMaxBinCapacity()));
+			cost += item.getSize();
+			ins.getOptimalSolution().getItems().add(item);
+		}
 	}
 
 
@@ -226,7 +236,7 @@ public class LinearVSCIFPGenerator extends VSCIFPGenerator{
 	/**
 	 * Declare bin types.
 	 */
-	private void initializeBinTypes() {
+	private void initializeLinearBinTypes() {
 		//For the largest bin, capacity = cost = binCapacity
 		ins.binTypes.add(new BinType(getProblem().getMaxBinCapacity(), getProblem().getMaxBinCapacity()));
 		//For other bins, 
@@ -235,6 +245,31 @@ public class LinearVSCIFPGenerator extends VSCIFPGenerator{
 			ins.binTypes.add(new BinType(n, n)); //Linear cost
 		}
 
+	}
+	
+	/**
+	 * Declare bin types.
+	 */
+	private void initializeMonotoneBinTypes() {
+		//For the largest bin, capacity = cost = binCapacity
+		ins.binTypes.add(new BinType(getProblem().getMaxBinCapacity(), getProblem().getMaxBinCapacity()));
+		//For other bins, 
+		while (ins.binTypes.size() < getProblem().getTypesOfBinCount()) { // TODO Can last a while !
+			int n = nextInt(1, getProblem().getMaxBinCapacity() - 1); // uniform number in [1, binCapacity - 1].
+			ins.binTypes.add(new BinType(n, n)); //Linear cost
+		}
+
+		//		On fixe maintenant les coûts de chaque bin. La plus grande coute sa capacité, puis on fixe les autres coûts en descendant.
+		//		A descending iterator on binTypes collection
+		Iterator<BinType> descIt = ins.binTypes.descendingIterator();
+		BinType prevBin = descIt.next();	// Biggest bin.
+		while (descIt.hasNext()) {
+			BinType currBin = descIt.next();
+			//			System.out.println("["+prevBin.unitCost() * currBin.getCapacity()+","+prevBin.getCost()+"[");
+			currBin.setCost((int) Math.floor(nextDouble(prevBin.unitCost() * currBin.getCapacity(), prevBin.getCost())));
+			//			System.out.println(currBin);
+			prevBin = currBin;
+		}
 	}
 
 

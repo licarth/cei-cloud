@@ -1,14 +1,7 @@
 package VSCIFP.algs;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-
-import com.google.common.collect.Iterators;
 
 import VSCIFP.Bin;
 import VSCIFP.BinType;
@@ -18,10 +11,8 @@ import VSCIFP.VSCIFPSolution;
 import binpacking.BPP;
 import binpacking.BPPInstance;
 import binpacking.BPPSol;
-import binpacking.algs.NF;
 import binpacking.algs.NFD;
-import common.Utils;
-import common.algorithm.Algorithm;
+
 import common.algorithm.OfflineAlgorithm;
 import common.problem.InputDataException;
 
@@ -31,11 +22,11 @@ import common.problem.InputDataException;
  * @author thomas
  *
  */
-public class NFL extends OfflineAlgorithm<VSCIFP, VSCIFPInstance>{
+public class CDNFL extends OfflineAlgorithm<VSCIFP, VSCIFPInstance>{
 
 	private VSCIFPSolution sol;
 
-	public NFL() {
+	public CDNFL() {
 	}
 
 	@Override
@@ -63,7 +54,7 @@ public class NFL extends OfflineAlgorithm<VSCIFP, VSCIFPInstance>{
 		}
 
 		BPP bpp = new BPP(maxBinCapacity);
-		NF nfd = new NF();
+		NFD nfd = new NFD();
 		BPPInstance bppInstance = new BPPInstance(bpp, sol.getItemLeaves());
 
 		BPPSol s = (BPPSol) nfd.solve(bppInstance);

@@ -1,7 +1,7 @@
 package VSCIFP;
 
 import VSCIFP.algs.CIFFD;
-import VSCIFP.algs.NFL;
+import VSCIFP.algs.CNFL;
 import VSCIFP.algs.NFLWithBinTypeOptimization;
 import VSCIFP.benchmark.RelativeVSCIFPBenchmark;
 import VSCIFP.gens.MonotoneVSCIFPGenerator;
@@ -19,7 +19,7 @@ public class RelativeGenerationBenchmark {
 		int nRuns = 1000;
 		
 		CIFFD ciffd = new CIFFD();
-		NFL nfl = new NFL();
+		CNFL nfl = new CNFL();
 		NFLWithBinTypeOptimization nflOpt = new NFLWithBinTypeOptimization();
 		
 		RelativeVSCIFPBenchmark benchmarkCIFFD = new RelativeVSCIFPBenchmark(p, ciffd, monoGen, nRuns);

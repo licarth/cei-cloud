@@ -4,13 +4,13 @@ import java.io.FileWriter;
 
 import VSCIFP.algs.CFFf;
 import VSCIFP.algs.CIFFD;
-import VSCIFP.algs.CNDFL;
+import VSCIFP.algs.CDNFLAlmostEqual;
+import VSCIFP.algs.CNFLAlmostEqual;
+import VSCIFP.algs.CDNFL;
 import VSCIFP.algs.CNFL;
-import VSCIFP.algs.NDFL;
-import VSCIFP.algs.NFL;
 import VSCIFP.algs.NFLWithBinTypeOptimization;
 import VSCIFP.benchmark.RelativeVSCIFPBenchmark;
-import VSCIFP.gens.UnknownCostVSCIFPGenerator;
+import VSCIFP.gens.LinearUnknownCostVSCIFPGenerator;
 
 import common.algorithm.Algorithm;
 import common.benchmark.RelativeBenchmarkStats;
@@ -37,9 +37,9 @@ public class DVariesUnknownGenerationBenchmark {
 			
 
 			VSCIFP p3bins = new VSCIFP(100, 3, 1, D);
-			UnknownCostVSCIFPGenerator gen3bins = new UnknownCostVSCIFPGenerator(p3bins, 10000);
+			LinearUnknownCostVSCIFPGenerator gen3bins = new LinearUnknownCostVSCIFPGenerator(p3bins, 10000);
 			VSCIFP p10bins = new VSCIFP(100, 10, 1, D);
-			UnknownCostVSCIFPGenerator gen10bins = new UnknownCostVSCIFPGenerator(p10bins, 10000);
+			LinearUnknownCostVSCIFPGenerator gen10bins = new LinearUnknownCostVSCIFPGenerator(p10bins, 10000);
 
 //			VSCIFP p3bins = new VSCIFP(100, 3, 1, D);
 //			MonotoneWithoutCutsVSCIFPGenerator gen3bins = new MonotoneWithoutCutsVSCIFPGenerator(p3bins, 10000);
@@ -49,10 +49,10 @@ public class DVariesUnknownGenerationBenchmark {
 			int nRuns = 1000;
 
 			final CIFFD ciffd = new CIFFD();
-			final NFL nfl = new NFL();
-			final CNDFL cndfl = new CNDFL();
-			final NDFL ndfl = new NDFL();
-			final CNFL cnfl = new CNFL();
+			final CNFL nfl = new CNFL();
+			final CDNFLAlmostEqual cndfl = new CDNFLAlmostEqual();
+			final CDNFL ndfl = new CDNFL();
+			final CNFLAlmostEqual cnfl = new CNFLAlmostEqual();
 			final NFLWithBinTypeOptimization nflOpt = new NFLWithBinTypeOptimization();
 			final CFFf cfff = new CFFf(0.5);
 			//		SavedCFFf cfffSaved = new SavedCFFf(0.5);

@@ -54,7 +54,7 @@ public class ManualGenerationTest {
 			}
 		};
 
-		NFL nfl = new NFL();
+		CNFL nfl = new CNFL();
 		System.out.println(nfl.solve(genDiv.generateInstance()));
 		NFLWithBinTypeOptimization nflOpt = new NFLWithBinTypeOptimization();
 		System.out.println(nflOpt.solve(genDiv.generateInstance()));

@@ -13,20 +13,21 @@ import binpacking.BPPInstance;
 import binpacking.BPPSol;
 import binpacking.algs.NFD;
 
+import common.Utils;
 import common.algorithm.OfflineAlgorithm;
 import common.problem.InputDataException;
 
 /**
- * 
+ * Cuts in 'almost equal parts'
  * 
  * @author thomas
  *
  */
-public class CNDFL extends OfflineAlgorithm<VSCIFP, VSCIFPInstance>{
+public class CDNFLAlmostEqual extends OfflineAlgorithm<VSCIFP, VSCIFPInstance>{
 
 	private VSCIFPSolution sol;
 
-	public CNDFL() {
+	public CDNFLAlmostEqual() {
 	}
 
 	@Override

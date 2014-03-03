@@ -4,10 +4,10 @@ import java.io.FileWriter;
 
 import VSCIFP.algs.CFFf;
 import VSCIFP.algs.CIFFD;
-import VSCIFP.algs.CNDFL;
+import VSCIFP.algs.CDNFLAlmostEqual;
+import VSCIFP.algs.CNFLAlmostEqual;
+import VSCIFP.algs.CDNFL;
 import VSCIFP.algs.CNFL;
-import VSCIFP.algs.NDFL;
-import VSCIFP.algs.NFL;
 import VSCIFP.algs.NFLWithBinTypeOptimization;
 import VSCIFP.benchmark.OptimalVSCIFPBenchmark;
 import VSCIFP.gens.LinearVSCIFPGenerator;
@@ -39,10 +39,10 @@ public class Fig4GenerationBenchmark {
 			int nRuns = 1000;
 
 			final CIFFD ciffd = new CIFFD();
-			final NFL nfl = new NFL();
-			final CNDFL cndfl = new CNDFL();
-			final NDFL ndfl = new NDFL();
-			final CNFL cnfl = new CNFL();
+			final CNFL nfl = new CNFL();
+			final CDNFLAlmostEqual cndfl = new CDNFLAlmostEqual();
+			final CDNFL ndfl = new CDNFL();
+			final CNFLAlmostEqual cnfl = new CNFLAlmostEqual();
 			final NFLWithBinTypeOptimization nflOpt = new NFLWithBinTypeOptimization();
 			final CFFf cfff = new CFFf(0.5);
 			//		SavedCFFf cfffSaved = new SavedCFFf(0.5);

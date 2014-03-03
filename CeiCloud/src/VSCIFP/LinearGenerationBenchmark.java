@@ -2,10 +2,10 @@ package VSCIFP;
 
 import VSCIFP.algs.CFFf;
 import VSCIFP.algs.CIFFD;
-import VSCIFP.algs.CNDFL;
+import VSCIFP.algs.CDNFLAlmostEqual;
+import VSCIFP.algs.CNFLAlmostEqual;
+import VSCIFP.algs.CDNFL;
 import VSCIFP.algs.CNFL;
-import VSCIFP.algs.NDFL;
-import VSCIFP.algs.NFL;
 import VSCIFP.algs.NFLWithBinTypeOptimization;
 import VSCIFP.benchmark.OptimalVSCIFPBenchmark;
 import VSCIFP.gens.MonotoneVSCIFPGenerator;
@@ -22,10 +22,10 @@ public class LinearGenerationBenchmark {
 		int nRuns = 1000;
 		
 		CIFFD ciffd = new CIFFD();
-		NFL nfl = new NFL();
-		CNDFL cndfl = new CNDFL();
-		NDFL ndfl = new NDFL();
-		CNFL cnfl = new CNFL();
+		CNFL nfl = new CNFL();
+		CDNFLAlmostEqual cndfl = new CDNFLAlmostEqual();
+		CDNFL ndfl = new CDNFL();
+		CNFLAlmostEqual cnfl = new CNFLAlmostEqual();
 		NFLWithBinTypeOptimization nflOpt = new NFLWithBinTypeOptimization();
 		CFFf cfff = new CFFf(0.5);
 //		SavedCFFf cfffSaved = new SavedCFFf(0.5);
