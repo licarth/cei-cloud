@@ -16,7 +16,5 @@ public abstract class AbstractBPP extends AbstractProblem {
 		if (!(obj instanceof IProblem)) return false;
 		return isSameProblemAs((IProblem) obj);
 	}
-
-	public abstract boolean isSameProblemAs(IProblem other);
 	
 }

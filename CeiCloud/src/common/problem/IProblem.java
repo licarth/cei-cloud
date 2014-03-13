@@ -8,5 +8,5 @@ package common.problem;
  *
  */
 public interface IProblem {
-
+	
 }

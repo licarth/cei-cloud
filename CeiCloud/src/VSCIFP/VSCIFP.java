@@ -1,6 +1,7 @@
 package VSCIFP;
 
 import common.problem.AbstractProblem;
+import common.problem.IProblem;
 
 public class VSCIFP extends AbstractProblem{
 	
@@ -97,6 +98,12 @@ public class VSCIFP extends AbstractProblem{
 
 	public void setItemMinSize(int itemMinSize) {
 		this.itemMinSize = itemMinSize;
+	}
+
+	@Override
+	public boolean isSameProblemAs(IProblem other) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 //	public int[] itemSizes;	//L	

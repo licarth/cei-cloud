@@ -11,6 +11,12 @@ import common.Utils;
 import common.problem.InputDataException;
 import common.problem.Instance;
 
+/**
+ * Describes an instance of a particular bin packing problem.
+ * 
+ * @author thomas
+ *
+ */
 public class BPPInstance extends Instance<BPP> {
 
 	/**

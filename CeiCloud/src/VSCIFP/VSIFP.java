@@ -1,6 +1,7 @@
 package VSCIFP;
 
 import common.problem.AbstractProblem;
+import common.problem.IProblem;
 
 public class VSIFP extends AbstractProblem{
 	
@@ -45,6 +46,12 @@ public class VSIFP extends AbstractProblem{
 
 	public int getItemMaxSize() {
 		return binCapacity * (maxNumSplits +1);
+	}
+
+	@Override
+	public boolean isSameProblemAs(IProblem other) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

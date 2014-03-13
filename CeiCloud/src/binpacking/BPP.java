@@ -3,6 +3,19 @@ package binpacking;
 import common.problem.IProblem;
 
 
+/**
+ * Describes a BPP problem with its parameters.
+ * 
+ * An instance of this class is actually a problem with its own set of parameters.
+ * This class does not describe an "instance" of the Bin Packing Problem, which is described in 
+ * class {@link BPPInstance}.
+ * 
+ * @see BPPInstance
+ * @see BPPSol
+ * 
+ * @author thomas
+ *
+ */
 public class BPP extends AbstractBPP {
 	/**
 	 *	Bin size. A BPP problem has one single bin type of constant size.

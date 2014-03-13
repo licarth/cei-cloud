@@ -15,7 +15,7 @@ import common.solution.ISolution;
 /**
  * @author thomas
  *
- *	First-Fit Decreasing implementation for BPP problems.
+ *	First-Fit algorithm implementation for BPP problems.
  *
  */
 public class FF extends BPPAlgorithm {
