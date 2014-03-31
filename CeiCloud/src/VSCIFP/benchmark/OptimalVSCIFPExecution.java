@@ -4,8 +4,8 @@ import VSCIFP.VSCIFP;
 import VSCIFP.VSCIFPInstance;
 import VSCIFP.gens.VSCIFPGenerator;
 import common.algorithm.Algorithm;
-import common.benchmark.OptimalBenchmarkStats;
-import common.benchmark.OptimalCostBenchmark;
+import common.benchmark.OptimalExecutionStats;
+import common.benchmark.OptimalCostExecution;
 import common.problem.InputDataException;
 import common.solution.ISolution;
 import common.solution.OptimalCostNotKnownException;
@@ -16,9 +16,9 @@ import common.solution.OptimalCostNotKnownException;
  * @author thomas
  *
  */
-public class OptimalVSCIFPBenchmark extends OptimalCostBenchmark<VSCIFP, VSCIFPInstance, Algorithm<VSCIFP, VSCIFPInstance>, VSCIFPGenerator> {
+public class OptimalVSCIFPExecution extends OptimalCostExecution<VSCIFP, VSCIFPInstance, Algorithm<VSCIFP, VSCIFPInstance>, VSCIFPGenerator> {
 
-	public OptimalVSCIFPBenchmark(VSCIFP problem,
+	public OptimalVSCIFPExecution(VSCIFP problem,
 			Algorithm<VSCIFP, VSCIFPInstance> algorithm,
 			VSCIFPGenerator generator, int runCount) {
 		super(problem, algorithm, generator, runCount);
@@ -26,11 +26,11 @@ public class OptimalVSCIFPBenchmark extends OptimalCostBenchmark<VSCIFP, VSCIFPI
 	}
 	
 	@Override
-	public OptimalBenchmarkStats<VSCIFP, VSCIFPInstance> run() throws Exception {
+	public OptimalExecutionStats<VSCIFP, VSCIFPInstance> run() throws Exception {
 		
 		//Create instances
 		
-		OptimalBenchmarkStats<VSCIFP, VSCIFPInstance> bs = new OptimalBenchmarkStats<>(this);
+		OptimalExecutionStats<VSCIFP, VSCIFPInstance> bs = new OptimalExecutionStats<>(this);
 		for (int j = 0; j < getRunCount(); j++) {
 			try {
 				VSCIFPInstance i = getGenerator().generateInstance();

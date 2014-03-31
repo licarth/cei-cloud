@@ -3,9 +3,9 @@ package common.benchmark;
 import common.problem.IInstance;
 import common.problem.IProblem;
 
-public class RelativeBenchmarkStats<P extends IProblem, I extends IInstance<? extends P>> extends BenchmarkStats<P,I> {
+public class RelativeExecutionStats<P extends IProblem, I extends IInstance<? extends P>> extends ExecutionStats<P,I> {
 	
-	public RelativeBenchmarkStats(IBenchmark bench) {
+	public RelativeExecutionStats(IExecution bench) {
 		super(bench);
 	}
 

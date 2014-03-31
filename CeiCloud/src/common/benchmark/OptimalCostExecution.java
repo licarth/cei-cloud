@@ -11,8 +11,7 @@ import common.solution.OptimalCostNotKnownException;
 
 /**
  * 
- * A benchmark that compares the algorithm performance to the optimal cost of the problem instance.
- * The generator provided in Generics should allow us to know the optimal cost.
+ * An execution of an algorithm for which we know the optimal cost of instance.
  * 
  * @author thomas
  *
@@ -20,9 +19,9 @@ import common.solution.OptimalCostNotKnownException;
  * @param <A>
  * @param <G>
  */
-public abstract class OptimalCostBenchmark<P extends IProblem, 
+public abstract class OptimalCostExecution<P extends IProblem, 
 I extends IInstance<P> & IOptimalCostAwareInstance, A extends IAlgorithm<P, ? super I>, G extends OptimalRandomGenerator<P,I>>
-implements IBenchmark<P,A,I,G>{
+implements IExecution<P,A,I,G>{
 	
 	private int runCount;
 	
@@ -30,9 +29,9 @@ implements IBenchmark<P,A,I,G>{
 	private A algorithm;
 	private G generator;
 	
-	public OptimalBenchmarkStats<P, I> run() throws Exception {
+	public OptimalExecutionStats<P, I> run() throws Exception {
 		//Create instances
-		OptimalBenchmarkStats<P, I> bs = new OptimalBenchmarkStats<P,I>(this);
+		OptimalExecutionStats<P, I> bs = new OptimalExecutionStats<P,I>(this);
 		for (int j = 0; j < getRunCount(); j++) {
 			try {
 				I i = (I) getGenerator().generateInstance();
@@ -46,7 +45,7 @@ implements IBenchmark<P,A,I,G>{
 		return bs;
 	}
 
-	public OptimalCostBenchmark(P problem, A algorithm, G generator, int runCount) {
+	public OptimalCostExecution(P problem, A algorithm, G generator, int runCount) {
 		super();
 		this.problem = problem;
 		this.algorithm = algorithm;

@@ -3,7 +3,7 @@ package common.generator;
 import java.util.List;
 import java.util.Random;
 
-import common.benchmark.BenchmarkRunException;
+import common.benchmark.AlgorithmExecutionException;
 import common.problem.IInstance;
 import common.problem.IProblem;
 import common.problem.InputDataException;
@@ -25,7 +25,7 @@ public abstract class RandomGenerator<P extends IProblem, I extends IInstance<? 
 	 * Generates one input instance of the problem.
 	 * @return
 	 * @throws Exception 
-	 * @throws BenchmarkRunException 
+	 * @throws AlgorithmExecutionException 
 	 */
 	abstract public I generateInstance() throws InputDataException, Exception;
 	
@@ -34,9 +34,9 @@ public abstract class RandomGenerator<P extends IProblem, I extends IInstance<? 
 	 * 
 	 * @param n qty of instances to generate.
 	 * @return
-	 * @throws BenchmarkRunException 
+	 * @throws AlgorithmExecutionException 
 	 */
-	abstract public List<I> generateInstances(int n) throws InputDataException;
+	abstract public List<I> generateInstances(int n) throws InputDataException, Exception;
 	
 	/**
 	 * Generates a seed for random method. Here it's a constant.

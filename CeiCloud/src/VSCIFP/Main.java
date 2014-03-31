@@ -7,12 +7,11 @@ import VSCIFP.algs.CIFFD;
 import VSCIFP.algs.CNFL;
 import VSCIFP.algs.NFLWithBinTypeOptimization;
 import VSCIFP.gens.LinearVSCIFPGenerator;
-
 import common.problem.InputDataException;
 import common.solution.OptimalCostNotKnownException;
 
 public class Main {
-	public static void main(String[] args) throws InputDataException, OptimalCostNotKnownException {
+	public static void main(String[] args) throws Exception {
 		VSCIFP p = new VSCIFP(100, 3, 1, 1);
 //		MonotoneVSCIFPGenerator gen = new MonotoneVSCIFPGenerator(p);
 		LinearVSCIFPGenerator gen = new LinearVSCIFPGenerator(p, 1000);

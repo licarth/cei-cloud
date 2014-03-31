@@ -27,7 +27,7 @@ public abstract class LibraryGenerator<P extends IProblem, I extends IInstance<P
 	 * 
 	 * @param n qty of instances to generate.
 	 * @return
-	 * @throws BenchmarkRunException 
+	 * @throws AlgorithmExecutionException 
 	 */
 	abstract public List<? extends IInstance<P>> generateInstances() throws InputDataException;
 	

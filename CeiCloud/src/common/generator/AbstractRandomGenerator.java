@@ -28,7 +28,7 @@ public abstract class AbstractRandomGenerator<P extends IProblem, I extends IIns
 
 	private Random random = new Random(SEED);
 	
-	public List<I> generateInstances(int n) throws InputDataException {
+	public List<I> generateInstances(int n) throws Exception {
 		List<I> l = new ArrayList<I>();
 		for (int i = 0; i < n; i++) {
 			l.add(generateInstance());

@@ -5,8 +5,8 @@ import VSCIFP.algs.CIFFD;
 import VSCIFP.algs.CDNFLAlmostEqual;
 import VSCIFP.algs.CNFL;
 import VSCIFP.algs.NFLWithBinTypeOptimization;
-import VSCIFP.benchmark.OptimalVSCIFPBenchmark;
-import VSCIFP.benchmark.RelativeVSCIFPBenchmark;
+import VSCIFP.benchmark.OptimalVSCIFPExecution;
+import VSCIFP.benchmark.RelativeVSCIFPExecution;
 import VSCIFP.gens.LinearUnknownCostVSCIFPGenerator;
 import VSCIFP.gens.MonotoneVSCIFPGenerator;
 
@@ -29,28 +29,28 @@ public class RlativeLinearGenerationBenchmark {
 //		SavedCFFf cfffSaved = new SavedCFFf(0.5);
 		
 		gen.reset();
-		System.out.println(new RelativeVSCIFPBenchmark(p, ciffd, gen, nRuns).run());
+		System.out.println(new RelativeVSCIFPExecution(p, ciffd, gen, nRuns).run());
 //		
 ////		gen.reset();
-////		System.out.println(new RelativeVSCIFPBenchmark(p, ciffd, gen, nRuns).run());
+////		System.out.println(new RelativeVSCIFPExecution(p, ciffd, gen, nRuns).run());
 //
 		gen.reset();
-		System.out.println(new RelativeVSCIFPBenchmark(p, nfl, gen, nRuns).run());
+		System.out.println(new RelativeVSCIFPExecution(p, nfl, gen, nRuns).run());
 
 		gen.reset();
-		System.out.println(new RelativeVSCIFPBenchmark(p, cnfl2, gen, nRuns).run());
+		System.out.println(new RelativeVSCIFPExecution(p, cnfl2, gen, nRuns).run());
 //		
 		gen.reset();
-		System.out.println(new RelativeVSCIFPBenchmark(p, nflOpt, gen, nRuns).run());
+		System.out.println(new RelativeVSCIFPExecution(p, nflOpt, gen, nRuns).run());
 //		
 //		gen.reset();
-//		System.out.println(new RelativeVSCIFPBenchmark(p, cfff, gen, nRuns).run());
+//		System.out.println(new RelativeVSCIFPExecution(p, cfff, gen, nRuns).run());
 
 		gen.reset();
-		System.out.println(new RelativeVSCIFPBenchmark(p, cfff, gen, nRuns).run());
+		System.out.println(new RelativeVSCIFPExecution(p, cfff, gen, nRuns).run());
 		
 //		gen.reset();
-//		System.out.println(new RelativeVSCIFPBenchmark(p, cfffSaved, gen, nRuns).run());
+//		System.out.println(new RelativeVSCIFPExecution(p, cfffSaved, gen, nRuns).run());
 		
 	}
 

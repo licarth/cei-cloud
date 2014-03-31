@@ -10,7 +10,6 @@ import VSCIFP.VSCIFPInstance;
 import VSCIFP.algs.CIFFD;
 import VSCIFP.algs.Item;
 import VSCIFP.gens.VSCIFPGenerator;
-
 import common.problem.InputDataException;
 
 public class CIFFDTest {
@@ -18,10 +17,10 @@ public class CIFFDTest {
 	final CIFFD ciffd = new CIFFD();
 	
 	/**
-	 * @throws InputDataException
+	 * @throws Exception 
 	 */
 	@Test
-	public void test() throws InputDataException {
+	public void test() throws Exception {
 		
 		//A generator for test purposes only that generates only one type of instance, always the same.
 		VSCIFPGenerator gen = new VSCIFPGenerator(problem, 1000) {

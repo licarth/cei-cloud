@@ -3,10 +3,9 @@ package binpacking.benchmark;
 import binpacking.BPP;
 import binpacking.BPPInstance;
 import binpacking.OptimalKnownBPPInstance;
-
 import common.algorithm.OfflineAlgorithm;
-import common.benchmark.OptimalBenchmarkStats;
-import common.benchmark.OptimalCostBenchmark;
+import common.benchmark.OptimalExecutionStats;
+import common.benchmark.OptimalCostExecution;
 import common.generator.OptimalRandomGenerator;
 import common.problem.InputDataException;
 import common.solution.ISolution;
@@ -18,7 +17,7 @@ import common.solution.OptimalCostNotKnownException;
  * @author thomas
  *
  */
-public class BPPOptimalBenchmark extends OptimalCostBenchmark<BPP, OptimalKnownBPPInstance, OfflineAlgorithm<BPP, BPPInstance>, OptimalRandomGenerator<BPP, OptimalKnownBPPInstance>> {
+public class BPPOptimalBenchmark extends OptimalCostExecution<BPP, OptimalKnownBPPInstance, OfflineAlgorithm<BPP, BPPInstance>, OptimalRandomGenerator<BPP, OptimalKnownBPPInstance>> {
 	
 	public BPPOptimalBenchmark(BPP problem,
 			OfflineAlgorithm<BPP, BPPInstance> algorithm,
@@ -28,10 +27,10 @@ public class BPPOptimalBenchmark extends OptimalCostBenchmark<BPP, OptimalKnownB
 	}
 
 	@Override
-	public OptimalBenchmarkStats<BPP, OptimalKnownBPPInstance> run() {
+	public OptimalExecutionStats<BPP, OptimalKnownBPPInstance> run() {
 		//Create instances
 		
-		OptimalBenchmarkStats<BPP, OptimalKnownBPPInstance> bs = new OptimalBenchmarkStats<>(this);
+		OptimalExecutionStats<BPP, OptimalKnownBPPInstance> bs = new OptimalExecutionStats<>(this);
 		for (int j = 0; j < getRunCount(); j++) {
 			try {
 				OptimalKnownBPPInstance i = getGenerator().generateInstance();
@@ -45,7 +44,7 @@ public class BPPOptimalBenchmark extends OptimalCostBenchmark<BPP, OptimalKnownB
 					e.printStackTrace();
 				}
 //				VizUtils.barChart(i.getItemSizes(), getProblem().getItemMinSize(), getProblem().getItemMaxSize());
-			} catch (InputDataException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}

@@ -11,11 +11,11 @@ import VSCIFP.algs.CIFFD;
 import VSCIFP.algs.CNFL;
 import VSCIFP.algs.CNFLAlmostEqual;
 import VSCIFP.algs.NFLWithBinTypeOptimization;
-import VSCIFP.benchmark.OptimalVSCIFPBenchmark;
+import VSCIFP.benchmark.OptimalVSCIFPExecution;
 import VSCIFP.gens.MonotoneWithoutCutsVSCIFPGenerator;
 
 import common.algorithm.Algorithm;
-import common.benchmark.OptimalBenchmarkStats;
+import common.benchmark.OptimalExecutionStats;
 
 public class Fig11GenerationBenchmark {
 
@@ -57,9 +57,9 @@ public class Fig11GenerationBenchmark {
 			
 			for (int i = 0; i < algs.length; i++) {
 				gen3bins.reset();
-				OptimalBenchmarkStats<VSCIFP, VSCIFPInstance> stats3bins = new OptimalVSCIFPBenchmark(p3bins, algs[i], gen3bins, nRuns).run();
+				OptimalExecutionStats<VSCIFP, VSCIFPInstance> stats3bins = new OptimalVSCIFPExecution(p3bins, algs[i], gen3bins, nRuns).run();
 				gen10bins.reset();
-				OptimalBenchmarkStats<VSCIFP, VSCIFPInstance> stats10bins = new OptimalVSCIFPBenchmark(p10bins, algs[i], gen10bins, nRuns).run();
+				OptimalExecutionStats<VSCIFP, VSCIFPInstance> stats10bins = new OptimalVSCIFPExecution(p10bins, algs[i], gen10bins, nRuns).run();
 				StringBuilder sb = new StringBuilder();
 				sb.append(D);
 				sb.append(" ");

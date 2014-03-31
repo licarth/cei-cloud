@@ -9,11 +9,11 @@ import VSCIFP.algs.CNFLAlmostEqual;
 import VSCIFP.algs.CDNFL;
 import VSCIFP.algs.CNFL;
 import VSCIFP.algs.NFLWithBinTypeOptimization;
-import VSCIFP.benchmark.RelativeVSCIFPBenchmark;
+import VSCIFP.benchmark.RelativeVSCIFPExecution;
 import VSCIFP.gens.LinearVSCIFPGenerator;
 import VSCIFP.gens.LinearUnknownCostVSCIFPGenerator;
 import common.algorithm.Algorithm;
-import common.benchmark.RelativeBenchmarkStats;
+import common.benchmark.RelativeExecutionStats;
 
 public class Fig8GenerationBenchmark {
 
@@ -45,9 +45,9 @@ public class Fig8GenerationBenchmark {
 			
 			for (int i = 0; i < algs.length; i++) {
 				gen3bins.reset();
-				RelativeBenchmarkStats<VSCIFP, VSCIFPInstance> stats3bins = new RelativeVSCIFPBenchmark(p3bins, algs[i], gen3bins, nRuns).run();
+				RelativeExecutionStats<VSCIFP, VSCIFPInstance> stats3bins = new RelativeVSCIFPExecution(p3bins, algs[i], gen3bins, nRuns).run();
 				gen10bins.reset();
-				RelativeBenchmarkStats<VSCIFP, VSCIFPInstance> stats10bins = new RelativeVSCIFPBenchmark(p10bins, algs[i], gen10bins, nRuns).run();
+				RelativeExecutionStats<VSCIFP, VSCIFPInstance> stats10bins = new RelativeVSCIFPExecution(p10bins, algs[i], gen10bins, nRuns).run();
 				StringBuilder sb = new StringBuilder();
 				sb.append(algs[i].getClass().getSimpleName());
 				sb.append(" ");

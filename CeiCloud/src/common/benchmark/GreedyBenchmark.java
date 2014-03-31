@@ -7,7 +7,7 @@ import common.problem.IProblem;
 import common.problem.InputDataException;
 import common.solution.ISolution;
 
-public abstract class GreedyBenchmark<P extends IProblem, I extends IInstance<P>, A extends IAlgorithm<P, I>, G extends RandomGenerator<P,? extends I>> implements IBenchmark<P,A,I,G>{
+public abstract class GreedyBenchmark<P extends IProblem, I extends IInstance<P>, A extends IAlgorithm<P, I>, G extends RandomGenerator<P,? extends I>> implements IExecution<P,A,I,G>{
 
 	public GreedyBenchmark(P problem, A algorithm, G generator) {
 		super();
@@ -21,7 +21,7 @@ public abstract class GreedyBenchmark<P extends IProblem, I extends IInstance<P>
 	private G generator;
 	
 	@Override
-	public OptimalBenchmarkStats<P, I> run() throws BenchmarkRunException {
+	public OptimalExecutionStats<P, I> run() throws Exception {
 		try {
 			I i = getGenerator().generateInstance();
 			ISolution<P, ? super I> sol = getAlgorithm().solve(i);

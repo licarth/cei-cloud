@@ -5,14 +5,25 @@ import common.generator.IGenerator;
 import common.problem.IInstance;
 import common.problem.IProblem;
 
-public interface IBenchmark<P extends IProblem, A extends IAlgorithm<P, ? extends IInstance<? extends P>>,
+/**
+ * A benchmark is a 
+ * 
+ * 
+ * @author thomas
+ *
+ * @param <P>
+ * @param <A>
+ * @param <I>
+ * @param <G>
+ */
+public interface IExecution<P extends IProblem, A extends IAlgorithm<P, ? extends IInstance<? extends P>>,
 		I extends IInstance<P>, G extends IGenerator<P,? extends I>> {
 	/**
 	 * Runs the benchmark.
 	 * @return 
 	 * @throws Exception 
 	 */
-	BenchmarkStats<P, I> run() throws BenchmarkRunException, Exception;
+	ExecutionStats<P, I> run() throws AlgorithmExecutionException, Exception;
 	
 	P getProblem();
 	A getAlgorithm();

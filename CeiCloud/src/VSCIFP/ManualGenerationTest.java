@@ -4,11 +4,9 @@ import java.util.TreeSet;
 
 import org.junit.Test;
 
-import binpacking.BPPInstance;
-import binpacking.BPPSol;
-import VSCIFP.BinType;
-import VSCIFP.VSCIFP;
-import VSCIFP.VSCIFPInstance;
+import VSCIFP.algs.CNFL;
+import VSCIFP.algs.Item;
+import VSCIFP.algs.NFLWithBinTypeOptimization;
 import VSCIFP.gens.VSCIFPGenerator;
 import common.problem.InputDataException;
 import common.solution.OptimalCostNotKnownException;
@@ -16,7 +14,7 @@ import common.solution.OptimalCostNotKnownException;
 public class ManualGenerationTest {
 
 	@Test
-	public void test() throws InputDataException, OptimalCostNotKnownException {
+	public void test() throws Exception {
 
 		final VSCIFP problem = new VSCIFP(10, 3, 1, 1);
 		
@@ -34,22 +32,22 @@ public class ManualGenerationTest {
 				}};
 				instance.getItems().add(new Item(16));
 				instance.getItems().add(new Item(14));
-				instance.getItems().add(new Item(10));
-				instance.getItems().add(new Item(14));
-				instance.getItems().add(new Item(14));
-				instance.getItems().add(new Item(5));
-				instance.getItems().add(new Item(6));
-				instance.getItems().add(new Item(7));
-				instance.getItems().add(new Item(8));
-				instance.getItems().add(new Item(4));
-				instance.getItems().add(new Item(12));
-				instance.getItems().add(new Item(10));
-				instance.getItems().add(new Item(12));
-				instance.getItems().add(new Item(12));
-				instance.getItems().add(new Item(12));
-				instance.getItems().add(new Item(12));
-				instance.getItems().add(new Item(10));
-				instance.getItems().add(new Item(10));
+//				instance.getItems().add(new Item(10));
+//				instance.getItems().add(new Item(14));
+//				instance.getItems().add(new Item(14));
+//				instance.getItems().add(new Item(5));
+//				instance.getItems().add(new Item(6));
+//				instance.getItems().add(new Item(7));
+//				instance.getItems().add(new Item(8));
+//				instance.getItems().add(new Item(4));
+//				instance.getItems().add(new Item(12));
+//				instance.getItems().add(new Item(10));
+//				instance.getItems().add(new Item(12));
+//				instance.getItems().add(new Item(12));
+//				instance.getItems().add(new Item(12));
+//				instance.getItems().add(new Item(12));
+//				instance.getItems().add(new Item(10));
+//				instance.getItems().add(new Item(10));
 				return instance;
 			}
 		};

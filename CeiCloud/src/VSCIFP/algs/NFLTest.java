@@ -16,7 +16,7 @@ import common.solution.OptimalCostNotKnownException;
 public class NFLTest {
 
 	@Test
-	public void test() throws InputDataException, OptimalCostNotKnownException {
+	public void test() throws Exception {
 
 		final VSCIFP problem = new VSCIFP(10, 2, 1, 1);
 		

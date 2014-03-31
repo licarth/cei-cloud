@@ -3,9 +3,9 @@ package common.benchmark;
 import common.problem.IInstance;
 import common.problem.IProblem;
 
-public class OptimalBenchmarkStats<P extends IProblem, I extends IInstance<? extends P>> extends BenchmarkStats<P, I> {
+public class OptimalExecutionStats<P extends IProblem, I extends IInstance<? extends P>> extends ExecutionStats<P, I> {
 	
-	public OptimalBenchmarkStats(IBenchmark bench) {
+	public OptimalExecutionStats(IExecution bench) {
 		super(bench);
 		// TODO Auto-generated constructor stub
 	}

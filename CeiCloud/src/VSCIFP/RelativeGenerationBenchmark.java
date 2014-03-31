@@ -3,10 +3,10 @@ package VSCIFP;
 import VSCIFP.algs.CIFFD;
 import VSCIFP.algs.CNFL;
 import VSCIFP.algs.NFLWithBinTypeOptimization;
-import VSCIFP.benchmark.RelativeVSCIFPBenchmark;
+import VSCIFP.benchmark.RelativeVSCIFPExecution;
 import VSCIFP.gens.MonotoneVSCIFPGenerator;
 
-import common.benchmark.RelativeBenchmarkStats;
+import common.benchmark.RelativeExecutionStats;
 
 public class RelativeGenerationBenchmark {
 
@@ -22,12 +22,12 @@ public class RelativeGenerationBenchmark {
 		CNFL nfl = new CNFL();
 		NFLWithBinTypeOptimization nflOpt = new NFLWithBinTypeOptimization();
 		
-		RelativeVSCIFPBenchmark benchmarkCIFFD = new RelativeVSCIFPBenchmark(p, ciffd, monoGen, nRuns);
-		RelativeBenchmarkStats<VSCIFP, VSCIFPInstance> stats = benchmarkCIFFD.run();
-		RelativeVSCIFPBenchmark benchmarkNFL = new RelativeVSCIFPBenchmark(p, nfl, monoGen, nRuns);
-		RelativeBenchmarkStats<VSCIFP, VSCIFPInstance> stats2 = benchmarkNFL.run();
-		RelativeVSCIFPBenchmark benchmarkNFLOPT = new RelativeVSCIFPBenchmark(p, nflOpt, monoGen, nRuns);
-		RelativeBenchmarkStats<VSCIFP, VSCIFPInstance> stats3 = benchmarkNFLOPT.run();
+		RelativeVSCIFPExecution benchmarkCIFFD = new RelativeVSCIFPExecution(p, ciffd, monoGen, nRuns);
+		RelativeExecutionStats<VSCIFP, VSCIFPInstance> stats = benchmarkCIFFD.run();
+		RelativeVSCIFPExecution benchmarkNFL = new RelativeVSCIFPExecution(p, nfl, monoGen, nRuns);
+		RelativeExecutionStats<VSCIFP, VSCIFPInstance> stats2 = benchmarkNFL.run();
+		RelativeVSCIFPExecution benchmarkNFLOPT = new RelativeVSCIFPExecution(p, nflOpt, monoGen, nRuns);
+		RelativeExecutionStats<VSCIFP, VSCIFPInstance> stats3 = benchmarkNFLOPT.run();
 		
 		System.out.println(stats);
 		System.out.println(stats2);

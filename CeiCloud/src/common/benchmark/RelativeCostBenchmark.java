@@ -23,23 +23,23 @@ import common.solution.OptimalCostNotKnownException;
  */
 public abstract class RelativeCostBenchmark<P extends IProblem, 
 I extends IInstance<P>, A extends IAlgorithm<P, ? super I>, G extends RandomGenerator<P,I>>
-implements IBenchmark<P,A,I,G>{
+implements IExecution<P,A,I,G>{
 	
 	private int runCount;
 	
-	private RelativeBenchmarkStats<P, I> reference;
+	private RelativeExecutionStats<P, I> reference;
 	
 	private P problem;
 	private A algorithm;
 	private G generator;
 	
-	public RelativeCostBenchmark(RelativeBenchmarkStats<P, I> reference) {
+	public RelativeCostBenchmark(RelativeExecutionStats<P, I> reference) {
 		this.reference = reference;
 	}
 	
-	public RelativeBenchmarkStats<P, I> run() throws Exception {
+	public RelativeExecutionStats<P, I> run() throws Exception {
 		//Create instances
-		RelativeBenchmarkStats<P, I> bs = new RelativeBenchmarkStats<P,I>(this);
+		RelativeExecutionStats<P, I> bs = new RelativeExecutionStats<P,I>(this);
 		for (int j = 0; j < getRunCount(); j++) {
 			try {
 				I i = (I) getGenerator().generateInstance();

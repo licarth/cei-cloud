@@ -5,15 +5,15 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import common.problem.IInstance;
 import common.problem.IProblem;
 
-public class BenchmarkStats<P extends IProblem, I extends IInstance<? extends P>> {
+public class ExecutionStats<P extends IProblem, I extends IInstance<? extends P>> {
 	
 	public DescriptiveStatistics stats = new DescriptiveStatistics();
 	
-	public BenchmarkStats(IBenchmark bench) {
+	public ExecutionStats(IExecution bench) {
 		this.bench = bench;
 	}
 	
-	IBenchmark bench;
+	IExecution bench;
 	
 	public double getEpsilon() {
 		return 1.96*stats.getStandardDeviation()/Math.sqrt(stats.getN());

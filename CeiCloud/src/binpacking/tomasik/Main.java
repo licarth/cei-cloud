@@ -8,14 +8,14 @@ import binpacking.algs.NF;
 import binpacking.algs.NFD;
 import binpacking.benchmark.BPPOptimalBenchmark;
 import binpacking.gens.MartelloTothBPPLibraryGenerator;
-import common.benchmark.BenchmarkRunException;
-import common.benchmark.OptimalBenchmarkStats;
+import common.benchmark.AlgorithmExecutionException;
+import common.benchmark.OptimalExecutionStats;
 import common.problem.InputDataException;
 
 public class Main {
 
 	
-	public static void main(String[] args) throws InputDataException, BenchmarkRunException {
+	public static void main(String[] args) throws InputDataException, AlgorithmExecutionException {
 		
 		//IProblem definition
 		BPP problem = new BPP(100, 1, 99);
@@ -60,7 +60,7 @@ public class Main {
 		//		try {
 		//			Solution<BPPInstance> sol = ffd.solve(i);
 		//			System.out.println(sol);
-		//		} catch (BenchmarkRunException e) {
+		//		} catch (AlgorithmExecutionException e) {
 		//			// TODO Auto-generated catch block
 		//			e.printStackTrace();
 		//		}
