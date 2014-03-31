@@ -18,7 +18,7 @@ Build
 This project relies on Maven dependency management. The easiest way to import dependencies and build is to use Maven.
 
 
-Todo
+To do
 ----
 
 Enhance benchmarking classes (benckmark package).
