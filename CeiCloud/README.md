@@ -27,7 +27,16 @@ To make this tool more complete, we could :
 *	Create 
 *	Use a logging API (instead of System.out.print!)
 
-Authors
+Authors & Contributors
 -------
 
 [Thomas Carli](mailto:thomascarli@gmail.com)
+
+Examples
+--------
+
+Although this tool has been developped to evaluate the precision of VSCIFP problems defined in the paper release mentioned in the introduction, one can define its own Problem, Instances, Algorithms and Generators.
+
+Let's run through a simple example. Let's say we are trying to assess the precision of Bin Packing Algorithms. A bin packing Problem class (BPP) could look like :
+
+ 
