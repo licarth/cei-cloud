@@ -21,7 +21,11 @@ This project relies on Maven dependency management. The easiest way to import de
 To do
 ----
 
-Enhance benchmarking classes (benckmark package).
+To make this tool more complete, we could :
+
+*	Enhance benchmarking classes (benckmark package) to automatically compare algorithm precision and output the results in a particular form
+*	Create 
+*	Use a logging API (instead of System.out.print!)
 
 Authors
 -------
