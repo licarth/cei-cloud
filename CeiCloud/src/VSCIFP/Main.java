@@ -15,7 +15,7 @@ public class Main {
 		VSCIFP p = new VSCIFP(100, 3, 1, 1);
 //		MonotoneVSCIFPGenerator gen = new MonotoneVSCIFPGenerator(p);
 		LinearVSCIFPGenerator gen = new LinearVSCIFPGenerator(p, 1000);
-		List<VSCIFPInstance> instances = gen.generateInstances(10);
+		List<? extends VSCIFPInstance> instances = gen.generateInstances(10);
 		
 		for (VSCIFPInstance ins : instances) {
 			CIFFD ciffd = new CIFFD();

@@ -36,7 +36,7 @@ public abstract class RandomGenerator<P extends IProblem, I extends IInstance<? 
 	 * @return
 	 * @throws AlgorithmExecutionException 
 	 */
-	abstract public List<I> generateInstances(int n) throws InputDataException, Exception;
+	abstract public List<? extends I> generateInstances(int n) throws InputDataException, Exception;
 	
 	/**
 	 * Generates a seed for random method. Here it's a constant.

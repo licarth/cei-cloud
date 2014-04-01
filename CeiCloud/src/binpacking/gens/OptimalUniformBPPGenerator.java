@@ -99,8 +99,8 @@ public class OptimalUniformBPPGenerator extends NumItemsFixedBPPGenerator {
 	}
 
 	@Override
-	public List<BPPInstance> generateInstances(int n) {
-			List<BPPInstance> l = new ArrayList<BPPInstance>();
+	public List<OptimalKnownBPPInstance> generateInstances(int n) {
+			List<OptimalKnownBPPInstance> l = new ArrayList<OptimalKnownBPPInstance>();
 			for (int i = 0; i < n; i++) {
 				l.add(generateInstance());
 			}
