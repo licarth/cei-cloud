@@ -25,7 +25,7 @@ public class Optimal {
 		NF nf = new NF();
 		NFD nfd = new NFD();
 
-		MartelloTothBPPLibraryGenerator gen = new MartelloTothBPPLibraryGenerator(bpp);							//	Instance generator declaration
+		MartelloTothBPPLibraryGenerator gen = new MartelloTothBPPLibraryGenerator(bpp);			//	Instance generator declaration
 
 		List<OptimalKnownBPPInstance> l = gen.generateInstances();
 		int i=0;
