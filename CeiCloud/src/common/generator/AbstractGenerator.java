@@ -1,7 +1,5 @@
 package common.generator;
 
-import java.util.Random;
-
 import common.problem.IInstance;
 import common.problem.IProblem;
 

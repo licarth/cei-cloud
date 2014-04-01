@@ -21,7 +21,7 @@ import common.solution.ISolution;
 public class FF extends BPPAlgorithm {
 
 	@Override
-	public ISolution<BPP, BPPInstance> solve(BPPInstance ins) throws InputDataException {
+	public BPPSol solve(BPPInstance ins) throws InputDataException {
 
 		//Worst case : 1 bin per item.
 		List<List<Item>> sol = new ArrayList<>();

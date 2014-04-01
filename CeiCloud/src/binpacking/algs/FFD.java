@@ -22,7 +22,7 @@ import static common.Utils.*;
 public class FFD extends BPPAlgorithm {
 
 	@Override
-	public ISolution<BPP, BPPInstance> solve(BPPInstance ins) throws InputDataException {
+	public BPPSol solve(BPPInstance ins) throws InputDataException {
 		// Sort desc. (OFF-LINE ALG)
 		List<Item> sortedItems = Utils.cloneItemList(ins.getItems());
 		Utils.sortDesc(sortedItems);

@@ -20,6 +20,12 @@ import common.generator.OptimalLibraryGenerator;
 import common.generator.OptimalRandomGenerator;
 import common.problem.InputDataException;
 
+/**
+ * Generator that create instances described by Martello & Toth.
+ * 
+ * @author thomas
+ *
+ */
 public class MartelloTothBPPLibraryGenerator extends OptimalLibraryGenerator<BPP, OptimalKnownBPPInstance>{
 
 	public MartelloTothBPPLibraryGenerator(BPP problem) {

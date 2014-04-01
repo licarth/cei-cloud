@@ -9,13 +9,6 @@ import common.problem.Instance;
 import common.problem.IProblem;
 import common.problem.InputDataException;
 
-/**
- * IGenerator that creates random instances from a random seed.
- * 
- * @author thomas
- *
- * @param <P>
- */
 public abstract class AbstractRandomGenerator<P extends IProblem, I extends IInstance<? extends P>> extends RandomGenerator<P,I> {
 
 	public AbstractRandomGenerator(P problem) {
